@@ -1,0 +1,33 @@
+import express from "express";
+import mongoose from "mongoose";
+import "dotenv/config";
+import exerciseRoutes from "./routes/exercise";
+import workoutRoutes from "./routes/workout";
+import errorHandler from "./middleware/error-handler";
+import { CustomError } from "./utils/classes/errors";
+
+const app = express();
+const port = process.env.PORT;
+
+app.use(express.json());
+
+// Connect to DB
+mongoose
+    .connect(process.env.MONGODB_CONNECTION_STRING!)
+    .then(() => {
+        console.log("Connected to database");
+        app.listen(port, () => console.log(`Server running on port ${port}`));
+    })
+    .catch((error) => console.log(`Error connecting the database: ${error}`));
+
+// Routes
+app.use("/api/exercise", exerciseRoutes);
+
+app.use("/api/workout", workoutRoutes);
+
+// Error handling
+app.use((req, res, next) => {
+    next(new CustomError(404, "Endpoint not found"));
+});
+
+app.use(errorHandler);
