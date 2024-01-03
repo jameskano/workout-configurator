@@ -1,0 +1,49 @@
+@import "../../styles/variables.scss";
+
+.side-navbar {
+    padding: 0;
+    width: 90%;
+    left: -90%;
+    top: 0;
+    position: absolute;
+    background-color: black;
+    height: 100%;
+
+    &--show {
+        left: 0;
+        padding: $spacing-6;
+        transition: all 0.2s ease-out;
+    }
+
+    &--hide {
+        padding: $spacing-6 0;
+        transition: all 0.2s ease-in;
+    }
+
+    &__option {
+        padding: $spacing-2 0;
+        width: 100%;
+
+        > a {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+            text-decoration: none;
+        }
+
+        &:not(:last-of-type) {
+            border-bottom: 1px solid white;
+        }
+    }
+}
+
+@media (min-width: 900px) {
+    .side-navbar {
+        width: max(30%, 300px);
+        padding: $spacing-6;
+        position: relative;
+    }
+}

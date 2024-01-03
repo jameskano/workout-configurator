@@ -1,0 +1,38 @@
+@import "src/styles/variables.scss";
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        > h1 {
+            font-size: $font-xl;
+            font-family: $font-primary;
+            margin: 0;
+            color: white;
+            padding: $spacing-5 0;
+        }
+
+        > span {
+            left: $spacing-6;
+            top: 50%;
+            transform: translateY(-50%);
+            position: absolute;
+            cursor: pointer;
+        }
+    }
+
+    &__main-content {
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        flex: 1;
+    }
+}
