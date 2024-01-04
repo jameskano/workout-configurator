@@ -24,11 +24,15 @@ const ExercisesPage = () => {
 
             <div className="exercises__list"></div>
 
-            {showExerciseModal &&
-                createPortal(
-                    <ExerciseModal />,
-                    document.querySelector("#modal-root")!
-                )}
+            {/* {showExerciseModal && */}
+            {createPortal(
+                <ExerciseModal
+                    showModal={showExerciseModal}
+                    setShowModal={setShowExerciseModal}
+                />,
+                document.querySelector("#modal-root")!
+            )}
+            {/* )} */}
         </section>
     );
 };

@@ -26,13 +26,30 @@
             transform: translateY(-50%);
             position: absolute;
             cursor: pointer;
+            z-index: 1;
         }
     }
 
-    &__main-content {
+    &__body {
         display: flex;
         flex-direction: row;
         position: relative;
         flex: 1;
+    }
+}
+
+@media (min-width: 900px) {
+    .layout {
+        &__header {
+            margin-left: $side-navbar-size;
+
+            > span {
+                display: none;
+            }
+        }
+
+        &__main-content {
+            margin-left: $side-navbar-size;
+        }
     }
 }

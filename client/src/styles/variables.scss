@@ -48,11 +48,11 @@ $font-xxxxl: 1.875rem;
 $spacing-5xl: 2rem;
 
 // Border
-$xs-border-radius: 2px;
-$s-border-radius: 4px;
-$m-border-radius: 7px;
-$l-border-radius: 10px;
-$sphere-border-radius: 50%;
+$border-radius-1: 2px;
+$border-radius-2: 4px;
+$border-radius-3: 7px;
+$border-radius-4: 10px;
+$border-radius-sphere: 50%;
 
 // Shadows
 $elevation-1: 0 0 2px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1),
@@ -147,3 +147,6 @@ $color-light-search-input-border: #979797;
 $color-light-create-input-border: #bbb;
 // Custom input text
 $color-light-input-text: #fff;
+
+// Misc
+$side-navbar-size: clamp(300px, 30%, 500px);

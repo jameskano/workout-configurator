@@ -3,6 +3,7 @@ import { LayoutTypes } from "./Layout.types";
 import "./Layout.scss";
 import { useLocation } from "react-router";
 import { useState } from "react";
+import { pageTitle } from "../../utils/constants/page-title";
 
 const Layout = ({ currentPageComponent }: LayoutTypes) => {
     const location = useLocation();
@@ -22,13 +23,20 @@ const Layout = ({ currentPageComponent }: LayoutTypes) => {
                     menu
                 </span>
                 <h1 className="exercises__title">
-                    {location.pathname.slice(1).charAt(0).toUpperCase() +
-                        location.pathname.slice(2)}
+                    {
+                        (pageTitle as any)[
+                            location.pathname.slice(1).toUpperCase()
+                        ]
+                    }
                 </h1>
             </div>
-            <div className="layout__main-content">
+            {/* <SideNavBar showSideNavbar={isSideNavbarShown} />
+            {currentPageComponent} */}
+            <div className="layout__body">
                 <SideNavBar showSideNavbar={isSideNavbarShown} />
-                {currentPageComponent}
+                <div className="layout__main-content">
+                    {currentPageComponent}
+                </div>
             </div>
         </section>
     );

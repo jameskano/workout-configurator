@@ -8,6 +8,7 @@
     position: absolute;
     background-color: black;
     height: 100%;
+    overflow-x: hidden;
 
     &--show {
         left: 0;
@@ -42,8 +43,9 @@
 
 @media (min-width: 900px) {
     .side-navbar {
-        width: max(30%, 300px);
+        width: $side-navbar-size;
         padding: $spacing-6;
-        position: relative;
+        position: fixed;
+        left: 0;
     }
 }
