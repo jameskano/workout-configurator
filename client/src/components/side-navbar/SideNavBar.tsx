@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./SideNavBar.scss";
 import { SideNavbarTypes } from "./SideNavbar.types";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
 const SideNavBar = ({ showSideNavbar }: SideNavbarTypes) => {
     const logOutHandler = () => {};
@@ -20,9 +21,7 @@ const SideNavBar = ({ showSideNavbar }: SideNavbarTypes) => {
                     }
                 >
                     Exercises
-                    <span className="material-symbols-rounded">
-                        chevron_right
-                    </span>
+                    <ArrowForwardIosRoundedIcon />
                 </NavLink>
             </div>
             <div className="side-navbar__option">
@@ -33,9 +32,7 @@ const SideNavBar = ({ showSideNavbar }: SideNavbarTypes) => {
                     }
                 >
                     Workouts
-                    <span className="material-symbols-rounded">
-                        chevron_right
-                    </span>
+                    <ArrowForwardIosRoundedIcon />
                 </NavLink>
             </div>
             <div className="side-navbar__option">
@@ -46,17 +43,13 @@ const SideNavBar = ({ showSideNavbar }: SideNavbarTypes) => {
                     }
                 >
                     <span>Account</span>
-                    <span className="material-symbols-rounded">
-                        chevron_right
-                    </span>
+                    <ArrowForwardIosRoundedIcon />
                 </NavLink>
             </div>
             <div className="side-navbar__option">
                 <Link to="/" onClick={logOutHandler}>
                     Log out
-                    <span className="material-symbols-rounded">
-                        chevron_right
-                    </span>
+                    <ArrowForwardIosRoundedIcon />
                 </Link>
             </div>
         </section>

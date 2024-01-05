@@ -1,4 +1,4 @@
-@import "../../styles/variables.scss";
+@import "../../styles/main-styles.scss";
 
 .exercise-modal {
     &__form {
@@ -8,22 +8,56 @@
         left: 50%;
         transform: translate(-50%, -50%);
         background-color: aquamarine;
-        padding: $spacing-8;
         border-radius: $border-radius-2;
         display: flex;
         flex-direction: column;
-        // flex-wrap: nowrap;
+        overflow: hidden;
+    }
+
+    &__header {
+        padding: $spacing-3 $spacing-8;
+        background-color: red;
+    }
+
+    &__body {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
         gap: $spacing-3;
+        padding: $spacing-4 $spacing-8;
+    }
+
+    &__bottom {
+        align-self: flex-end;
+        padding: 0 $spacing-8 $spacing-4;
+
+        > button {
+            text-transform: none;
+        }
+    }
+
+    &__input {
+        background-color: antiquewhite;
+        border-radius: $border-radius-2;
     }
 
     &__title,
     &__metadata {
-        // width: 100%;
-        flex: 1;
+        grid-column: 1 / -1;
     }
+}
 
-    &__option {
-        display: inline-block;
-        flex-basis: 20%;
+@media (min-width: 900px) {
+    .exercise-modal {
+        &__form {
+            width: clamp(500px, 60%, 800px);
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .exercise-modal {
+        &__body {
+            grid-template-columns: repeat(2, 1fr);
+        }
     }
 }

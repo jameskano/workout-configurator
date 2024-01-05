@@ -3,6 +3,8 @@ import GenericFilters from "../../components/generic-filters/GenericFilters";
 import { createPortal } from "react-dom";
 import ExerciseModal from "../../components/exercise-modal/ExerciseModal";
 import "./ExercisesPage.scss";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import { Button } from "@mui/material";
 
 const ExercisesPage = () => {
     const [showExerciseModal, setShowExerciseModal] = useState(false);
@@ -10,29 +12,28 @@ const ExercisesPage = () => {
 
     const newExerciseHandler = () => {
         setShowExerciseModal(true);
-        setIsEditExerciseMode(true);
+        setIsEditExerciseMode(false);
     };
 
     return (
         <section className="exercises">
-            <div className="exercises__new" onClick={newExerciseHandler}>
+            <Button className="exercises__new" onClick={newExerciseHandler}>
                 <span>Add new exercise</span>
-                <span className="material-symbols-rounded">add</span>
-            </div>
+                <AddRoundedIcon />
+            </Button>
 
             <GenericFilters />
 
             <div className="exercises__list"></div>
 
-            {/* {showExerciseModal && */}
             {createPortal(
                 <ExerciseModal
                     showModal={showExerciseModal}
                     setShowModal={setShowExerciseModal}
+                    isEditMode={isEditExerciseMode}
                 />,
                 document.querySelector("#modal-root")!
             )}
-            {/* )} */}
         </section>
     );
 };

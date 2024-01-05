@@ -3,8 +3,8 @@ html {
 }
 
 // Font families
-$font-primary: "Open Sans";
-$font-secondary: "Rubik";
+$font-primary: "Roboto";
+$font-secondary: "Montserrat";
 
 // Font weights
 $font-weight-extra-light: 200;
@@ -74,66 +74,56 @@ $elevation-portal: 0 0 10px 2px rgba(0, 0, 0, 0.35);
 $popover-tooltip-elevation: 1px 3px 2px rgba(0, 0, 0, 0.4);
 
 // Primary color
-$color-primary-brighter-2: #b8dcec;
-$color-primary-brighter-1: #7ebedc;
-$color-primary: #319acb;
-$color-primary-hover: #356379;
-$color-primary-darker-1: #387c9b;
-$color-primary-darker-2: #7687c3;
-$color-primary-darker-3: #25576e;
-$color-primary-darker-4: #7c8285;
-$color-primary-dmd: #dbab68;
+$color-primary-brighter-2: #a2d1ff;
+$color-primary-brighter-1: #8ac4ff;
+$color-primary: #66b2ff;
+$color-primary-darker-1: #528eca;
+$color-primary-darker-2: #3d6a96;
+$color-primary-hover: #549ce3;
 // Secondary color
-$color-secondary-brighter-2: #f4afbe;
-$color-secondary-brighter-1: #f38099;
-$color-secondary: #ee4266;
-$color-secondary-darker-1: #be3652;
-$color-secondary-darker-2: #7a1f32;
+$color-secondary-brighter-2: #f8bbd0;
+$color-secondary-brighter-1: #f06292;
+$color-secondary: #ec407a;
+$color-secondary-darker-1: #c2185b;
+$color-secondary-darker-2: #880e4f;
+$color-secondary-hover: #e91e63;
 // System feedback
-$color-system-feedback-success: #18b549;
-$color-system-feedback-success-2: #62c3a3;
-$color-system-feedback-success-3: #92c089;
-$color-system-feedback-success-3-disabled_dark: #4f5f5c;
-$color-system-feedback-success-3-disabled_light: #e9f2e7;
-$color-system-feedback-success-4: #3cb371;
-$color-system-feedback-error: #e37272;
-$color-system-feedback-error-disabled_dark: #5b5358;
-$color-system-feedback-error-disabled_light: #f9e3e3;
-$color-system-feedback-warning: #e9c417;
-$color-system-feedback-warning-disabled_dark: #5c5f4b;
-$color-system-feedback-warning-disabled_light: #fbf3d1;
-$color-system-feedback-info: #179ce9;
-$color-system-feedback-disabled: #bbbbbb;
+$color-system-feedback-success: #2ab757;
+$color-system-feedback-success-brighter: #34eb6e;
+$color-system-feedback-success-darker: #208b42;
+$color-system-feedback-error: #d04b4b;
+$color-system-feedback-error-darker: #a63c3c;
+$color-system-feedback-error-brighter: #f95a5a;
+$color-system-feedback-warning: #ddbb24;
+$color-system-feedback-warning-brighter: #ffdd44;
+$color-system-feedback-warning-darker: #b69b22;
+$color-system-feedback-info: #1e9be2;
+$color-system-feedback-info-darker: #137cb9;
+$color-system-feedback-info-brighter: #3cb7ff;
 
 // Text Black
-$color-text-black-base: #343434;
-$color-text-black-brighter-1: #5c5c5c;
-$color-text-black-brighter-2: #838383;
+$color-text-black-base: #252525;
+$color-text-black-brighter-1: #383838;
+$color-text-black-brighter-2: #5a5a5a;
 // Text White
 $color-text-white-base: #ffffff;
-$color-text-white-darker-1: #c6c6c6;
-$color-text-white-darker-2: #b2b2b2;
+$color-text-white-darker-1: #e1e1e1;
+$color-text-white-darker-2: #bcbbbb;
 // Background, panels, modals... for Light Mode
 $color-background-light-1: #ffffff;
-$color-background-light-2: #f3f3f3;
+$color-background-light-2: #eeeeee;
 $color-background-light-3: #d5d5d5;
 $color-background-light-4: #bbbbbb;
-$color-background-light-5: #c6c6c6;
-$color-background-light-6: #a6a6a6;
+$color-background-light-5: #a8a8a8;
 // Background, panels, modals... for Dark Mode
-$color-background-dark-1: #565f64;
-$color-background-dark-2: #444e54;
-$color-background-dark-3: #3f484d;
-$color-background-dark-4: #373f44;
-$color-background-dark-5: #31383c;
-$color-background-dark-6: #1a1e20;
-$color-background-dark-7: #292f32;
+$color-background-dark-1: #515a5e;
+$color-background-dark-2: #3e4548;
+$color-background-dark-3: #2f3537;
+$color-background-dark-4: #202425;
+$color-background-dark-5: #191b1d;
 // Scrollbar
 $color-scrollbar-light: #797c7d;
 $color-scrollbar-dark: #2d2d2d;
-// Custom TextField
-$color-background-simple-textfied-dark: #292f30;
-$color-background-simple-textfied-light: #ffffff;
 //transparent-light-grey
 $color-background-transparent-light-grey: rgba(216, 216, 216, 0.07);
 $color-background-disabled-grey: rgba(227, 227, 227, 0.7);
@@ -142,11 +132,6 @@ $color-background-hovered-grey: rgba(227, 227, 227, 0.8);
 $color-background-transparent-dark-grey: rgba(70, 70, 75, 0.8);
 $color-background-dark-grey: rgba(67, 78, 84, 0.8);
 $color-light-grey: #9fa3a6;
-// Custom input border
-$color-light-search-input-border: #979797;
-$color-light-create-input-border: #bbb;
-// Custom input text
-$color-light-input-text: #fff;
 
 // Misc
 $side-navbar-size: clamp(300px, 30%, 500px);

@@ -1,8 +1,16 @@
+@import "../../styles/main-styles.scss";
+
 .exercises {
     &__new {
         display: flex;
         align-items: center;
         align-content: center;
         cursor: pointer;
+
+        > svg {
+            color: $color-primary;
+        }
     }
 }
+
+// @media (min-width: 900px)

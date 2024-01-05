@@ -1,9 +1,10 @@
-@import "src/styles/variables.scss";
+@import "src/styles/main-styles.scss";
 
 .layout {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: $color-background-dark-4;
 
     &__header {
         display: flex;
@@ -11,10 +12,11 @@
         align-items: center;
         justify-content: center;
         position: relative;
+        box-shadow: $elevation-2;
 
         > h1 {
             font-size: $font-xl;
-            font-family: $font-primary;
+            font-family: $font-secondary;
             margin: 0;
             color: white;
             padding: $spacing-5 0;
@@ -27,6 +29,7 @@
             position: absolute;
             cursor: pointer;
             z-index: 1;
+            color: $color-primary;
         }
     }
 
@@ -35,6 +38,12 @@
         flex-direction: row;
         position: relative;
         flex: 1;
+        padding: $spacing-4 $spacing-6;
+        width: 100%;
+    }
+
+    &__main-content {
+        width: 100%;
     }
 }
 
