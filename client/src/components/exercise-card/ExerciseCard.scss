@@ -1,0 +1,55 @@
+@import "../../styles/main-styles.scss";
+
+.exercise-card {
+    background-color: $color-background-dark-5;
+    box-shadow: $elevation-4;
+    padding: $spacing-4;
+    border-radius: $border-radius-2;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+
+    h3,
+    h2 {
+        margin: 0;
+        font-family: $font-secondary;
+        font-weight: $font-weight-semi-bold;
+    }
+
+    h3,
+    span {
+        font-size: $font-xs;
+    }
+
+    h3 {
+        color: $color-primary-darker-1;
+    }
+
+    span {
+        color: $color-text-white-base;
+    }
+
+    &__title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding-top: $spacing-2;
+
+        > h2 {
+            color: $color-primary-brighter-1;
+            font-size: $font-m;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        > div {
+            text-align: center;
+        }
+    }
+}

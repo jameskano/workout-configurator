@@ -1,11 +1,16 @@
 import GenericFilters from "../../components/generic-filters/GenericFilters";
+import AddButton from "../../UI/add-button/AddButton";
 
 const WorkoutsPage = () => {
+    const newWorkoutHandler = () => {};
+
     return (
         <section className="workouts">
             <div className="workouts__new">
-                <span>Create new workout</span>
-                <span className="material-symbols-rounded">add</span>
+                <AddButton
+                    text="Create new workout"
+                    onClickHandler={newWorkoutHandler}
+                />
             </div>
 
             <GenericFilters />

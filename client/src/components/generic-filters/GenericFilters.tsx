@@ -37,6 +37,7 @@ const GenericFilters = () => {
             )}
             {pathname === "/workouts" && (
                 <FormControlLabel
+                    className="generic-filters__checkbox"
                     control={<CheckBox />}
                     label="Show selected workouts"
                 />

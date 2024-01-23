@@ -23,7 +23,7 @@
         }
 
         > span {
-            left: $spacing-6;
+            left: $spacing-4;
             top: 50%;
             transform: translateY(-50%);
             position: absolute;
@@ -38,7 +38,7 @@
         flex-direction: row;
         position: relative;
         flex: 1;
-        padding: $spacing-4 $spacing-6;
+        padding: $spacing-4 $spacing-4;
         width: 100%;
     }
 
