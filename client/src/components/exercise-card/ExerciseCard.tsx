@@ -1,5 +1,8 @@
-import { ExerciseType } from "utils/types/exercise.types";
 import "./ExerciseCard.scss";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import { ExerciseCardType } from "./ExerciseCard.types";
+import { useExerciseContext } from "../../store/context/exercise-context/exercise-context";
 
 const ExerciseCard = ({
     title,
@@ -8,11 +11,27 @@ const ExerciseCard = ({
     RPE,
     metadata,
     bodyPart,
-}: ExerciseType) => {
+    setShowExerciseModal,
+    setIsEditExerciseMode,
+}: ExerciseCardType) => {
+    const { setExerciseItemDisp } = useExerciseContext();
+
+    const editExerciseHandler = () => {
+        setShowExerciseModal(true);
+        setIsEditExerciseMode(true);
+        setExerciseItemDisp({ title, sets, reps, RPE, metadata, bodyPart });
+    };
+
     return (
         <div className="exercise-card">
             <div className="exercise-card__title">
                 <h2>{title}</h2>
+                <div className="exercise-card__actions">
+                    <div onClick={editExerciseHandler}>
+                        <EditRoundedIcon />
+                    </div>
+                    <DeleteRoundedIcon />
+                </div>
             </div>
             <div className="exercise-card__content">
                 <div className="exercise-card__sets">

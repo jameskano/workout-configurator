@@ -14,6 +14,7 @@ const GenericFilters = () => {
 
     return (
         <section className="generic-filters">
+            <span>Search</span>
             <TextField
                 label="Name"
                 type="text"

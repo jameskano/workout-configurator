@@ -35,7 +35,7 @@ const SideNavBar = ({ showSideNavbar }: SideNavbarTypes) => {
                     <ArrowForwardIosRoundedIcon />
                 </NavLink>
             </div>
-            <div className="side-navbar__option">
+            {/* <div className="side-navbar__option">
                 <NavLink
                     to="/account"
                     className={({ isActive }) =>
@@ -45,7 +45,7 @@ const SideNavBar = ({ showSideNavbar }: SideNavbarTypes) => {
                     <span>Account</span>
                     <ArrowForwardIosRoundedIcon />
                 </NavLink>
-            </div>
+            </div> */}
             <div className="side-navbar__option">
                 <Link to="/" onClick={logOutHandler}>
                     Log out

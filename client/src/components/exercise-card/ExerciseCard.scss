@@ -7,7 +7,7 @@
     border-radius: $border-radius-2;
     display: flex;
     flex-direction: column;
-    gap: $spacing-2;
+    gap: $spacing-3;
 
     h3,
     h2 {
@@ -18,7 +18,7 @@
 
     h3,
     span {
-        font-size: $font-xs;
+        font-size: $font-s;
     }
 
     h3 {
@@ -32,13 +32,14 @@
     &__title {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
         width: 100%;
         padding-top: $spacing-2;
+        position: relative;
 
         > h2 {
             color: $color-primary-brighter-1;
-            font-size: $font-m;
+            font-size: $font-l;
         }
     }
 
@@ -50,6 +51,20 @@
 
         > div {
             text-align: center;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        flex-direction: row;
+        gap: $spacing-3;
+
+        svg {
+            color: $color-secondary;
+
+            &:hover {
+                color: $color-secondary-hover;
+            }
         }
     }
 }

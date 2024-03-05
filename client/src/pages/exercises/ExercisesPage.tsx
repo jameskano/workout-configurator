@@ -56,6 +56,8 @@ const ExercisesPage = () => {
                                 RPE={RPE}
                                 metadata={metadata}
                                 bodyPart={bodyPart}
+                                setShowExerciseModal={setShowExerciseModal}
+                                setIsEditExerciseMode={setIsEditExerciseMode}
                             />
                         );
                     }
