@@ -1,0 +1,67 @@
+@import "../../styles/main-styles.scss";
+
+.side-navbar {
+    padding: 0;
+    width: 90%;
+    left: -90%;
+    top: 0;
+    position: absolute;
+    background-color: $color-background-dark-5;
+    height: 100%;
+    overflow-x: hidden;
+    z-index: 2;
+
+    &--show {
+        left: 0;
+        padding: $spacing-6;
+        transition: all 0.2s ease-out;
+        box-shadow: $elevation-4;
+    }
+
+    &--hide {
+        padding: $spacing-6 0;
+        transition: all 0.2s ease-in;
+    }
+
+    &__option {
+        padding: $spacing-2 0;
+        width: 100%;
+
+        > a {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+            text-decoration: none;
+            color: $color-text-white-base;
+            font-size: $font-m;
+
+            > svg {
+                transform: scale(0.6);
+                color: $color-primary;
+            }
+        }
+
+        &:not(:last-of-type) {
+            border-bottom: 1px solid $color-text-black-brighter-1;
+        }
+    }
+}
+
+@media (min-width: 900px) {
+    .side-navbar {
+        width: $side-navbar-size;
+        padding: $spacing-6;
+        position: fixed;
+        left: 0;
+        box-shadow: $elevation-4;
+
+        &__option {
+            > a {
+                font-size: $font-s;
+            }
+        }
+    }
+}

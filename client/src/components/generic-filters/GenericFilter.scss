@@ -1,0 +1,24 @@
+@import "../../styles/main-styles.scss";
+
+.generic-filters {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: $spacing-2;
+	margin-top: $spacing-4;
+
+	&__input,
+	&__selector {
+		@include generic-input;
+	}
+
+	&__checkbox {
+		margin: 0 !important;
+
+		> svg {
+			> path {
+				color: $color-primary;
+			}
+		}
+	}
+}

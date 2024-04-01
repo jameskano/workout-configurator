@@ -1,0 +1,9 @@
+@import "./variables.scss";
+
+.MuiPopper-root {
+    > div {
+        background-color: $color-background-dark-5 !important;
+        color: $color-text-white-base;
+        box-shadow: $elevation-3;
+    }
+}
