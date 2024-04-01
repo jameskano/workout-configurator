@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import GenericFilters from "../../components/generic-filters/GenericFilters";
 import { createPortal } from "react-dom";
 import ExerciseModal from "../../components/exercise-modal/ExerciseModal";
