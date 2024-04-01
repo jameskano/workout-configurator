@@ -1,0 +1,8 @@
+{
+    "prettier.bracketSpacing": false,
+    "prettier.bracketSameLine": true,
+    "prettier.configPath": "./client/.prettierrc.json",
+    "prettier.prettierPath": "./client/node_modules/prettier",
+    "prettier.printWidth": 100,
+    "prettier.ignorePath": "./client/.prettierignore"
+}

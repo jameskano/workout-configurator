@@ -1,70 +1,75 @@
 @import "../../styles/main-styles.scss";
 
 .exercise-card {
-    background-color: $color-background-dark-5;
-    box-shadow: $elevation-4;
-    padding: $spacing-4;
-    border-radius: $border-radius-2;
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-3;
+	background-color: $color-background-dark-5;
+	box-shadow: $elevation-4;
+	padding: $spacing-3;
+	border-radius: $border-radius-2;
+	display: flex;
+	flex-direction: column;
+	gap: $spacing-2;
 
-    h3,
-    h2 {
-        margin: 0;
-        font-family: $font-secondary;
-        font-weight: $font-weight-semi-bold;
-    }
+	h3,
+	h2 {
+		margin: 0;
+		font-family: $font-secondary;
+		font-weight: $font-weight-semi-bold;
+	}
 
-    h3,
-    span {
-        font-size: $font-s;
-    }
+	h3 {
+		font-size: $font-s;
+		color: $color-primary-darker-1;
+	}
 
-    h3 {
-        color: $color-primary-darker-1;
-    }
+	span {
+		color: $color-text-white-base;
+		font-size: $font-s;
+	}
 
-    span {
-        color: $color-text-white-base;
-    }
+	&__title {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		padding-top: $spacing-2;
+		position: relative;
 
-    &__title {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        padding-top: $spacing-2;
-        position: relative;
+		> h2 {
+			color: $color-primary-brighter-1;
+			font-size: $font-m;
+		}
+	}
 
-        > h2 {
-            color: $color-primary-brighter-1;
-            font-size: $font-l;
-        }
-    }
+	&__content {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
 
-    &__content {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
+		> div {
+			text-align: center;
 
-        > div {
-            text-align: center;
-        }
-    }
+			> span {
+				font-size: $font-l;
+			}
+		}
+	}
 
-    &__actions {
-        display: flex;
-        flex-direction: row;
-        gap: $spacing-3;
+	&__actions {
+		display: flex;
+		flex-direction: row;
+		gap: $spacing-3;
 
-        svg {
-            color: $color-secondary;
+		> div {
+			cursor: pointer;
+		}
 
-            &:hover {
-                color: $color-secondary-hover;
-            }
-        }
-    }
+		svg {
+			color: $color-secondary;
+
+			&:hover {
+				color: $color-secondary-hover;
+			}
+		}
+	}
 }

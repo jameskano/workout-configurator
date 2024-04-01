@@ -1,8 +1,8 @@
 // Body parts
 export const bodyParts = {
-    CHEST: "Chest",
-    LEGS: "Leg",
-    ARMS: "Arms",
-    SHOULDERS: "Shoulders",
-    BACK: "Back",
+	CHEST: "Chest",
+	LEGS: "Legs",
+	ARMS: "Arms",
+	SHOULDERS: "Shoulders",
+	BACK: "Back",
 };

@@ -1,9 +1,10 @@
 @import "../../styles/main-styles.scss";
 
 .exercises {
-    &__list {
-        margin-top: $spacing-6;
-    }
+	&__list {
+		margin-top: $spacing-6;
+		display: flex;
+		flex-direction: column;
+		gap: $spacing-2;
+	}
 }
-
-// @media (min-width: 900px)
