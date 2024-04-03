@@ -1,23 +1,38 @@
+import { useState } from "react";
 import GenericFilters from "../../components/generic-filters/GenericFilters";
 import AddButton from "../../UI/add-button/AddButton";
+import { createPortal } from "react-dom";
+import WorkoutModal from "../../components/workout-modal/WorkoutModal";
 
 const WorkoutsPage = () => {
-    const newWorkoutHandler = () => {};
+	const [showWorkoutModal, setShowWorkoutModal] = useState(false);
+	const [isEditWorkoutMode, setIsEditWorkoutMode] = useState(false);
 
-    return (
-        <section className="workouts">
-            <div className="workouts__new">
-                <AddButton
-                    text="Create new workout"
-                    onClickHandler={newWorkoutHandler}
-                />
-            </div>
+	const newWorkoutHandler = () => {
+		setShowWorkoutModal(true);
+		setIsEditWorkoutMode(false);
+	};
 
-            <GenericFilters />
+	return (
+		<section className="workouts">
+			<div className="workouts__new">
+				<AddButton text="New workout" onClickHandler={newWorkoutHandler} />
+			</div>
 
-            <div className="workouts__list"></div>
-        </section>
-    );
+			<GenericFilters />
+
+			<div className="workouts__list"></div>
+
+			{createPortal(
+				<WorkoutModal
+					showModal={showWorkoutModal}
+					setShowModal={setShowWorkoutModal}
+					isEditMode={isEditWorkoutMode}
+				/>,
+				document.querySelector("#modal-root")!,
+			)}
+		</section>
+	);
 };
 
 export default WorkoutsPage;

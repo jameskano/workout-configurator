@@ -5,6 +5,7 @@ import { ExerciseCardType } from "./ExerciseCard.types";
 import { useExerciseContext } from "../../store/context/exercise-context/exercise-context";
 import { deleteExercise } from "../../services/exercises";
 import { useQueryClient } from "@tanstack/react-query";
+import { Tooltip } from "@mui/material";
 
 const ExerciseCard = ({
 	title,
@@ -42,10 +43,14 @@ const ExerciseCard = ({
 				<h2>{title}</h2>
 				<div className="exercise-card__actions">
 					<div onClick={editExerciseHandler}>
-						<EditRoundedIcon />
+						<Tooltip title="Edit exercise">
+							<EditRoundedIcon />
+						</Tooltip>
 					</div>
 					<div onClick={deleteExerciseHandler}>
-						<DeleteRoundedIcon />
+						<Tooltip title="Delete exercise">
+							<DeleteRoundedIcon />
+						</Tooltip>
 					</div>
 				</div>
 			</div>

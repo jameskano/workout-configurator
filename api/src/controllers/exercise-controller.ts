@@ -1,8 +1,7 @@
 import { RequestHandler } from "express";
-import ExerciseModel, { ExerciseType } from "../models/exercise-model";
+import ExerciseModel from "../models/exercise-model";
 import mongoose from "mongoose";
 import { CustomError } from "../utils/classes/errors";
-import { removeIdField } from "../utils/functions/remove-id";
 
 export const getAllExercises: RequestHandler = async (req, res, next) => {
 	try {
@@ -30,17 +29,8 @@ export const getExercise: RequestHandler = async (req, res, next) => {
 };
 
 export const createExercise: RequestHandler = async (req, res, next) => {
-	const { title, sets, reps, RPE, bodyPart, metadata }: ExerciseType = req.body;
-
 	try {
-		const newExercise = await ExerciseModel.create({
-			title,
-			sets,
-			reps,
-			RPE,
-			bodyPart,
-			metadata,
-		});
+		const newExercise = await ExerciseModel.create(req.body);
 		res.status(201).json(newExercise);
 	} catch (error) {
 		next(error);
@@ -62,7 +52,7 @@ export const deleteExercise: RequestHandler = async (req, res, next) => {
 		if (deletedExercises.deletedCount === 0) {
 			throw new CustomError(400, "No exercises were deleted");
 		}
-		console.log("reach");
+
 		res.status(204).send();
 	} catch (error) {
 		next(error);
@@ -73,12 +63,10 @@ export const updateExercise: RequestHandler = async (req, res, next) => {
 	const { _id } = req.body;
 
 	try {
-		if (!mongoose.isValidObjectId(_id)) throw new CustomError(400, "Exercise id invalid");
+		if (!mongoose.isValidObjectId(_id))
+			throw new CustomError(400, `Invalid exercise id: ${_id}`);
 
-		const updatedExercise = await ExerciseModel.findByIdAndUpdate(
-			{ _id },
-			{ ...removeIdField(req.body) },
-		);
+		const updatedExercise = await ExerciseModel.findByIdAndUpdate({ _id }, { ...req.body });
 
 		if (!updatedExercise) throw new CustomError(400, "Exercise does not exist");
 

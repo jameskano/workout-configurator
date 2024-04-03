@@ -26,7 +26,7 @@ const ExercisesPage = () => {
 	return (
 		<section className="exercises">
 			<div className="exercises__new">
-				<AddButton text="Add new exercise" onClickHandler={newExerciseHandler} />
+				<AddButton text="New exercise" onClickHandler={newExerciseHandler} />
 			</div>
 
 			<GenericFilters />
