@@ -32,17 +32,11 @@ const ExercisesPage = () => {
 			<GenericFilters />
 
 			<div className="exercises__list">
-				{data?.map(({ _id, RPE, reps, sets, title, metadata, bodyPart }: ExerciseType) => {
+				{data?.map((exercise: ExerciseType) => {
 					return (
 						<ExerciseCard
-							key={_id}
-							title={title}
-							sets={sets}
-							reps={reps}
-							RPE={RPE}
-							metadata={metadata}
-							bodyPart={bodyPart}
-							_id={_id}
+							key={exercise._id}
+							{...exercise}
 							setShowExerciseModal={setShowExerciseModal}
 							setIsEditExerciseMode={setIsEditExerciseMode}
 						/>

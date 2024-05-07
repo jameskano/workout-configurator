@@ -5,7 +5,7 @@ import { CustomError } from "../utils/classes/errors";
 
 export const getAllExercises: RequestHandler = async (req, res, next) => {
 	try {
-		const exercises = await ExerciseModel.find({}).sort({ updatedAt: -1 });
+		const exercises = await ExerciseModel.find({}).sort({ createdAt: -1 });
 		res.status(200).json(exercises);
 	} catch (error) {
 		next(error);

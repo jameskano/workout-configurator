@@ -28,7 +28,7 @@ const WorkoutModal = ({ isEditMode, showModal, setShowModal }: WorkoutModalTypes
 	const saveWorkoutHandler = async () => {
 		try {
 			isEditMode ? await updateWorkout(workoutItem) : await createWorkout(workoutItem);
-			queryClient.invalidateQueries({ queryKey: ["exercises"] });
+			queryClient.invalidateQueries({ queryKey: ["workouts"] });
 		} catch (error) {
 			// Error handling
 		} finally {
@@ -36,12 +36,19 @@ const WorkoutModal = ({ isEditMode, showModal, setShowModal }: WorkoutModalTypes
 		}
 	};
 
-	const changeFieldHandler = (value: string, name: string) => {
+	const changeFieldHandler = (value: string | boolean, name: string) => {
 		const updateExerciseItem = { ...workoutItem, [name]: value };
 		setWorkoutItemDisp(updateExerciseItem);
 	};
 
-	const changeExerciseSelectionHandler = (value: boolean, exerciseId: string) => {};
+	const changeExerciseSelectionHandler = (value: boolean, exerciseId: string) => {
+		let exercisesUpdated: string[] = [];
+
+		if (value) exercisesUpdated = [...workoutItem.exercises, exerciseId];
+		else exercisesUpdated = workoutItem.exercises.filter((exercise) => exercise !== exerciseId);
+
+		setWorkoutItemDisp({ ...workoutItem, exercises: exercisesUpdated });
+	};
 
 	return (
 		<form className={`exercise-modal ${showModal ? "exercise-modal--open" : ""}`}>
@@ -64,21 +71,30 @@ const WorkoutModal = ({ isEditMode, showModal, setShowModal }: WorkoutModalTypes
 					required
 				/>
 				<FormControlLabel
-					required
-					control={<Checkbox checked={favourite} color="info" />}
+					control={
+						<Checkbox
+							checked={favourite}
+							color="info"
+							onChange={(e, value) => changeFieldHandler(value, "favourite")}
+						/>
+					}
 					label="Favourite"
 				/>
 				<div className="workout-modal__exercises">
-					<span>Select workout exercises</span>
+					<span>Select workout exercises *</span>
 
 					<div>
 						{data?.map(({ _id, title }: ExerciseType) => {
 							return (
 								<FormControlLabel
+									key={_id}
 									control={
 										<Checkbox
-											checked={exercises.includes(+_id!)}
-											onChange={(e, value) => console.log(e, value)}
+											checked={exercises.includes(_id!)}
+											onChange={(e, value) =>
+												changeExerciseSelectionHandler(value, _id!)
+											}
+											color="info"
 										/>
 									}
 									label={title}
