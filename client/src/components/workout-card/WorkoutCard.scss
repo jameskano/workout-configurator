@@ -1,6 +1,6 @@
 @import '../../styles/main-styles.scss';
 
-.exercise-card {
+.workout-card {
 	background-color: $color-background-dark-5;
 	box-shadow: $elevation-4;
 	padding: $spacing-3;
@@ -43,14 +43,11 @@
 	&__content {
 		display: flex;
 		flex-direction: row;
-		align-items: stretch;
+		align-items: center;
 		justify-content: space-between;
 
 		> div {
-			flex: 1;
-			overflow-x: hidden;
-			text-overflow: ellipsis;
-			padding-right: $spacing-1;
+			text-align: center;
 
 			> span {
 				font-size: $font-l;

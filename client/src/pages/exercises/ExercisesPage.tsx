@@ -1,19 +1,30 @@
-import { useState } from "react";
-import GenericFilters from "../../components/generic-filters/GenericFilters";
-import { createPortal } from "react-dom";
-import ExerciseModal from "../../components/exercise-modal/ExerciseModal";
-import "./ExercisesPage.scss";
-import AddButton from "../../UI/add-button/AddButton";
-import { useQuery } from "@tanstack/react-query";
-import { ExerciseType } from "../../utils/types/exercise.types";
-import ExerciseCard from "../../components/exercise-card/ExerciseCard";
-import { getAllExercisesFn } from "./functions/services";
+import { useEffect, useState } from 'react';
+import GenericFilters from '../../components/generic-filters/GenericFilters';
+import { createPortal } from 'react-dom';
+import ExerciseModal from '../../components/exercise-modal/ExerciseModal';
+import './ExercisesPage.scss';
+import AddButton from '../../UI/add-button/AddButton';
+import { useQuery } from '@tanstack/react-query';
+import { ExerciseType } from '../../utils/types/exercise.types';
+import ExerciseCard from '../../components/exercise-card/ExerciseCard';
+import { getAllExercisesFn } from './functions/services';
+import { useFiltersContext } from '../../store/context/filters-context/filters-context';
 
 const ExercisesPage = () => {
 	const { isLoading, isError, data, error } = useQuery({
-		queryKey: ["exercises"],
+		queryKey: ['exercises'],
 		queryFn: getAllExercisesFn,
 	});
+	const { textFilter } = useFiltersContext();
+
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			// exercises filter request
+			console.log('exercise: ' + textFilter);
+		}, 1000);
+
+		return () => clearTimeout(timeout);
+	}, [textFilter]);
 
 	const [showExerciseModal, setShowExerciseModal] = useState(false);
 	const [isEditExerciseMode, setIsEditExerciseMode] = useState(false);
@@ -24,14 +35,14 @@ const ExercisesPage = () => {
 	};
 
 	return (
-		<section className="exercises">
-			<div className="exercises__new">
-				<AddButton text="New exercise" onClickHandler={newExerciseHandler} />
+		<section className='exercises'>
+			<div className='exercises__new'>
+				<AddButton text='New exercise' onClickHandler={newExerciseHandler} />
 			</div>
 
 			<GenericFilters />
 
-			<div className="exercises__list">
+			<div className='exercises__list'>
 				{data?.map((exercise: ExerciseType) => {
 					return (
 						<ExerciseCard
@@ -50,7 +61,7 @@ const ExercisesPage = () => {
 					setShowModal={setShowExerciseModal}
 					isEditMode={isEditExerciseMode}
 				/>,
-				document.querySelector("#modal-root")!,
+				document.querySelector('#modal-root')!,
 			)}
 		</section>
 	);

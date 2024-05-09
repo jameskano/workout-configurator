@@ -8,6 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { memo } from 'react';
+import './WorkoutCard.scss';
 
 const WorkoutCard = ({
 	title,
@@ -72,12 +73,14 @@ const WorkoutCard = ({
 				</div>
 			</div>
 
-			<div className='workout-card__content'></div>
+			{/* <div className='workout-card__extended'>
+				<div className='workout-card__content'></div>
 
-			<div className='workout-card__metadata'>
-				<h3>Notes</h3>
-				<span>{metadata}</span>
-			</div>
+				<div className='workout-card__metadata'>
+					<h3>Notes</h3>
+					<span>{metadata}</span>
+				</div>
+			</div> */}
 		</div>
 	);
 };

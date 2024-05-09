@@ -69,10 +69,12 @@ const ExerciseCard = ({
 					<span>{RPE}</span>
 				</div>
 			</div>
-			<div className='exercise-card__metadata'>
-				<h3>Notes</h3>
-				<span>{metadata}</span>
-			</div>
+			{metadata && (
+				<div className='exercise-card__metadata'>
+					<h3>Notes</h3>
+					<span>{metadata}</span>
+				</div>
+			)}
 		</div>
 	);
 };

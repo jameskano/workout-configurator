@@ -7,17 +7,29 @@ import { useQuery } from '@tanstack/react-query';
 import WorkoutCard from '../../components/workout-card/WorkoutCard';
 import { WorkoutType } from '../../utils/types/workout.types';
 import { getAllWorkoutsFn } from './functions/services';
+import './WorkoutPage.scss';
+import { useFiltersContext } from '../../store/context/filters-context/filters-context';
 
 const WorkoutsPage = () => {
 	const { isLoading, isError, data, error } = useQuery({
 		queryKey: ['workouts'],
 		queryFn: getAllWorkoutsFn,
 	});
+	const { textFilter } = useFiltersContext();
 
 	const [showWorkoutModal, setShowWorkoutModal] = useState(false);
 	const [isEditWorkoutMode, setIsEditWorkoutMode] = useState(false);
 	const [showFavourites, setShowFavourites] = useState(true);
 	const [filteredWorkouts, setFilteredWorkouts] = useState<WorkoutType[]>([]);
+
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			// workouts filter request
+			console.log('workout: ' + textFilter);
+		}, 1000);
+
+		return () => clearTimeout(timeout);
+	}, [textFilter]);
 
 	useEffect(() => {
 		const updatedFilteredWorkouts: WorkoutType[] = showFavourites
@@ -40,7 +52,7 @@ const WorkoutsPage = () => {
 			<GenericFilters setShowFavourites={setShowFavourites} showFavourites={showFavourites} />
 
 			<div className='workouts__list'>
-				{filteredWorkouts.map((workout: WorkoutType) => (
+				{filteredWorkouts?.map((workout: WorkoutType) => (
 					<WorkoutCard
 						{...workout}
 						key={workout._id}

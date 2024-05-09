@@ -1,16 +1,22 @@
-@import "../../styles/main-styles.scss";
+@import '../../styles/main-styles.scss';
 
 button.add-button {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    gap: $spacing-4;
-    color: $color-primary;
-    border: 1px solid $color-primary;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+	gap: $spacing-4;
+	color: $color-primary;
+	border: 1px solid $color-primary;
+	padding: $spacing-1 $spacing-3;
 
-    &:hover {
-        color: $color-primary-brighter-2;
-        border-color: $color-primary-brighter-2;
-    }
+	> span {
+		font-size: $font-xxs;
+		line-height: normal;
+	}
+
+	&:hover {
+		color: $color-primary-brighter-2;
+		border-color: $color-primary-brighter-2;
+	}
 }
