@@ -9,6 +9,9 @@ import { WorkoutType } from '../../utils/types/workout.types';
 import { getAllWorkoutsFn } from './functions/services';
 import './WorkoutPage.scss';
 import { useFiltersContext } from '../../store/context/filters-context/filters-context';
+import { getFilteredWorkouts } from '../../services/workouts';
+import useToast from '../../utils/hooks/toast-hook/use-toast';
+import { toastConstants } from '../../utils/constants/toast';
 
 const WorkoutsPage = () => {
 	const { isLoading, isError, data, error } = useQuery({
@@ -16,6 +19,7 @@ const WorkoutsPage = () => {
 		queryFn: getAllWorkoutsFn,
 	});
 	const { textFilter } = useFiltersContext();
+	const { openToastHandler } = useToast();
 
 	const [showWorkoutModal, setShowWorkoutModal] = useState(false);
 	const [isEditWorkoutMode, setIsEditWorkoutMode] = useState(false);
@@ -23,9 +27,15 @@ const WorkoutsPage = () => {
 	const [filteredWorkouts, setFilteredWorkouts] = useState<WorkoutType[]>([]);
 
 	useEffect(() => {
-		const timeout = setTimeout(() => {
-			// workouts filter request
-			console.log('workout: ' + textFilter);
+		const timeout = setTimeout(async () => {
+			// loader
+			try {
+				const data = await getFilteredWorkouts(textFilter); // use react query
+			} catch (error) {
+				openToastHandler('Error. Workouts could not be loaded', toastConstants.TYPES.ERROR);
+			} finally {
+				// finish loader
+			}
 		}, 1000);
 
 		return () => clearTimeout(timeout);

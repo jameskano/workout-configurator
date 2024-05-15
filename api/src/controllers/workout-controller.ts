@@ -59,3 +59,14 @@ export const updateWorkout: RequestHandler = async (req, res, next) => {
 		next(error);
 	}
 };
+
+export const getFilteredWorkouts: RequestHandler = async (req, res, next) => {
+	const { filter } = req.params;
+
+	try {
+		const exercises = await WorkoutModel.find({ title: filter }).sort({ createdAt: -1 });
+		res.status(200).json(exercises);
+	} catch (error) {
+		next(error);
+	}
+};

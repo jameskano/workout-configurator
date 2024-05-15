@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import GenericFilters from '../../components/generic-filters/GenericFilters';
 import { createPortal } from 'react-dom';
 import ExerciseModal from '../../components/exercise-modal/ExerciseModal';
@@ -9,18 +9,38 @@ import { ExerciseType } from '../../utils/types/exercise.types';
 import ExerciseCard from '../../components/exercise-card/ExerciseCard';
 import { getAllExercisesFn } from './functions/services';
 import { useFiltersContext } from '../../store/context/filters-context/filters-context';
+import { getFilteredExercises } from '../../services/exercises';
 
 const ExercisesPage = () => {
+	const { textFilter } = useFiltersContext();
+
+	const firstRenderRef = useRef(true);
+
+	const [filteredQueryEnabled, setFilteredQueryEnabled] = useState(false);
+
 	const { isLoading, isError, data, error } = useQuery({
 		queryKey: ['exercises'],
 		queryFn: getAllExercisesFn,
 	});
-	const { textFilter } = useFiltersContext();
+
+	const {
+		isLoading: isFilteredLoading,
+		isError: isFilteredError,
+		data: filteredData,
+		error: filteredError,
+	} = useQuery({
+		queryKey: ['exercises', textFilter],
+		queryFn: () => getFilteredExercises(textFilter),
+		enabled: filteredQueryEnabled,
+	});
 
 	useEffect(() => {
+		if (firstRenderRef.current) {
+			firstRenderRef.current = false;
+			return;
+		}
 		const timeout = setTimeout(() => {
-			// exercises filter request
-			console.log('exercise: ' + textFilter);
+			setFilteredQueryEnabled(true);
 		}, 1000);
 
 		return () => clearTimeout(timeout);
@@ -67,4 +87,4 @@ const ExercisesPage = () => {
 	);
 };
 
-export default ExercisesPage;
+export default memo(ExercisesPage);

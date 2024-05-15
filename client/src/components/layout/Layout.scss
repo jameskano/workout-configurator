@@ -22,10 +22,10 @@
 			padding: $spacing-4 0;
 		}
 
-		> span {
+		> svg {
 			left: $spacing-4;
 			top: 50%;
-			transform: translateY(-50%);
+			transform: translateY(-50%) scale(1.25);
 			position: absolute;
 			cursor: pointer;
 			z-index: 1;

@@ -1,9 +1,9 @@
-import axios from "axios";
-import { ExerciseType } from "utils/types/exercise.types";
+import axios from 'axios';
+import { ExerciseType } from 'utils/types/exercise.types';
 
 export const getAllExercises = () => {
 	const config = {
-		method: "GET",
+		method: 'GET',
 		url: `${import.meta.env.VITE_WORKOUT_API}/exercise`,
 	};
 
@@ -12,7 +12,7 @@ export const getAllExercises = () => {
 
 export const getExercise = (id: number) => {
 	const config = {
-		method: "GET",
+		method: 'GET',
 		url: `${import.meta.env.VITE_WORKOUT_API}/exercise/${id}`,
 	};
 
@@ -21,7 +21,7 @@ export const getExercise = (id: number) => {
 
 export const createExercise = (exerciseData: ExerciseType) => {
 	const config = {
-		method: "POST",
+		method: 'POST',
 		url: `${import.meta.env.VITE_WORKOUT_API}/exercise`,
 		data: exerciseData,
 	};
@@ -31,7 +31,7 @@ export const createExercise = (exerciseData: ExerciseType) => {
 
 export const updateExercise = (exerciseData: ExerciseType) => {
 	const config = {
-		method: "PUT",
+		method: 'PUT',
 		url: `${import.meta.env.VITE_WORKOUT_API}/exercise`,
 		data: exerciseData,
 	};
@@ -41,9 +41,19 @@ export const updateExercise = (exerciseData: ExerciseType) => {
 
 export const deleteExercise = (exerciseIds: string[]) => {
 	const config = {
-		method: "DELETE",
+		method: 'DELETE',
 		url: `${import.meta.env.VITE_WORKOUT_API}/exercise`,
 		data: { exerciseIds },
+	};
+
+	return axios(config);
+};
+
+export const getFilteredExercises = (filter: string) => {
+	const config = {
+		method: 'POST',
+		url: `${import.meta.env.VITE_WORKOUT_API}/exercise/filter`,
+		params: { filter },
 	};
 
 	return axios(config);

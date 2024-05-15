@@ -3,17 +3,20 @@ import {
 	deleteWorkout,
 	getAllWorkouts,
 	updateWorkout,
-} from "../controllers/workout-controller";
-import express from "express";
+	getFilteredWorkouts,
+} from '../controllers/workout-controller';
+import express from 'express';
 
 const router = express.Router();
 
-router.get("/", getAllWorkouts);
+router.get('/', getAllWorkouts);
 
-router.post("/", createWorkout);
+router.post('/', createWorkout);
 
-router.put("/", updateWorkout);
+router.post('/filter', getFilteredWorkouts);
 
-router.delete("/", deleteWorkout);
+router.put('/', updateWorkout);
+
+router.delete('/', deleteWorkout);
 
 export default router;

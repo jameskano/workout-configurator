@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ExerciseProvider } from './store/context/exercise-context/exercise-provider';
 import { WorkoutProvider } from './store/context/workout-context/workout-provider';
 import { FiltersProvider } from './store/context/filters-context/filters-provider';
+import { ToastProvider } from './store/context/toast-context/toast-provider';
 
 function App() {
 	const queryClient = new QueryClient();
@@ -14,7 +15,9 @@ function App() {
 			<ExerciseProvider>
 				<WorkoutProvider>
 					<FiltersProvider>
-						<RouterProvider router={routes} />
+						<ToastProvider>
+							<RouterProvider router={routes} />
+						</ToastProvider>
 					</FiltersProvider>
 				</WorkoutProvider>
 			</ExerciseProvider>
