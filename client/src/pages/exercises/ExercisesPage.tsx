@@ -12,7 +12,7 @@ import { useFiltersContext } from '../../store/context/filters-context/filters-c
 import { getFilteredExercises } from '../../services/exercises';
 
 const ExercisesPage = () => {
-	const { textFilter } = useFiltersContext();
+	const { textFilter, bodyPartFilter } = useFiltersContext();
 
 	const firstRenderRef = useRef(true);
 
@@ -23,6 +23,12 @@ const ExercisesPage = () => {
 		queryFn: getAllExercisesFn,
 	});
 
+	const getFilteredExercisesHandler = () => {
+		getFilteredExercises(textFilter, bodyPartFilter.toLowerCase());
+		setFilteredQueryEnabled(false);
+		return;
+	};
+
 	const {
 		isLoading: isFilteredLoading,
 		isError: isFilteredError,
@@ -30,7 +36,7 @@ const ExercisesPage = () => {
 		error: filteredError,
 	} = useQuery({
 		queryKey: ['exercises', textFilter],
-		queryFn: () => getFilteredExercises(textFilter),
+		queryFn: getFilteredExercisesHandler,
 		enabled: filteredQueryEnabled,
 	});
 
@@ -44,7 +50,7 @@ const ExercisesPage = () => {
 		}, 1000);
 
 		return () => clearTimeout(timeout);
-	}, [textFilter]);
+	}, [textFilter, bodyPartFilter]);
 
 	const [showExerciseModal, setShowExerciseModal] = useState(false);
 	const [isEditExerciseMode, setIsEditExerciseMode] = useState(false);

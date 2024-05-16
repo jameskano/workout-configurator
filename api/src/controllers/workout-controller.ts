@@ -2,6 +2,7 @@ import { RequestHandler } from 'express';
 import WorkoutModel from '../models/workout-model';
 import mongoose from 'mongoose';
 import { CustomError } from '../utils/classes/errors';
+const diacriticLess = require('diacriticless');
 
 export const getAllWorkouts: RequestHandler = async (req, res, next) => {
 	try {
@@ -61,11 +62,19 @@ export const updateWorkout: RequestHandler = async (req, res, next) => {
 };
 
 export const getFilteredWorkouts: RequestHandler = async (req, res, next) => {
-	const { filter } = req.params;
+	const { filter } = req.body;
 
 	try {
-		const exercises = await WorkoutModel.find({ title: filter }).sort({ createdAt: -1 });
-		res.status(200).json(exercises);
+		const formattedFilter = diacriticLess(filter.toLowerCase());
+		const workouts = await WorkoutModel.find({}).sort({
+			createdAt: -1,
+		});
+		const filteredWorkouts = workouts.filter((workout) => {
+			const titleWithoutDiacritics = diacriticLess(workout.title.toLowerCase());
+			return titleWithoutDiacritics.includes(formattedFilter);
+		});
+
+		res.status(200).json(filteredWorkouts);
 	} catch (error) {
 		next(error);
 	}

@@ -2,6 +2,7 @@ import { RequestHandler } from 'express';
 import ExerciseModel from '../models/exercise-model';
 import mongoose from 'mongoose';
 import { CustomError } from '../utils/classes/errors';
+const diacriticLess = require('diacriticless');
 
 export const getAllExercises: RequestHandler = async (req, res, next) => {
 	try {
@@ -77,11 +78,31 @@ export const updateExercise: RequestHandler = async (req, res, next) => {
 };
 
 export const getFilteredExercises: RequestHandler = async (req, res, next) => {
-	const { filter } = req.params;
+	const { textFilter, bodyPartFilter } = req.body;
 
 	try {
-		const exercises = await ExerciseModel.find({ title: filter }).sort({ createdAt: -1 });
-		res.status(200).json(exercises);
+		const formattedFilter = diacriticLess(textFilter.toLowerCase());
+		const exercises = await ExerciseModel.find({}).sort({
+			createdAt: -1,
+		});
+		const filteredExercises = exercises.filter((exercise) => {
+			const titleWithoutDiacritics = diacriticLess(exercise.title.toLowerCase());
+			switch (true) {
+				case formattedFilter && bodyPartFilter !== '':
+					return (
+						titleWithoutDiacritics.includes(formattedFilter) &&
+						exercise.bodyPart === bodyPartFilter
+					);
+				case formattedFilter && !bodyPartFilter:
+					return titleWithoutDiacritics.includes(formattedFilter);
+				case !formattedFilter && bodyPartFilter !== '':
+					return exercise.bodyPart === bodyPartFilter;
+				case !formattedFilter && !bodyPartFilter:
+					return exercises;
+			}
+		});
+
+		res.status(200).json(filteredExercises);
 	} catch (error) {
 		next(error);
 	}

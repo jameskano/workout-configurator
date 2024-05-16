@@ -49,11 +49,11 @@ export const deleteExercise = (exerciseIds: string[]) => {
 	return axios(config);
 };
 
-export const getFilteredExercises = (filter: string) => {
+export const getFilteredExercises = (textFilter: string, bodyPartFilter: string) => {
 	const config = {
 		method: 'POST',
 		url: `${import.meta.env.VITE_WORKOUT_API}/exercise/filter`,
-		params: { filter },
+		data: { textFilter, bodyPartFilter },
 	};
 
 	return axios(config);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import GenericFilters from '../../components/generic-filters/GenericFilters';
 import AddButton from '../../UI/add-button/AddButton';
 import { createPortal } from 'react-dom';
@@ -21,16 +21,23 @@ const WorkoutsPage = () => {
 	const { textFilter } = useFiltersContext();
 	const { openToastHandler } = useToast();
 
+	const firstRenderRef = useRef(true);
+
 	const [showWorkoutModal, setShowWorkoutModal] = useState(false);
 	const [isEditWorkoutMode, setIsEditWorkoutMode] = useState(false);
 	const [showFavourites, setShowFavourites] = useState(true);
 	const [filteredWorkouts, setFilteredWorkouts] = useState<WorkoutType[]>([]);
 
 	useEffect(() => {
+		if (firstRenderRef.current) {
+			firstRenderRef.current = false;
+			return;
+		}
 		const timeout = setTimeout(async () => {
 			// loader
 			try {
-				const data = await getFilteredWorkouts(textFilter); // use react query
+				const res = await getFilteredWorkouts(textFilter); // use react query
+				setFilteredWorkouts(res.data);
 			} catch (error) {
 				openToastHandler('Error. Workouts could not be loaded', toastConstants.TYPES.ERROR);
 			} finally {

@@ -44,7 +44,7 @@ export const getFilteredWorkouts = (filter: string) => {
 	const config = {
 		method: 'POST',
 		url: `${import.meta.env.VITE_WORKOUT_API}/workout/filter`,
-		params: { filter },
+		data: { filter },
 	};
 
 	return axios(config);

@@ -23,9 +23,6 @@ const Layout = ({ currentPageComponent }: LayoutTypes) => {
 				) : (
 					<MenuRoundedIcon onClick={sideNavbarHandler} />
 				)}
-				{/* <span className='material-symbols-rounded' onClick={sideNavbarHandler}>
-					menu
-				</span> */}
 				<h1 className='exercises__title'>
 					{(pageTitle as any)[location.pathname.slice(1).toUpperCase()]}
 				</h1>
