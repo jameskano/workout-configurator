@@ -1,10 +1,22 @@
 @import '../../styles/main-styles.scss';
 
 .workouts {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+
 	&__list {
 		margin-top: $spacing-6;
 		display: flex;
 		flex-direction: column;
 		gap: $spacing-2;
+		position: relative;
+		height: 100%;
+	}
+
+	&__feedback {
+		color: $color-text-white-darker-2;
+		text-align: center;
+		margin-top: $spacing-6;
 	}
 }

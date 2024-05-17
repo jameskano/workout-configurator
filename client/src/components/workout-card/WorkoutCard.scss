@@ -3,11 +3,11 @@
 .workout-card {
 	background-color: $color-background-dark-5;
 	box-shadow: $elevation-4;
-	padding: $spacing-3;
+	padding: $spacing-2 $spacing-4;
 	border-radius: $border-radius-2;
 	display: flex;
 	flex-direction: column;
-	gap: $spacing-2;
+	gap: $spacing-3;
 
 	h3,
 	h2 {
