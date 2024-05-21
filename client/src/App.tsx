@@ -6,21 +6,24 @@ import { ExerciseProvider } from './store/context/exercise-context/exercise-prov
 import { WorkoutProvider } from './store/context/workout-context/workout-provider';
 import { FiltersProvider } from './store/context/filters-context/filters-provider';
 import { ToastProvider } from './store/context/toast-context/toast-provider';
+import { CircularLoaderProvider } from './store/context/circular-loader-context/circular-loader-provider';
 
 function App() {
 	const queryClient = new QueryClient();
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<ExerciseProvider>
-				<WorkoutProvider>
-					<FiltersProvider>
-						<ToastProvider>
-							<RouterProvider router={routes} />
-						</ToastProvider>
-					</FiltersProvider>
-				</WorkoutProvider>
-			</ExerciseProvider>
+			<CircularLoaderProvider>
+				<ExerciseProvider>
+					<WorkoutProvider>
+						<FiltersProvider>
+							<ToastProvider>
+								<RouterProvider router={routes} />
+							</ToastProvider>
+						</FiltersProvider>
+					</WorkoutProvider>
+				</ExerciseProvider>
+			</CircularLoaderProvider>
 		</QueryClientProvider>
 	);
 }

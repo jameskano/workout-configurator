@@ -10,9 +10,17 @@ import ExerciseCard from '../../components/exercise-card/ExerciseCard';
 import { getAllExercisesFn } from './functions/services';
 import { useFiltersContext } from '../../store/context/filters-context/filters-context';
 import { getFilteredExercises } from '../../services/exercises';
+import useToast from '../../utils/hooks/toast-hook/use-toast';
+import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
+import { toastMessages } from '../../utils/toast-messages';
+import { toastConstants } from '../../utils/constants/toast';
+import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
+import { backdropConstants } from '../../utils/constants/backdrop';
 
 const ExercisesPage = () => {
 	const { textFilter, bodyPartFilter } = useFiltersContext();
+	const { openToastHandler } = useToast();
+	const { setOpenLoader } = useCircularLoaderContext();
 
 	const firstRenderRef = useRef(true);
 
@@ -52,6 +60,11 @@ const ExercisesPage = () => {
 		return () => clearTimeout(timeout);
 	}, [textFilter, bodyPartFilter]);
 
+	useEffect(() => {
+		if (isError || isFilteredError)
+			openToastHandler(toastMessages.EXERCISE_GET_ERROR, toastConstants.TYPES.ERROR);
+	}, [isError, isFilteredError]);
+
 	const [showExerciseModal, setShowExerciseModal] = useState(false);
 	const [isEditExerciseMode, setIsEditExerciseMode] = useState(false);
 
@@ -80,6 +93,16 @@ const ExercisesPage = () => {
 					);
 				})}
 			</div>
+
+			{createPortal(
+				<BackdropLoader
+					open={isLoading || isFilteredLoading}
+					position={backdropConstants.POSITION.ABSOLUTE}
+				/>,
+				document.querySelector('.exercises__list') !== null
+					? document.querySelector('.exercises__list')!
+					: document.querySelector('#modal-root')!,
+			)}
 
 			{createPortal(
 				<ExerciseModal

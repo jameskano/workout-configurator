@@ -4,7 +4,7 @@ import './BackdropLoader.scss';
 
 const BackdropLoader = ({ open, position }: BackdropComponentTypes) => {
 	return (
-		<div className='backdrop-loader'>
+		<div className='backdrop-loader' style={{ display: open ? 'flex' : 'none' }}>
 			<BackdropComponent open={open} position={position} />
 			{open && <CircularLoader />}
 		</div>

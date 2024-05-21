@@ -14,6 +14,8 @@ import useToast from '../../utils/hooks/toast-hook/use-toast';
 import { toastConstants } from '../../utils/constants/toast';
 import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
 import { debounce } from '../../utils/functions/debounce';
+import { backdropConstants } from '../../utils/constants/backdrop';
+import { toastMessages } from '../../utils/toast-messages';
 
 const WorkoutsPage = () => {
 	const { isLoading, isError, data, error } = useQuery({
@@ -78,16 +80,12 @@ const WorkoutsPage = () => {
 		if (filteredData) {
 			setFilteredWorkouts(updatedFilteredWorkouts(filteredData.data));
 		}
-
-		if (filteringError) {
-			openToastHandler('Error. Workouts could not be loaded', toastConstants.TYPES.ERROR);
-		}
-	}, [filteredData, filteringError, isFiltering]);
+	}, [filteredData]);
 	// End of new filtered workouts request
 
 	useEffect(() => {
 		if (!firstRenderRef.current && (error || filteringError))
-			openToastHandler('Error. Workouts could not be loaded', toastConstants.TYPES.ERROR);
+			openToastHandler(toastMessages.WORKOUT_GET_ERROR, toastConstants.TYPES.ERROR);
 	}, [error, filteringError]);
 
 	useEffect(() => {
@@ -133,7 +131,10 @@ const WorkoutsPage = () => {
 			</div>
 
 			{createPortal(
-				<BackdropLoader open={isLoading || isFiltering} position='absolute' />,
+				<BackdropLoader
+					open={isLoading || isFiltering}
+					position={backdropConstants.POSITION.ABSOLUTE}
+				/>,
 				document.querySelector('.workouts__list') !== null
 					? document.querySelector('.workouts__list')!
 					: document.querySelector('#modal-root')!,

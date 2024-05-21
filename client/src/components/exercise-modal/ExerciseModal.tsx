@@ -8,6 +8,10 @@ import { createExercise, updateExercise } from '../../services/exercises';
 import { useQueryClient } from '@tanstack/react-query';
 import { bodyPartToLowerCase } from '../../utils/functions/format-body-part-value';
 import { ArrowBack } from '@mui/icons-material';
+import useToast from '../../utils/hooks/toast-hook/use-toast';
+import { toastMessages } from '../../utils/toast-messages';
+import { toastConstants } from '../../utils/constants/toast';
+import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
 
 const ExerciseModal = ({ showModal, setShowModal, isEditMode }: ExerciseModalTypes) => {
 	const {
@@ -16,6 +20,9 @@ const ExerciseModal = ({ showModal, setShowModal, isEditMode }: ExerciseModalTyp
 		setExerciseItemDisp,
 	} = useExerciseContext();
 	const queryClient = useQueryClient();
+
+	const { openToastHandler } = useToast();
+	const { setOpenLoader } = useCircularLoaderContext();
 
 	const closeModalHandler = () => {
 		setShowModal(false);
@@ -29,13 +36,26 @@ const ExerciseModal = ({ showModal, setShowModal, isEditMode }: ExerciseModalTyp
 	};
 
 	const saveExerciseHandler = async () => {
+		setOpenLoader(true);
 		try {
 			isEditMode ? await updateExercise(exerciseItem) : await createExercise(exerciseItem);
 			queryClient.invalidateQueries({ queryKey: ['exercises'] });
+			openToastHandler(
+				isEditMode
+					? toastMessages.EXERCISE_UPDATE_SUCCESS
+					: toastMessages.EXERCISE_CREATE_SUCCESS,
+				toastConstants.TYPES.SUCCESS,
+			);
 		} catch (error) {
-			// Error handling
+			openToastHandler(
+				isEditMode
+					? toastMessages.EXERCISE_UPDATE_ERROR
+					: toastMessages.EXERCISE_CREATE_ERROR,
+				toastConstants.TYPES.ERROR,
+			);
 		} finally {
 			closeModalHandler();
+			setOpenLoader(false);
 		}
 	};
 

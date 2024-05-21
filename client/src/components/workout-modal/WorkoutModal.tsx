@@ -7,6 +7,14 @@ import './WorkoutModal.scss';
 import { ExerciseType } from '../../utils/types/exercise.types';
 import { getAllExercisesFn } from '../../pages/exercises/functions/services';
 import { useWorkoutContext } from '../../store/context/workout-context/workout-context';
+import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
+import useToast from '../../utils/hooks/toast-hook/use-toast';
+import { toastConstants } from '../../utils/constants/toast';
+import { useEffect } from 'react';
+import { toastMessages } from '../../utils/toast-messages';
+import { backdropConstants } from '../../utils/constants/backdrop';
+import { createPortal } from 'react-dom';
+import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
 
 const WorkoutModal = ({ isEditMode, showModal, setShowModal }: WorkoutModalTypes) => {
 	const queryClient = useQueryClient();
@@ -14,12 +22,20 @@ const WorkoutModal = ({ isEditMode, showModal, setShowModal }: WorkoutModalTypes
 		queryKey: ['exercises'],
 		queryFn: getAllExercisesFn,
 		refetchOnWindowFocus: false,
+		enabled: showModal,
 	});
+
 	const {
 		workoutItem: { title, favourite, exercises, metadata },
 		workoutItem,
 		setWorkoutItemDisp,
 	} = useWorkoutContext();
+	const { setOpenLoader } = useCircularLoaderContext();
+	const { openToastHandler } = useToast();
+
+	useEffect(() => {
+		if (isError) openToastHandler(toastMessages.EXERCISE_GET_ERROR, toastConstants.TYPES.ERROR);
+	}, [isError]);
 
 	const closeModalHandler = () => {
 		setShowModal(false);
@@ -27,13 +43,26 @@ const WorkoutModal = ({ isEditMode, showModal, setShowModal }: WorkoutModalTypes
 	};
 
 	const saveWorkoutHandler = async () => {
+		setOpenLoader(true);
 		try {
 			isEditMode ? await updateWorkout(workoutItem) : await createWorkout(workoutItem);
 			queryClient.invalidateQueries({ queryKey: ['workouts'] });
+			openToastHandler(
+				isEditMode
+					? toastMessages.WORKOUT_UPDATE_SUCCESS
+					: toastMessages.WORKOUT_CREATE_SUCCESS,
+				toastConstants.TYPES.SUCCESS,
+			);
 		} catch (error) {
-			// Error handling
+			openToastHandler(
+				isEditMode
+					? toastMessages.WORKOUT_UPDATE_ERROR
+					: toastMessages.WORKOUT_CREATE_ERROR,
+				toastConstants.TYPES.ERROR,
+			);
 		} finally {
 			closeModalHandler();
+			setOpenLoader(false);
 		}
 	};
 
@@ -118,6 +147,13 @@ const WorkoutModal = ({ isEditMode, showModal, setShowModal }: WorkoutModalTypes
 					Save workout
 				</Button>
 			</div>
+
+			{createPortal(
+				<BackdropLoader open={isLoading} position={backdropConstants.POSITION.ABSOLUTE} />,
+				document.querySelector('.workout-modal__exercises') !== null
+					? document.querySelector('.workout-modal__exercises')!
+					: document.querySelector('#modal-root')!,
+			)}
 		</form>
 	);
 };

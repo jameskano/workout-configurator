@@ -7,9 +7,14 @@ import { pageTitle } from '../../utils/constants/page-title';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Toast from '../../UI/toast/Toast';
+import { createPortal } from 'react-dom';
+import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
+import { backdropConstants } from '../../utils/constants/backdrop';
+import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
 
 const Layout = ({ currentPageComponent }: LayoutTypes) => {
 	const location = useLocation();
+	const { openLoader } = useCircularLoaderContext();
 
 	const [isSideNavbarShown, setIsSideNavbarShown] = useState(false);
 
@@ -37,6 +42,10 @@ const Layout = ({ currentPageComponent }: LayoutTypes) => {
 			</div>
 
 			<Toast />
+			{createPortal(
+				<BackdropLoader open={openLoader} position={backdropConstants.POSITION.FIXED} />,
+				document.querySelector('#modal-root')!,
+			)}
 		</section>
 	);
 };
