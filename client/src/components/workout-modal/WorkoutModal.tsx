@@ -15,13 +15,15 @@ import { toastMessages } from '../../utils/toast-messages';
 import { backdropConstants } from '../../utils/constants/backdrop';
 import { createPortal } from 'react-dom';
 import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
+import { miscellaneous } from '../../utils/constants/app-constants';
+import useCustomQuery from '../../utils/hooks/custom-query-hook/use-custom-query';
 
 const WorkoutModal = ({ isEditMode, showModal, setShowModal }: WorkoutModalTypes) => {
 	const queryClient = useQueryClient();
-	const { isLoading, isError, data, error } = useQuery({
+
+	const { isLoading, isError, data } = useCustomQuery({
 		queryKey: ['exercises'],
 		queryFn: getAllExercisesFn,
-		refetchOnWindowFocus: false,
 		enabled: showModal,
 	});
 
@@ -131,6 +133,10 @@ const WorkoutModal = ({ isEditMode, showModal, setShowModal }: WorkoutModalTypes
 								/>
 							);
 						})}
+
+						{!data?.length && !isLoading && (
+							<span className='no-data-text'>{miscellaneous.NO_DATA_TEXT}</span>
+						)}
 					</div>
 				</div>
 				<TextField

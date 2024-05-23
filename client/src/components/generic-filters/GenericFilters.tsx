@@ -4,7 +4,7 @@ import { useLocation } from 'react-router';
 import './GenericFilters.scss';
 import { GenericFiltersType } from './GenericFilters.types';
 import { useFiltersContext } from '../../store/context/filters-context/filters-context';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const GenericFilters = ({ setShowFavourites, showFavourites }: GenericFiltersType) => {
 	const { pathname } = useLocation();

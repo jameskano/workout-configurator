@@ -4,66 +4,45 @@ import { createPortal } from 'react-dom';
 import ExerciseModal from '../../components/exercise-modal/ExerciseModal';
 import './ExercisesPage.scss';
 import AddButton from '../../UI/add-button/AddButton';
-import { useQuery } from '@tanstack/react-query';
 import { ExerciseType } from '../../utils/types/exercise.types';
 import ExerciseCard from '../../components/exercise-card/ExerciseCard';
-import { getAllExercisesFn } from './functions/services';
+import { miscellaneous } from '../../utils/constants/app-constants';
 import { useFiltersContext } from '../../store/context/filters-context/filters-context';
-import { getFilteredExercises } from '../../services/exercises';
 import useToast from '../../utils/hooks/toast-hook/use-toast';
-import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
 import { toastMessages } from '../../utils/toast-messages';
 import { toastConstants } from '../../utils/constants/toast';
 import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
 import { backdropConstants } from '../../utils/constants/backdrop';
+import useCustomQuery from '../../utils/hooks/custom-query-hook/use-custom-query';
+import { getFilteredExercises } from '../../services/exercises';
 
 const ExercisesPage = () => {
 	const { textFilter, bodyPartFilter } = useFiltersContext();
 	const { openToastHandler } = useToast();
-	const { setOpenLoader } = useCircularLoaderContext();
 
 	const firstRenderRef = useRef(true);
 
-	const [filteredQueryEnabled, setFilteredQueryEnabled] = useState(false);
+	const [exerciseFilter, setExerciseFilter] = useState('');
 
-	const { isLoading, isError, data, error } = useQuery({
-		queryKey: ['exercises'],
-		queryFn: getAllExercisesFn,
-	});
-
-	const getFilteredExercisesHandler = () => {
-		getFilteredExercises(textFilter, bodyPartFilter.toLowerCase());
-		setFilteredQueryEnabled(false);
-		return;
-	};
-
-	const {
-		isLoading: isFilteredLoading,
-		isError: isFilteredError,
-		data: filteredData,
-		error: filteredError,
-	} = useQuery({
-		queryKey: ['exercises', textFilter],
-		queryFn: getFilteredExercisesHandler,
-		enabled: filteredQueryEnabled,
+	const { isLoading, isError, data } = useCustomQuery({
+		queryKey: ['exercises', exerciseFilter],
+		queryFn: () => getFilteredExercises(textFilter, bodyPartFilter.toLocaleLowerCase()),
+		enabled: !!exerciseFilter || firstRenderRef.current,
 	});
 
 	useEffect(() => {
-		if (firstRenderRef.current) {
-			firstRenderRef.current = false;
-			return;
-		}
+		if (firstRenderRef.current) return;
+
 		const timeout = setTimeout(() => {
-			setFilteredQueryEnabled(true);
+			setExerciseFilter(textFilter + bodyPartFilter);
 		}, 1000);
 
 		return () => clearTimeout(timeout);
 	}, [textFilter, bodyPartFilter]);
 
 	useEffect(() => {
-		if (isError || isFilteredError)
-			openToastHandler(toastMessages.EXERCISE_GET_ERROR, toastConstants.TYPES.ERROR);
-	}, [isError, isFilteredError]);
+		if (isError) openToastHandler(toastMessages.EXERCISE_GET_ERROR, toastConstants.TYPES.ERROR);
+	}, [isError]);
 
 	const [showExerciseModal, setShowExerciseModal] = useState(false);
 	const [isEditExerciseMode, setIsEditExerciseMode] = useState(false);
@@ -72,6 +51,10 @@ const ExercisesPage = () => {
 		setShowExerciseModal(true);
 		setIsEditExerciseMode(false);
 	};
+
+	useEffect(() => {
+		if (firstRenderRef.current) firstRenderRef.current = false;
+	}, []);
 
 	return (
 		<section className='exercises'>
@@ -82,7 +65,7 @@ const ExercisesPage = () => {
 			<GenericFilters />
 
 			<div className='exercises__list'>
-				{data?.map((exercise: ExerciseType) => {
+				{data?.data?.map((exercise: ExerciseType) => {
 					return (
 						<ExerciseCard
 							key={exercise._id}
@@ -92,13 +75,14 @@ const ExercisesPage = () => {
 						/>
 					);
 				})}
+
+				{!data?.data?.length && !isLoading && (
+					<span className='no-data-text'>{miscellaneous.NO_DATA_TEXT}</span>
+				)}
 			</div>
 
 			{createPortal(
-				<BackdropLoader
-					open={isLoading || isFilteredLoading}
-					position={backdropConstants.POSITION.ABSOLUTE}
-				/>,
+				<BackdropLoader open={isLoading} position={backdropConstants.POSITION.ABSOLUTE} />,
 				document.querySelector('.exercises__list') !== null
 					? document.querySelector('.exercises__list')!
 					: document.querySelector('#modal-root')!,

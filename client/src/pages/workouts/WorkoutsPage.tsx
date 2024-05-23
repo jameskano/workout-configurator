@@ -1,12 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import GenericFilters from '../../components/generic-filters/GenericFilters';
 import AddButton from '../../UI/add-button/AddButton';
 import { createPortal } from 'react-dom';
 import WorkoutModal from '../../components/workout-modal/WorkoutModal';
-import { useQuery } from '@tanstack/react-query';
 import WorkoutCard from '../../components/workout-card/WorkoutCard';
 import { WorkoutType } from '../../utils/types/workout.types';
-import { getAllWorkoutsFn } from './functions/services';
 import './WorkoutPage.scss';
 import { useFiltersContext } from '../../store/context/filters-context/filters-context';
 import { getFilteredWorkouts } from '../../services/workouts';
@@ -16,13 +14,10 @@ import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
 import { debounce } from '../../utils/functions/debounce';
 import { backdropConstants } from '../../utils/constants/backdrop';
 import { toastMessages } from '../../utils/toast-messages';
+import { miscellaneous } from '../../utils/constants/app-constants';
+import useCustomQuery from '../../utils/hooks/custom-query-hook/use-custom-query';
 
 const WorkoutsPage = () => {
-	const { isLoading, isError, data, error } = useQuery({
-		queryKey: ['workouts'],
-		queryFn: getAllWorkoutsFn,
-		refetchOnWindowFocus: false,
-	});
 	const { textFilter } = useFiltersContext();
 	const { openToastHandler } = useToast();
 
@@ -32,64 +27,25 @@ const WorkoutsPage = () => {
 	const [isEditWorkoutMode, setIsEditWorkoutMode] = useState(false);
 	const [showFavourites, setShowFavourites] = useState(true);
 	const [filteredWorkouts, setFilteredWorkouts] = useState<WorkoutType[]>([]);
-	const [debouncedFilter, setDebouncedFilter] = useState<string | null>(null);
+	const [debouncedFilter, setDebouncedFilter] = useState('');
 
-	// Old filtered workouts request
-	// useEffect(() => {
-	// 	if (firstRenderRef.current) {
-	// 		firstRenderRef.current = false;
-	// 		return;
-	// 	}
-	// 	const timeout = setTimeout(async () => {
-	// 		setShowLoader(true);
-	// 		try {
-	// 			const res = await getFilteredWorkouts(textFilter); // use react query
-	// 			setFilteredWorkouts(updatedFilteredWorkouts(res.data));
-	// 		} catch (error) {
-	// 			openToastHandler('Error. Workouts could not be loaded', toastConstants.TYPES.ERROR);
-	// 		} finally {
-	// 			setShowLoader(false);
-	// 		}
-	// 	}, 1000);
+	const { isLoading, isError, data } = useCustomQuery({
+		queryKey: ['workouts', debouncedFilter],
+		queryFn: () => getFilteredWorkouts(debouncedFilter!),
+		enabled: !!debouncedFilter || firstRenderRef.current,
+	});
 
-	// 	return () => clearTimeout(timeout);
-	// }, [textFilter]);
-
-	// New filtered workouts request
 	useEffect(() => {
 		if (!firstRenderRef.current) updateDebouncedFilter(textFilter);
 	}, [textFilter]);
 
-	const {
-		data: filteredData,
-		isLoading: isFiltering,
-		error: filteringError,
-	} = useQuery({
-		queryKey: ['filteredWorkouts', debouncedFilter],
-		queryFn: () => getFilteredWorkouts(debouncedFilter!),
-		enabled: debouncedFilter !== undefined && debouncedFilter !== null,
-		refetchOnWindowFocus: false,
-	});
-
 	useEffect(() => {
-		if (firstRenderRef.current) {
-			firstRenderRef.current = false;
-			return;
-		}
-
-		if (filteredData) {
-			setFilteredWorkouts(updatedFilteredWorkouts(filteredData.data));
-		}
-	}, [filteredData]);
-	// End of new filtered workouts request
-
-	useEffect(() => {
-		if (!firstRenderRef.current && (error || filteringError))
+		if (!firstRenderRef.current && isError)
 			openToastHandler(toastMessages.WORKOUT_GET_ERROR, toastConstants.TYPES.ERROR);
-	}, [error, filteringError]);
+	}, [isError]);
 
 	useEffect(() => {
-		setFilteredWorkouts(updatedFilteredWorkouts(data));
+		if (data) setFilteredWorkouts(updatedFilteredWorkouts(data.data));
 	}, [data, showFavourites]);
 
 	const updateDebouncedFilter = useCallback(
@@ -109,6 +65,10 @@ const WorkoutsPage = () => {
 		setIsEditWorkoutMode(false);
 	};
 
+	useEffect(() => {
+		if (firstRenderRef.current) firstRenderRef.current = false;
+	}, []);
+
 	return (
 		<section className='workouts'>
 			<div className='workouts__new'>
@@ -127,14 +87,13 @@ const WorkoutsPage = () => {
 					/>
 				))}
 
-				{!data && !isLoading && <span className='workouts__feedback'>No content</span>}
+				{!filteredWorkouts.length && !isLoading && (
+					<span className='no-data-text'>{miscellaneous.NO_DATA_TEXT}</span>
+				)}
 			</div>
 
 			{createPortal(
-				<BackdropLoader
-					open={isLoading || isFiltering}
-					position={backdropConstants.POSITION.ABSOLUTE}
-				/>,
+				<BackdropLoader open={isLoading} position={backdropConstants.POSITION.ABSOLUTE} />,
 				document.querySelector('.workouts__list') !== null
 					? document.querySelector('.workouts__list')!
 					: document.querySelector('#modal-root')!,
@@ -152,4 +111,4 @@ const WorkoutsPage = () => {
 	);
 };
 
-export default WorkoutsPage;
+export default memo(WorkoutsPage);
