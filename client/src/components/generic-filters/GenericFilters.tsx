@@ -9,29 +9,33 @@ import { useEffect } from 'react';
 const GenericFilters = ({ setShowFavourites, showFavourites }: GenericFiltersType) => {
 	const { pathname } = useLocation();
 	const {
-		textFilter,
+		exerciseTitle,
+		workoutTitle,
 		bodyPartFilter,
-		setTextFilterState,
-		setBodyPartFilterState,
 		storedPathname,
 		setStoredPathname,
+		setExerciseTitle,
+		setWorkoutTitle,
+		setBodyPartFilter,
 	} = useFiltersContext();
 
 	useEffect(() => {
-		if (['/exercises', '/workouts'].includes(pathname)) {
-			if (storedPathname === '') setStoredPathname(pathname);
-			else if (storedPathname !== pathname) {
-				setStoredPathname(pathname);
-				setTextFilterState('');
-				setBodyPartFilterState('');
-			}
+		switch (storedPathname) {
+			case '/exercises':
+				setExerciseTitle('');
+				break;
+			case '/workouts':
+				setWorkoutTitle('');
+				break;
 		}
-	}, []);
+		setStoredPathname(pathname);
+	}, [pathname]);
 
-	const changeTextFilterHandler = (value: string) => setTextFilterState(value);
+	const changeTextFilterHandler = (value: string) =>
+		pathname === '/exercises' ? setExerciseTitle(value) : setWorkoutTitle(value);
 
 	const changeBodyPartHandler = (value: string | null) =>
-		value !== null ? setBodyPartFilterState(value) : setBodyPartFilterState('');
+		value !== null ? setBodyPartFilter(value) : setBodyPartFilter('');
 
 	return (
 		<section className='generic-filters'>
@@ -42,7 +46,7 @@ const GenericFilters = ({ setShowFavourites, showFavourites }: GenericFiltersTyp
 				variant='outlined'
 				className='generic-filters__input'
 				size='small'
-				value={textFilter}
+				value={pathname === '/exercises' ? exerciseTitle : workoutTitle}
 				onChange={(e) => changeTextFilterHandler(e.target.value)}
 			/>
 			{pathname === '/exercises' && (

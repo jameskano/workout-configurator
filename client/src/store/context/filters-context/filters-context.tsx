@@ -1,10 +1,12 @@
 import { createContext, useContext } from 'react';
 
 interface FiltersContextType {
-	textFilter: string;
+	exerciseTitle: string;
+	workoutTitle: string;
 	bodyPartFilter: string;
-	setTextFilterState: (value: string) => void;
-	setBodyPartFilterState: (value: string) => void;
+	setExerciseTitle: (value: string) => void;
+	setWorkoutTitle: (value: string) => void;
+	setBodyPartFilter: (value: string) => void;
 	storedPathname: string;
 	setStoredPathname: (value: string) => void;
 }

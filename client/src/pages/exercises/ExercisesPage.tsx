@@ -17,7 +17,7 @@ import useCustomQuery from '../../utils/hooks/custom-query-hook/use-custom-query
 import { getFilteredExercises } from '../../services/exercises';
 
 const ExercisesPage = () => {
-	const { textFilter, bodyPartFilter } = useFiltersContext();
+	const { exerciseTitle, bodyPartFilter } = useFiltersContext();
 	const { openToastHandler } = useToast();
 
 	const firstRenderRef = useRef(true);
@@ -26,7 +26,7 @@ const ExercisesPage = () => {
 
 	const { isLoading, isError, data } = useCustomQuery({
 		queryKey: ['exercises', exerciseFilter],
-		queryFn: () => getFilteredExercises(textFilter, bodyPartFilter.toLocaleLowerCase()),
+		queryFn: () => getFilteredExercises(exerciseTitle, bodyPartFilter.toLocaleLowerCase()),
 		enabled: !!exerciseFilter || firstRenderRef.current,
 	});
 
@@ -34,11 +34,11 @@ const ExercisesPage = () => {
 		if (firstRenderRef.current) return;
 
 		const timeout = setTimeout(() => {
-			setExerciseFilter(textFilter + bodyPartFilter);
+			setExerciseFilter(exerciseTitle + bodyPartFilter);
 		}, 1000);
 
 		return () => clearTimeout(timeout);
-	}, [textFilter, bodyPartFilter]);
+	}, [exerciseTitle, bodyPartFilter]);
 
 	useEffect(() => {
 		if (isError) openToastHandler(toastMessages.EXERCISE_GET_ERROR, toastConstants.TYPES.ERROR);

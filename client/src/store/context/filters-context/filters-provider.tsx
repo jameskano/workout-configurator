@@ -2,24 +2,23 @@ import { useMemo, useState } from 'react';
 import { FiltersContext } from './filters-context';
 
 export const FiltersProvider = ({ children }: { children: React.ReactNode }) => {
-	const [textFilter, setTextFilter] = useState('');
+	const [exerciseTitle, setExerciseTitle] = useState('');
+	const [workoutTitle, setWorkoutTitle] = useState('');
 	const [bodyPartFilter, setBodyPartFilter] = useState('');
 	const [storedPathname, setStoredPathname] = useState('');
 
-	const setTextFilterState = (value: string) => setTextFilter(value);
-
-	const setBodyPartFilterState = (value: string) => setBodyPartFilter(value);
-
 	const value = useMemo(
 		() => ({
-			textFilter,
+			exerciseTitle,
+			workoutTitle,
 			bodyPartFilter,
-			setTextFilterState,
-			setBodyPartFilterState,
+			setBodyPartFilter,
+			setExerciseTitle,
+			setWorkoutTitle,
 			storedPathname,
 			setStoredPathname,
 		}),
-		[textFilter, bodyPartFilter, storedPathname],
+		[exerciseTitle, workoutTitle, bodyPartFilter, storedPathname],
 	);
 
 	return <FiltersContext.Provider value={value}>{children}</FiltersContext.Provider>;

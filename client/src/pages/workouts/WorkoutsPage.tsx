@@ -18,7 +18,7 @@ import { miscellaneous } from '../../utils/constants/app-constants';
 import useCustomQuery from '../../utils/hooks/custom-query-hook/use-custom-query';
 
 const WorkoutsPage = () => {
-	const { textFilter } = useFiltersContext();
+	const { workoutTitle } = useFiltersContext();
 	const { openToastHandler } = useToast();
 
 	const firstRenderRef = useRef(true);
@@ -36,8 +36,8 @@ const WorkoutsPage = () => {
 	});
 
 	useEffect(() => {
-		if (!firstRenderRef.current) updateDebouncedFilter(textFilter);
-	}, [textFilter]);
+		if (!firstRenderRef.current) updateDebouncedFilter(workoutTitle);
+	}, [workoutTitle]);
 
 	useEffect(() => {
 		if (!firstRenderRef.current && isError)
