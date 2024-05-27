@@ -7,6 +7,7 @@ import { WorkoutProvider } from './store/context/workout-context/workout-provide
 import { FiltersProvider } from './store/context/filters-context/filters-provider';
 import { ToastProvider } from './store/context/toast-context/toast-provider';
 import { CircularLoaderProvider } from './store/context/circular-loader-context/circular-loader-provider';
+import { Suspense } from 'react';
 
 function App() {
 	const queryClient = new QueryClient();
@@ -18,7 +19,9 @@ function App() {
 					<WorkoutProvider>
 						<FiltersProvider>
 							<ToastProvider>
-								<RouterProvider router={routes} />
+								<Suspense fallback={'Loadinga...'}>
+									<RouterProvider router={routes} />
+								</Suspense>
 							</ToastProvider>
 						</FiltersProvider>
 					</WorkoutProvider>
