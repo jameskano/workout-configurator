@@ -3,9 +3,9 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { ExerciseCardType } from './ExerciseCard.types';
 import { useExerciseContext } from '../../store/context/exercise-context/exercise-context';
-import { deleteExercise } from '../../services/exercises';
 import { useQueryClient } from '@tanstack/react-query';
 import { Tooltip } from '@mui/material';
+import { useModalContext } from '../../store/context/modal-context/modal-context';
 
 const ExerciseCard = ({
 	title,
@@ -19,6 +19,7 @@ const ExerciseCard = ({
 	setIsEditExerciseMode,
 }: ExerciseCardType) => {
 	const { setExerciseItemDisp } = useExerciseContext();
+	const { setShowDeleteModal, setDeleteIds, setTriggerFunctions } = useModalContext();
 	const queryClient = useQueryClient();
 
 	const editExerciseHandler = () => {
@@ -27,15 +28,13 @@ const ExerciseCard = ({
 		setExerciseItemDisp({ title, sets, reps, RPE, metadata, bodyPart, _id });
 	};
 
-	const deleteExerciseHandler = async () => {
-		try {
-			_id && (await deleteExercise([_id]));
-			queryClient.invalidateQueries({ queryKey: ['exercises'] });
-		} catch (error) {
-			// Error handling
-		} finally {
-			// Stop loader and whatever is needed
-		}
+	const deleteExerciseHandler = () => {
+		if (!_id) return;
+		setShowDeleteModal(true);
+		setDeleteIds([_id]);
+		setTriggerFunctions({
+			onSuccess: () => queryClient.invalidateQueries({ queryKey: ['exercises'] }),
+		});
 	};
 
 	return (

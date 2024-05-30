@@ -11,7 +11,7 @@ import { useCircularLoaderContext } from '../../store/context/circular-loader-co
 import useToast from '../../utils/hooks/toast-hook/use-toast';
 import { toastConstants } from '../../utils/constants/toast';
 import { useEffect } from 'react';
-import { toastMessages } from '../../utils/toast-messages';
+import { toastMessages } from '../../utils/constants/toast-messages';
 import { backdropConstants } from '../../utils/constants/backdrop';
 import { createPortal } from 'react-dom';
 import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';

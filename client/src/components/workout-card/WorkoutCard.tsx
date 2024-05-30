@@ -3,12 +3,17 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { WorkoutCardType } from './WorkoutCard.types';
 import { useWorkoutContext } from '../../store/context/workout-context/workout-context';
-import { deleteWorkouts, updateWorkout } from '../../services/workouts';
+import { updateWorkout } from '../../services/workouts';
 import { useQueryClient } from '@tanstack/react-query';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { memo } from 'react';
 import './WorkoutCard.scss';
+import { useModalContext } from '../../store/context/modal-context/modal-context';
+import useToast from '../../utils/hooks/toast-hook/use-toast';
+import { toastConstants } from '../../utils/constants/toast';
+import { toastMessages } from '../../utils/constants/toast-messages';
+import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
 
 const WorkoutCard = ({
 	title,
@@ -21,6 +26,9 @@ const WorkoutCard = ({
 }: WorkoutCardType) => {
 	const queryClient = useQueryClient();
 	const { setWorkoutItemDisp } = useWorkoutContext();
+	const { setShowDeleteModal, setDeleteIds, setTriggerFunctions } = useModalContext();
+	const { openToastHandler } = useToast();
+	const { setOpenLoader } = useCircularLoaderContext();
 
 	const editWorkoutHandler = () => {
 		setIsEditWorkoutMode(true);
@@ -29,24 +37,23 @@ const WorkoutCard = ({
 	};
 
 	const deleteWorkoutHandler = async () => {
-		try {
-			_id && (await deleteWorkouts([_id]));
-			queryClient.invalidateQueries({ queryKey: ['workouts'] });
-		} catch (error) {
-			// Error handling
-		} finally {
-			// Stop loader and whatever is needed
-		}
+		if (!_id) return;
+		setShowDeleteModal(true);
+		setDeleteIds([_id]);
+		setTriggerFunctions({
+			onSuccess: () => queryClient.invalidateQueries({ queryKey: ['workouts'] }),
+		});
 	};
 
 	const favWorkoutHandler = async () => {
+		setOpenLoader(true);
 		try {
 			await updateWorkout({ title, metadata, _id, exercises, favourite: !favourite });
 			queryClient.invalidateQueries({ queryKey: ['workouts'] });
 		} catch (error) {
-			// Error handling
+			openToastHandler(toastMessages.WORKOUT_UPDATE_ERROR, toastConstants.TYPES.ERROR);
 		} finally {
-			// Stop loader and whatever is needed
+			setOpenLoader(false);
 		}
 	};
 

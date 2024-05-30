@@ -9,7 +9,7 @@ import ExerciseCard from '../../components/exercise-card/ExerciseCard';
 import { miscellaneous } from '../../utils/constants/app-constants';
 import { useFiltersContext } from '../../store/context/filters-context/filters-context';
 import useToast from '../../utils/hooks/toast-hook/use-toast';
-import { toastMessages } from '../../utils/toast-messages';
+import { toastMessages } from '../../utils/constants/toast-messages';
 import { toastConstants } from '../../utils/constants/toast';
 import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
 import { backdropConstants } from '../../utils/constants/backdrop';

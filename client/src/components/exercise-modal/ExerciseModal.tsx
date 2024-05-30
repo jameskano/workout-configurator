@@ -9,7 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { bodyPartToLowerCase } from '../../utils/functions/format-body-part-value';
 import { ArrowBack } from '@mui/icons-material';
 import useToast from '../../utils/hooks/toast-hook/use-toast';
-import { toastMessages } from '../../utils/toast-messages';
+import { toastMessages } from '../../utils/constants/toast-messages';
 import { toastConstants } from '../../utils/constants/toast';
 import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
 

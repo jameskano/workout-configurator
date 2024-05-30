@@ -13,7 +13,7 @@ import { toastConstants } from '../../utils/constants/toast';
 import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
 import { debounce } from '../../utils/functions/debounce';
 import { backdropConstants } from '../../utils/constants/backdrop';
-import { toastMessages } from '../../utils/toast-messages';
+import { toastMessages } from '../../utils/constants/toast-messages';
 import { miscellaneous } from '../../utils/constants/app-constants';
 import useCustomQuery from '../../utils/hooks/custom-query-hook/use-custom-query';
 
