@@ -140,7 +140,7 @@ const WorkoutModal = ({ isEditMode, showModal, setShowModal }: WorkoutModalTypes
 					</div>
 				</div>
 				<TextField
-					className='exercise-modal__metadata exercise-modal__input'
+					className='workout-modal__metadata workout-modal__input'
 					rows={3}
 					multiline
 					label='Additional information'
@@ -148,7 +148,7 @@ const WorkoutModal = ({ isEditMode, showModal, setShowModal }: WorkoutModalTypes
 					onChange={(e) => changeFieldHandler(e.target.value, 'metadata')}
 				/>
 			</div>
-			<div className='exercise-modal__bottom'>
+			<div className='workout-modal__bottom'>
 				<Button onClick={saveWorkoutHandler} variant='contained'>
 					Save workout
 				</Button>

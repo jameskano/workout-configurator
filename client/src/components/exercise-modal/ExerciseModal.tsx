@@ -13,7 +13,12 @@ import { toastMessages } from '../../utils/constants/toast-messages';
 import { toastConstants } from '../../utils/constants/toast';
 import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
 
-const ExerciseModal = ({ showModal, setShowModal, isEditMode }: ExerciseModalTypes) => {
+const ExerciseModal = ({
+	showModal,
+	setShowModal,
+	isEditMode,
+	refetchExercises,
+}: ExerciseModalTypes) => {
 	const {
 		exerciseItem: { _id, title, sets, reps, RPE, metadata, bodyPart },
 		exerciseItem,
@@ -39,13 +44,16 @@ const ExerciseModal = ({ showModal, setShowModal, isEditMode }: ExerciseModalTyp
 		setOpenLoader(true);
 		try {
 			isEditMode ? await updateExercise(exerciseItem) : await createExercise(exerciseItem);
-			queryClient.invalidateQueries({ queryKey: ['exercises'] });
+			queryClient.invalidateQueries({
+				queryKey: ['exercises'],
+			});
 			openToastHandler(
 				isEditMode
 					? toastMessages.EXERCISE_UPDATE_SUCCESS
 					: toastMessages.EXERCISE_CREATE_SUCCESS,
 				toastConstants.TYPES.SUCCESS,
 			);
+			refetchExercises();
 		} catch (error) {
 			openToastHandler(
 				isEditMode

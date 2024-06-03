@@ -36,7 +36,7 @@ const WorkoutCard = ({
 		setWorkoutItemDisp({ title, favourite, metadata, _id, exercises });
 	};
 
-	const deleteWorkoutHandler = async () => {
+	const deleteWorkoutHandler = () => {
 		if (!_id) return;
 		setShowDeleteModal(true);
 		setDeleteIds([_id]);
@@ -63,7 +63,7 @@ const WorkoutCard = ({
 				<h2>{title}</h2>
 				<div className='workout-card__actions'>
 					<div onClick={favWorkoutHandler}>
-						<Tooltip title={favourite ? 'Add to favourites' : 'Remove from favourites'}>
+						<Tooltip title={favourite ? 'Remove to favourites' : 'Add from favourites'}>
 							{favourite ? <StarIcon /> : <StarOutlineIcon />}
 						</Tooltip>
 					</div>

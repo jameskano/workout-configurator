@@ -1,4 +1,4 @@
-import { useModalContext } from 'store/context/modal-context/modal-context';
+import { useModalContext } from '../../store/context/modal-context/modal-context';
 import GenericPopup from '../../components/generic-popup/GenericPopup';
 import { GenericModalButtonType } from '../../components/generic-popup/GenericPopup.types';
 import useDelete from '../../utils/hooks/delete-hook/use-delete-hook';
@@ -10,7 +10,7 @@ const DeletePopup = () => {
 	const { deleteRequest } = useDelete();
 	const { pathname } = useLocation();
 
-	const deletePopupText = `Do you want to delete this ${pathname.replace('/', '')}`;
+	const deletePopupText = `Do you want to delete these ${pathname.replace('/', '')}?`;
 
 	const closeHandler = () => {
 		setShowDeleteModal(false);
@@ -27,12 +27,14 @@ const DeletePopup = () => {
 		text: 'Delete',
 		variant: 'contained',
 		onClick: deleteHandler,
+		className: 'deletePopupButton',
 	};
 
 	const cancelButton: GenericModalButtonType = {
 		text: 'Cancel',
 		variant: 'outlined',
 		onClick: closeHandler,
+		className: 'cancelPopupButton',
 	};
 
 	return (
@@ -41,7 +43,7 @@ const DeletePopup = () => {
 			text={deletePopupText}
 			showModal={showDeleteModal}
 			setShowModal={setShowDeleteModal}
-			buttons={[removeButton, cancelButton]}
+			buttons={[cancelButton, removeButton]}
 		/>
 	);
 };

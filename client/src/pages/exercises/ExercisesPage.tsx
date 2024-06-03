@@ -24,7 +24,7 @@ const ExercisesPage = () => {
 
 	const [exerciseFilter, setExerciseFilter] = useState('');
 
-	const { isLoading, isError, data } = useCustomQuery({
+	const { isLoading, isError, data, refetch } = useCustomQuery({
 		queryKey: ['exercises', exerciseFilter],
 		queryFn: () => getFilteredExercises(exerciseTitle, bodyPartFilter.toLocaleLowerCase()),
 		enabled: !!exerciseFilter || firstRenderRef.current,
@@ -93,6 +93,7 @@ const ExercisesPage = () => {
 					showModal={showExerciseModal}
 					setShowModal={setShowExerciseModal}
 					isEditMode={isEditExerciseMode}
+					refetchExercises={refetch}
 				/>,
 				document.querySelector('#modal-root')!,
 			)}

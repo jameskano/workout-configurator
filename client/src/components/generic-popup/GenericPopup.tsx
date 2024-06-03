@@ -1,14 +1,12 @@
 import { Box, Button, Modal } from '@mui/material';
 import { GenericModalButtonType, GenericPopupType } from './GenericPopup.types';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import { Tooltip } from '@mui/material';
+import './GenericPopup.scss';
 
 const GenericPopup = ({
 	onClose,
-	showModal,
+	showModal = false,
 	setShowModal,
 	classes,
-	showHeader,
 	headerText,
 	text,
 	buttons,
@@ -24,22 +22,21 @@ const GenericPopup = ({
 			disablePortal
 			onClose={closeModalHandler}
 			className={`modal ${classes}`}>
-			<Box component='section' className='modal__container'>
-				{showHeader && <div className='modal__header'>{headerText}</div>}
-				<div className='modal__content'>{text}</div>
-				{buttons?.length && (
-					<div className='modal__buttons'>
-						{buttons.map((button: GenericModalButtonType, index) => (
-							<Button {...button} key={index}>
-								{button.text}
-							</Button>
-						))}
-					</div>
-				)}
-				<div className='modal__close-icon' onClick={onClose}>
-					<CloseRoundedIcon />
+			<div className='modal__main-container'>
+				{headerText && <div className='modal__header'>{headerText}</div>}
+				<div className={`modal__container ${headerText ? 'modal__container--header' : ''}`}>
+					<div className='modal__content'>{text}</div>
+					{buttons?.length && (
+						<div className='modal__buttons'>
+							{buttons.map((button: GenericModalButtonType, index) => (
+								<Button {...button} key={index} className={button.className}>
+									{button.text}
+								</Button>
+							))}
+						</div>
+					)}
 				</div>
-			</Box>
+			</div>
 		</Modal>
 	);
 };

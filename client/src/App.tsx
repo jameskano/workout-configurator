@@ -8,6 +8,10 @@ import { FiltersProvider } from './store/context/filters-context/filters-provide
 import { ToastProvider } from './store/context/toast-context/toast-provider';
 import { CircularLoaderProvider } from './store/context/circular-loader-context/circular-loader-provider';
 import { Suspense } from 'react';
+import { ModalProvider } from './store/context/modal-context/modal-provider';
+import BackdropLoader from './UI/backdrop-loader/BackdropLoader';
+import { backdropConstants } from './utils/constants/backdrop';
+import CircularLoader from './UI/circular-loader/CircularLoader';
 
 function App() {
 	const queryClient = new QueryClient();
@@ -19,9 +23,16 @@ function App() {
 					<WorkoutProvider>
 						<FiltersProvider>
 							<ToastProvider>
-								<Suspense fallback={'Loadinga...'}>
-									<RouterProvider router={routes} />
-								</Suspense>
+								<ModalProvider>
+									<Suspense
+										fallback={
+											<div className='app-loader'>
+												<CircularLoader />
+											</div>
+										}>
+										<RouterProvider router={routes} />
+									</Suspense>
+								</ModalProvider>
 							</ToastProvider>
 						</FiltersProvider>
 					</WorkoutProvider>

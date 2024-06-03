@@ -3,3 +3,21 @@
 	text-align: center;
 	margin-top: $spacing-6;
 }
+
+.deletePopupButton {
+	background-color: $color-primary !important;
+
+	&:hover {
+		background-color: $color-primary-darker-1 !important;
+	}
+}
+
+.cancelPopupButton {
+	color: $color-primary !important;
+	border-color: $color-primary !important;
+
+	&:hover {
+		color: $color-primary-darker-1 !important;
+		border-color: $color-primary-darker-1 !important;
+	}
+}

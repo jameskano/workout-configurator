@@ -11,7 +11,7 @@ import { createPortal } from 'react-dom';
 import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
 import { backdropConstants } from '../../utils/constants/backdrop';
 import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
-import DeletePopup from 'components/delete-popup/DeletePopup';
+import DeletePopup from '../../components/delete-popup/DeletePopup';
 
 const Layout = ({ currentPageComponent }: LayoutTypes) => {
 	const location = useLocation();

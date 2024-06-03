@@ -1,8 +1,7 @@
-import { useCircularLoaderContext } from 'store/context/circular-loader-context/circular-loader-context';
-import { deleteWorkouts } from 'services/workouts';
-import { deleteExercise } from 'services/exercises';
+import { useCircularLoaderContext } from '../../../store/context/circular-loader-context/circular-loader-context';
+import { deleteWorkouts } from '../../../services/workouts';
+import { deleteExercise } from '../../../services/exercises';
 import { useLocation } from 'react-router';
-import { DeleteRequestType } from './use-delete-hook.types';
 import useToast from '../toast-hook/use-toast';
 import { toastMessages } from '../../../utils/constants/toast-messages';
 import { toastConstants } from '../../../utils/constants/toast';
@@ -16,7 +15,7 @@ const useDelete = () => {
 
 	const getDeleteFn = () => {
 		switch (pathname) {
-			case '/workout':
+			case '/workouts':
 				return deleteWorkouts;
 			case '/exercises':
 				return deleteExercise;
