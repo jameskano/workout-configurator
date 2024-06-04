@@ -72,6 +72,7 @@ const ExercisesPage = () => {
 							{...exercise}
 							setShowExerciseModal={setShowExerciseModal}
 							setIsEditExerciseMode={setIsEditExerciseMode}
+							refetchExercises={refetch}
 						/>
 					);
 				})}

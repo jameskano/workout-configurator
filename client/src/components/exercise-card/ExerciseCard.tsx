@@ -17,6 +17,7 @@ const ExerciseCard = ({
 	_id,
 	setShowExerciseModal,
 	setIsEditExerciseMode,
+	refetchExercises,
 }: ExerciseCardType) => {
 	const { setExerciseItemDisp } = useExerciseContext();
 	const { setShowDeleteModal, setDeleteIds, setTriggerFunctions } = useModalContext();
@@ -33,7 +34,10 @@ const ExerciseCard = ({
 		setShowDeleteModal(true);
 		setDeleteIds([_id]);
 		setTriggerFunctions({
-			onSuccess: () => queryClient.invalidateQueries({ queryKey: ['exercises'] }),
+			onSuccess: () => {
+				queryClient.invalidateQueries({ queryKey: ['exercises'] });
+				refetchExercises();
+			},
 		});
 	};
 

@@ -29,7 +29,7 @@ const WorkoutsPage = () => {
 	const [filteredWorkouts, setFilteredWorkouts] = useState<WorkoutType[]>([]);
 	const [debouncedFilter, setDebouncedFilter] = useState('');
 
-	const { isLoading, isError, data } = useCustomQuery({
+	const { isLoading, isError, data, refetch } = useCustomQuery({
 		queryKey: ['workouts', debouncedFilter],
 		queryFn: () => getFilteredWorkouts(debouncedFilter!),
 		enabled: !!debouncedFilter || firstRenderRef.current,
@@ -84,6 +84,7 @@ const WorkoutsPage = () => {
 						key={workout._id}
 						setShowWorkoutModal={setShowWorkoutModal}
 						setIsEditWorkoutMode={setIsEditWorkoutMode}
+						refetchWorkouts={refetch}
 					/>
 				))}
 
@@ -104,6 +105,7 @@ const WorkoutsPage = () => {
 					showModal={showWorkoutModal}
 					setShowModal={setShowWorkoutModal}
 					isEditMode={isEditWorkoutMode}
+					refetchWorkouts={refetch}
 				/>,
 				document.querySelector('#modal-root')!,
 			)}

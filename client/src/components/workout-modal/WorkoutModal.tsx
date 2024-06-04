@@ -18,7 +18,12 @@ import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
 import { miscellaneous } from '../../utils/constants/app-constants';
 import useCustomQuery from '../../utils/hooks/custom-query-hook/use-custom-query';
 
-const WorkoutModal = ({ isEditMode, showModal, setShowModal }: WorkoutModalTypes) => {
+const WorkoutModal = ({
+	isEditMode,
+	showModal,
+	setShowModal,
+	refetchWorkouts,
+}: WorkoutModalTypes) => {
 	const queryClient = useQueryClient();
 
 	const { isLoading, isError, data } = useCustomQuery({
@@ -55,6 +60,7 @@ const WorkoutModal = ({ isEditMode, showModal, setShowModal }: WorkoutModalTypes
 					: toastMessages.WORKOUT_CREATE_SUCCESS,
 				toastConstants.TYPES.SUCCESS,
 			);
+			refetchWorkouts();
 		} catch (error) {
 			openToastHandler(
 				isEditMode
@@ -83,7 +89,7 @@ const WorkoutModal = ({ isEditMode, showModal, setShowModal }: WorkoutModalTypes
 	};
 
 	return (
-		<form className={`exercise-modal ${showModal ? 'exercise-modal--open' : ''}`}>
+		<form className={`workout-modal ${showModal ? 'workout-modal--open' : ''}`}>
 			<div className='workout-modal__header'>
 				<div onClick={closeModalHandler}>
 					<ArrowBack />

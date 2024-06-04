@@ -23,6 +23,7 @@ const WorkoutCard = ({
 	exercises,
 	setIsEditWorkoutMode,
 	setShowWorkoutModal,
+	refetchWorkouts,
 }: WorkoutCardType) => {
 	const queryClient = useQueryClient();
 	const { setWorkoutItemDisp } = useWorkoutContext();
@@ -36,12 +37,17 @@ const WorkoutCard = ({
 		setWorkoutItemDisp({ title, favourite, metadata, _id, exercises });
 	};
 
+	const successWorkoutHandler = () => {
+		queryClient.invalidateQueries({ queryKey: ['workouts'] });
+		refetchWorkouts();
+	};
+
 	const deleteWorkoutHandler = () => {
 		if (!_id) return;
 		setShowDeleteModal(true);
 		setDeleteIds([_id]);
 		setTriggerFunctions({
-			onSuccess: () => queryClient.invalidateQueries({ queryKey: ['workouts'] }),
+			onSuccess: () => successWorkoutHandler(),
 		});
 	};
 
@@ -49,7 +55,7 @@ const WorkoutCard = ({
 		setOpenLoader(true);
 		try {
 			await updateWorkout({ title, metadata, _id, exercises, favourite: !favourite });
-			queryClient.invalidateQueries({ queryKey: ['workouts'] });
+			successWorkoutHandler();
 		} catch (error) {
 			openToastHandler(toastMessages.WORKOUT_UPDATE_ERROR, toastConstants.TYPES.ERROR);
 		} finally {
