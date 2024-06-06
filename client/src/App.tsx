@@ -9,9 +9,8 @@ import { ToastProvider } from './store/context/toast-context/toast-provider';
 import { CircularLoaderProvider } from './store/context/circular-loader-context/circular-loader-provider';
 import { Suspense } from 'react';
 import { ModalProvider } from './store/context/modal-context/modal-provider';
-import BackdropLoader from './UI/backdrop-loader/BackdropLoader';
-import { backdropConstants } from './utils/constants/backdrop';
 import CircularLoader from './UI/circular-loader/CircularLoader';
+import { PopoverProvider } from './store/context/popover-context/popover-provider';
 
 function App() {
 	const queryClient = new QueryClient();
@@ -24,14 +23,16 @@ function App() {
 						<FiltersProvider>
 							<ToastProvider>
 								<ModalProvider>
-									<Suspense
-										fallback={
-											<div className='app-loader'>
-												<CircularLoader />
-											</div>
-										}>
-										<RouterProvider router={routes} />
-									</Suspense>
+									<PopoverProvider>
+										<Suspense
+											fallback={
+												<div className='app-loader'>
+													<CircularLoader />
+												</div>
+											}>
+											<RouterProvider router={routes} />
+										</Suspense>
+									</PopoverProvider>
 								</ModalProvider>
 							</ToastProvider>
 						</FiltersProvider>

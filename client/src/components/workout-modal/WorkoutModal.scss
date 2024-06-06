@@ -65,6 +65,12 @@
 		}
 	}
 
+	&__metadata {
+		div {
+			color: $color-text-white-base;
+		}
+	}
+
 	&__exercises {
 		height: 100%;
 		grid-column: 1 / -1;

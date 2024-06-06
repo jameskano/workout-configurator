@@ -12,10 +12,14 @@ import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
 import { backdropConstants } from '../../utils/constants/backdrop';
 import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
 import DeletePopup from '../../components/delete-popup/DeletePopup';
+import { Popover } from '@mui/material';
+import { usePopoverContext } from '../../store/context/popover-context/popover-context';
 
 const Layout = ({ currentPageComponent }: LayoutTypes) => {
 	const location = useLocation();
 	const { openLoader } = useCircularLoaderContext();
+	const { popoverOpen, popoverContent, popoverAnchorElement, closePopoverHandler } =
+		usePopoverContext();
 
 	const [isSideNavbarShown, setIsSideNavbarShown] = useState(false);
 
@@ -43,6 +47,15 @@ const Layout = ({ currentPageComponent }: LayoutTypes) => {
 			</div>
 
 			<Toast />
+
+			<Popover
+				open={popoverOpen}
+				anchorEl={popoverAnchorElement}
+				onClose={closePopoverHandler}
+				className='popover-component'>
+				<span>{popoverContent}</span>
+			</Popover>
+
 			{createPortal(
 				<BackdropLoader open={openLoader} position={backdropConstants.POSITION.FIXED} />,
 				document.querySelector('#modal-root')!,

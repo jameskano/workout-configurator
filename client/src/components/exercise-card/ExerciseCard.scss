@@ -3,11 +3,11 @@
 .exercise-card {
 	background-color: $color-background-dark-5;
 	box-shadow: $elevation-4;
-	padding: $spacing-3;
+	padding: $spacing-1 $spacing-3;
 	border-radius: $border-radius-2;
 	display: flex;
 	flex-direction: column;
-	gap: $spacing-2;
+	gap: $spacing-1;
 
 	h3,
 	h2 {
@@ -50,7 +50,7 @@
 			flex: 1;
 			overflow-x: hidden;
 			text-overflow: ellipsis;
-			padding-right: $spacing-1;
+			text-align: center;
 
 			> span {
 				font-size: $font-l;
@@ -65,6 +65,7 @@
 
 		> div {
 			cursor: pointer;
+			height: 24px;
 		}
 
 		svg {

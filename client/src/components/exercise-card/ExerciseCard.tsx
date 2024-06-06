@@ -6,6 +6,8 @@ import { useExerciseContext } from '../../store/context/exercise-context/exercis
 import { useQueryClient } from '@tanstack/react-query';
 import { Tooltip } from '@mui/material';
 import { useModalContext } from '../../store/context/modal-context/modal-context';
+import CommentRoundedIcon from '@mui/icons-material/CommentRounded';
+import { usePopoverContext } from '../../store/context/popover-context/popover-context';
 
 const ExerciseCard = ({
 	title,
@@ -21,6 +23,7 @@ const ExerciseCard = ({
 }: ExerciseCardType) => {
 	const { setExerciseItemDisp } = useExerciseContext();
 	const { setShowDeleteModal, setDeleteIds, setTriggerFunctions } = useModalContext();
+	const { openPopoverHandler } = usePopoverContext();
 	const queryClient = useQueryClient();
 
 	const editExerciseHandler = () => {
@@ -41,11 +44,21 @@ const ExerciseCard = ({
 		});
 	};
 
+	const showMetadataHandler = (e: React.MouseEvent) =>
+		openPopoverHandler(e.target as Element, metadata);
+
 	return (
 		<div className='exercise-card'>
 			<div className='exercise-card__title'>
 				<h2>{title}</h2>
 				<div className='exercise-card__actions'>
+					{metadata && (
+						<div onClick={showMetadataHandler}>
+							<Tooltip title='Show notes'>
+								<CommentRoundedIcon />
+							</Tooltip>
+						</div>
+					)}
 					<div onClick={editExerciseHandler}>
 						<Tooltip title='Edit exercise'>
 							<EditRoundedIcon />
@@ -72,12 +85,6 @@ const ExerciseCard = ({
 					<span>{RPE}</span>
 				</div>
 			</div>
-			{metadata && (
-				<div className='exercise-card__metadata'>
-					<h3>Notes</h3>
-					<span>{metadata}</span>
-				</div>
-			)}
 		</div>
 	);
 };

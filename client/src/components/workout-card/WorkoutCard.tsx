@@ -14,6 +14,8 @@ import useToast from '../../utils/hooks/toast-hook/use-toast';
 import { toastConstants } from '../../utils/constants/toast';
 import { toastMessages } from '../../utils/constants/toast-messages';
 import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
+import { usePopoverContext } from '../../store/context/popover-context/popover-context';
+import CommentRoundedIcon from '@mui/icons-material/CommentRounded';
 
 const WorkoutCard = ({
 	title,
@@ -30,6 +32,7 @@ const WorkoutCard = ({
 	const { setShowDeleteModal, setDeleteIds, setTriggerFunctions } = useModalContext();
 	const { openToastHandler } = useToast();
 	const { setOpenLoader } = useCircularLoaderContext();
+	const { openPopoverHandler } = usePopoverContext();
 
 	const editWorkoutHandler = () => {
 		setIsEditWorkoutMode(true);
@@ -63,11 +66,21 @@ const WorkoutCard = ({
 		}
 	};
 
+	const showMetadataHandler = (e: React.MouseEvent) =>
+		openPopoverHandler(e.target as Element, metadata);
+
 	return (
 		<div className='workout-card'>
 			<div className='workout-card__title'>
 				<h2>{title}</h2>
 				<div className='workout-card__actions'>
+					{metadata && (
+						<div onClick={showMetadataHandler}>
+							<Tooltip title='Show notes'>
+								<CommentRoundedIcon />
+							</Tooltip>
+						</div>
+					)}
 					<div onClick={favWorkoutHandler}>
 						<Tooltip title={favourite ? 'Remove to favourites' : 'Add from favourites'}>
 							{favourite ? <StarIcon /> : <StarOutlineIcon />}
