@@ -1,0 +1,14 @@
+@import '../../styles/main-styles.scss';
+
+.workout-table {
+	display: flex;
+
+	> div {
+		background-color: $color-background-dark-5;
+	}
+
+	td,
+	th {
+		color: $color-text-white-base;
+	}
+}

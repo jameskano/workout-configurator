@@ -5,6 +5,7 @@ import {
 	updateExercise,
 	deleteExercise,
 	getFilteredExercises,
+	getExercisesByIds,
 } from '../controllers/exercise-controller';
 
 import express from 'express';
@@ -14,6 +15,8 @@ const router = express.Router();
 router.get('/', getAllExercises);
 
 router.get('/:id', getExercise);
+
+router.post('/ids', getExercisesByIds);
 
 router.post('/', createExercise);
 

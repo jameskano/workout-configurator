@@ -107,3 +107,24 @@ export const getFilteredExercises: RequestHandler = async (req, res, next) => {
 		next(error);
 	}
 };
+
+export const getExercisesByIds: RequestHandler = async (req, res, next) => {
+	const { exerciseIds }: { exerciseIds: string[] } = req.body;
+
+	try {
+		const invalidIds = exerciseIds.filter((id) => !mongoose.isValidObjectId(id));
+		if (invalidIds.length > 0) {
+			throw new CustomError(400, 'Invalid exercise ID');
+		}
+
+		const exercises = await ExerciseModel.find({ _id: { $in: exerciseIds } });
+
+		if (exercises.length !== exerciseIds.length) {
+			throw new CustomError(400, 'No exercises found for the provided IDs');
+		}
+
+		res.status(200).json(exercises);
+	} catch (error) {
+		next(error);
+	}
+};

@@ -58,3 +58,12 @@ export const getFilteredExercises = (textFilter: string, bodyPartFilter: string)
 
 	return axios(config);
 };
+
+export const getExercisesByIds = (exerciseIds: string[]) => {
+	const config = {
+		method: 'POST',
+		url: `${import.meta.env.VITE_WORKOUT_API}/exercise/ids`,
+		data: { exerciseIds },
+	};
+	return axios(config);
+};

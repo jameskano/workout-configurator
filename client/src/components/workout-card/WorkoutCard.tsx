@@ -1,4 +1,4 @@
-import { Tooltip } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Tooltip } from '@mui/material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { WorkoutCardType } from './WorkoutCard.types';
@@ -7,7 +7,7 @@ import { updateWorkout } from '../../services/workouts';
 import { useQueryClient } from '@tanstack/react-query';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import './WorkoutCard.scss';
 import { useModalContext } from '../../store/context/modal-context/modal-context';
 import useToast from '../../utils/hooks/toast-hook/use-toast';
@@ -16,6 +16,7 @@ import { toastMessages } from '../../utils/constants/toast-messages';
 import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
 import { usePopoverContext } from '../../store/context/popover-context/popover-context';
 import CommentRoundedIcon from '@mui/icons-material/CommentRounded';
+import WorkoutTable from '../../components/workout-table/WorkoutTable';
 
 const WorkoutCard = ({
 	title,
@@ -33,6 +34,8 @@ const WorkoutCard = ({
 	const { openToastHandler } = useToast();
 	const { setOpenLoader } = useCircularLoaderContext();
 	const { openPopoverHandler } = usePopoverContext();
+
+	const [workoutExtended, setWorkoutExtended] = useState(false);
 
 	const editWorkoutHandler = () => {
 		setIsEditWorkoutMode(true);
@@ -69,44 +72,56 @@ const WorkoutCard = ({
 	const showMetadataHandler = (e: React.MouseEvent) =>
 		openPopoverHandler(e.target as Element, metadata);
 
+	const extendCardHandler = (element: EventTarget) => {
+		if (
+			(element as Element).classList.contains('workout-card__title') ||
+			(element as Element).classList.contains('workout-card') ||
+			(element as Element).tagName === 'H2'
+		)
+			setWorkoutExtended((prevState) => !prevState);
+	};
+
 	return (
-		<div className='workout-card'>
-			<div className='workout-card__title'>
-				<h2>{title}</h2>
-				<div className='workout-card__actions'>
-					{metadata && (
-						<div onClick={showMetadataHandler}>
-							<Tooltip title='Show notes'>
-								<CommentRoundedIcon />
-							</Tooltip>
+		<div className='workout-card' onClick={(e) => extendCardHandler(e.target)}>
+			<Accordion>
+				<AccordionSummary>
+					<div className='workout-card__title'>
+						<h2>{title}</h2>
+						<div className='workout-card__actions'>
+							{metadata && (
+								<div onClick={showMetadataHandler} className='workout-card__action'>
+									<Tooltip title='Show notes'>
+										<CommentRoundedIcon />
+									</Tooltip>
+								</div>
+							)}
+							<div onClick={favWorkoutHandler} className='workout-card__action'>
+								<Tooltip
+									title={
+										favourite ? 'Remove to favourites' : 'Add from favourites'
+									}>
+									{favourite ? <StarIcon /> : <StarOutlineIcon />}
+								</Tooltip>
+							</div>
+							<div onClick={editWorkoutHandler} className='workout-card__action'>
+								<Tooltip title='Edit workout'>
+									<EditRoundedIcon />
+								</Tooltip>
+							</div>
+							<div onClick={deleteWorkoutHandler} className='workout-card__action'>
+								<Tooltip title='Delete workout'>
+									<DeleteRoundedIcon />
+								</Tooltip>
+							</div>
 						</div>
-					)}
-					<div onClick={favWorkoutHandler}>
-						<Tooltip title={favourite ? 'Remove to favourites' : 'Add from favourites'}>
-							{favourite ? <StarIcon /> : <StarOutlineIcon />}
-						</Tooltip>
 					</div>
-					<div onClick={editWorkoutHandler}>
-						<Tooltip title='Edit workout'>
-							<EditRoundedIcon />
-						</Tooltip>
+				</AccordionSummary>
+				<AccordionDetails>
+					<div className='workout-card__table'>
+						<WorkoutTable exercises={exercises} workoutId={_id || ''} />
 					</div>
-					<div onClick={deleteWorkoutHandler}>
-						<Tooltip title='Delete workout'>
-							<DeleteRoundedIcon />
-						</Tooltip>
-					</div>
-				</div>
-			</div>
-
-			{/* <div className='workout-card__extended'>
-				<div className='workout-card__content'></div>
-
-				<div className='workout-card__metadata'>
-					<h3>Notes</h3>
-					<span>{metadata}</span>
-				</div>
-			</div> */}
+				</AccordionDetails>
+			</Accordion>
 		</div>
 	);
 };
