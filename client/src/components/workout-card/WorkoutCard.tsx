@@ -35,9 +35,8 @@ const WorkoutCard = ({
 	const { setOpenLoader } = useCircularLoaderContext();
 	const { openPopoverHandler } = usePopoverContext();
 
-	const [workoutExtended, setWorkoutExtended] = useState(false);
-
-	const editWorkoutHandler = () => {
+	const editWorkoutHandler = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		setIsEditWorkoutMode(true);
 		setShowWorkoutModal(true);
 		setWorkoutItemDisp({ title, favourite, metadata, _id, exercises });
@@ -48,7 +47,8 @@ const WorkoutCard = ({
 		refetchWorkouts();
 	};
 
-	const deleteWorkoutHandler = () => {
+	const deleteWorkoutHandler = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		if (!_id) return;
 		setShowDeleteModal(true);
 		setDeleteIds([_id]);
@@ -57,7 +57,8 @@ const WorkoutCard = ({
 		});
 	};
 
-	const favWorkoutHandler = async () => {
+	const favWorkoutHandler = async (e: React.MouseEvent) => {
+		e.stopPropagation();
 		setOpenLoader(true);
 		try {
 			await updateWorkout({ title, metadata, _id, exercises, favourite: !favourite });
@@ -69,21 +70,19 @@ const WorkoutCard = ({
 		}
 	};
 
-	const showMetadataHandler = (e: React.MouseEvent) =>
+	const showMetadataHandler = (e: React.MouseEvent) => {
+		e.stopPropagation();
 		openPopoverHandler(e.target as Element, metadata);
-
-	const extendCardHandler = (element: EventTarget) => {
-		if (
-			(element as Element).classList.contains('workout-card__title') ||
-			(element as Element).classList.contains('workout-card') ||
-			(element as Element).tagName === 'H2'
-		)
-			setWorkoutExtended((prevState) => !prevState);
 	};
 
 	return (
-		<div className='workout-card' onClick={(e) => extendCardHandler(e.target)}>
-			<Accordion>
+		<div className='workout-card'>
+			<Accordion
+				onClick={(e) => {
+					console.log(e);
+					e.stopPropagation();
+					e.preventDefault();
+				}}>
 				<AccordionSummary>
 					<div className='workout-card__title'>
 						<h2>{title}</h2>

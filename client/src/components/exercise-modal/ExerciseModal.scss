@@ -76,8 +76,9 @@
 
 @media (min-width: 900px) {
 	.exercise-modal {
-		&__form {
-			width: clamp(500px, 60%, 800px);
+		&--open {
+			left: $side-navbar-size;
+			width: calc(100% - $side-navbar-size);
 		}
 	}
 }

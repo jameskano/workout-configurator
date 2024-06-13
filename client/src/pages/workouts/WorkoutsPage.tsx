@@ -48,6 +48,11 @@ const WorkoutsPage = () => {
 		if (data) setFilteredWorkouts(updatedFilteredWorkouts(data.data));
 	}, [data, showFavourites]);
 
+	useEffect(() => {
+		if (showWorkoutModal) document.body.style.overflow = 'hidden';
+		else document.body.style.overflow = 'auto';
+	}, [showWorkoutModal]);
+
 	const updateDebouncedFilter = useCallback(
 		debounce((filter: string) => {
 			setDebouncedFilter(filter);

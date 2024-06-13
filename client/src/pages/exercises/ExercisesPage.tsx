@@ -23,6 +23,8 @@ const ExercisesPage = () => {
 	const firstRenderRef = useRef(true);
 
 	const [exerciseFilter, setExerciseFilter] = useState('');
+	const [showExerciseModal, setShowExerciseModal] = useState(false);
+	const [isEditExerciseMode, setIsEditExerciseMode] = useState(false);
 
 	const { isLoading, isError, data, refetch } = useCustomQuery({
 		queryKey: ['exercises', exerciseFilter],
@@ -44,8 +46,10 @@ const ExercisesPage = () => {
 		if (isError) openToastHandler(toastMessages.EXERCISE_GET_ERROR, toastConstants.TYPES.ERROR);
 	}, [isError]);
 
-	const [showExerciseModal, setShowExerciseModal] = useState(false);
-	const [isEditExerciseMode, setIsEditExerciseMode] = useState(false);
+	useEffect(() => {
+		if (showExerciseModal) document.body.style.overflow = 'hidden';
+		else document.body.style.overflow = 'auto';
+	}, [showExerciseModal]);
 
 	const newExerciseHandler = () => {
 		setShowExerciseModal(true);

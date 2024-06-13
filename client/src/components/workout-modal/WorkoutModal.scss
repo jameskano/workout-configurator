@@ -97,8 +97,8 @@
 
 @media (min-width: 900px) {
 	.workout-modal {
-		&__form {
-			width: clamp(500px, 60%, 800px);
+		&--open {
+			left: $side-navbar-size;
 		}
 	}
 }
