@@ -77,12 +77,7 @@ const WorkoutCard = ({
 
 	return (
 		<div className='workout-card'>
-			<Accordion
-				onClick={(e) => {
-					console.log(e);
-					e.stopPropagation();
-					e.preventDefault();
-				}}>
+			<Accordion>
 				<AccordionSummary>
 					<div className='workout-card__title'>
 						<h2>{title}</h2>
