@@ -1,4 +1,9 @@
-@import "./mixins.scss";
-@import "./Mui.scss";
+@import './mixins.scss';
+@import './Mui.scss';
 
-@import "./variables.scss";
+@import './variables.scss';
+
+@import './general-styles.scss';
+
+// Components
+@import './components/popover.scss';

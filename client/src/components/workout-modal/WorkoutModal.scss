@@ -1,0 +1,113 @@
+@import '../../styles/main-styles.scss';
+
+.workout-modal {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 100%;
+	background-color: $color-background-dark-3;
+	border-radius: $border-radius-2;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	z-index: 5;
+	transition: left 0.2s ease-in-out;
+
+	&--open {
+		left: 0;
+	}
+
+	&__header {
+		padding: $spacing-3 $spacing-5;
+		background-color: $color-background-dark-4;
+		display: flex;
+		gap: $spacing-5;
+
+		> div {
+			height: 21px;
+
+			> svg {
+				cursor: pointer;
+			}
+		}
+	}
+
+	&__body {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: $spacing-3;
+		padding: $spacing-4 $spacing-5;
+	}
+
+	&__bottom {
+		align-self: flex-end;
+		margin-top: auto;
+		padding: 0 $spacing-5 $spacing-4;
+
+		> button {
+			text-transform: none;
+			background-color: $color-primary !important;
+
+			&:hover {
+				background-color: $color-primary-darker-1 !important;
+			}
+		}
+	}
+
+	&__input {
+		@include generic-input;
+		background-color: $color-background-dark-4;
+
+		label {
+			color: $color-text-white-darker-2;
+		}
+	}
+
+	&__metadata {
+		div {
+			color: $color-text-white-base;
+		}
+	}
+
+	&__exercises {
+		height: 100%;
+		grid-column: 1 / -1;
+		align-self: stretch;
+		display: flex;
+		flex-direction: column;
+
+		> span {
+			font-weight: $font-weight-semi-bold;
+		}
+
+		> div {
+			height: 100%;
+			padding: 0 $spacing-2;
+			border: 2px solid $color-background-dark-1;
+			display: flex;
+			flex-direction: column;
+			margin-top: $spacing-2;
+			background-color: $color-background-dark-2;
+			border-radius: $border-radius-2;
+		}
+	}
+}
+
+@media (min-width: 900px) {
+	.workout-modal {
+		&--open {
+			left: $side-navbar-size;
+		}
+	}
+}
+
+@media (min-width: 768px) {
+	.workout-modal {
+		&__body {
+			grid-template-columns: repeat(2, 1fr);
+			display: grid;
+		}
+	}
+}

@@ -1,24 +1,28 @@
-@import "../../styles/main-styles.scss";
+@import '../../styles/main-styles.scss';
 
 .exercise-modal {
-	&__form {
-		width: min(500px, 90%);
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		background-color: $color-background-dark-3;
-		border-radius: $border-radius-2;
-		display: flex;
-		flex-direction: column;
-		overflow: hidden;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 100%;
+	background-color: $color-background-dark-3;
+	border-radius: $border-radius-2;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	z-index: 5;
+	transition: left 0.2s ease-in-out;
+
+	&--open {
+		left: 0;
 	}
 
 	&__header {
 		padding: $spacing-3 $spacing-5;
 		background-color: $color-background-dark-4;
 		display: flex;
-		justify-content: space-between;
+		gap: $spacing-5;
 
 		> div {
 			height: 21px;
@@ -38,10 +42,16 @@
 
 	&__bottom {
 		align-self: flex-end;
-		padding: 0 $spacing-8 $spacing-4;
+		margin-top: auto;
+		padding: 0 $spacing-5 $spacing-4;
 
 		> button {
 			text-transform: none;
+			background-color: $color-primary !important;
+
+			&:hover {
+				background-color: $color-primary-darker-1 !important;
+			}
 		}
 	}
 
@@ -66,8 +76,9 @@
 
 @media (min-width: 900px) {
 	.exercise-modal {
-		&__form {
-			width: clamp(500px, 60%, 800px);
+		&--open {
+			left: $side-navbar-size;
+			width: calc(100% - $side-navbar-size);
 		}
 	}
 }

@@ -1,45 +1,69 @@
-import SideNavBar from "../side-navbar/SideNavBar";
-import { LayoutTypes } from "./Layout.types";
-import "./Layout.scss";
-import { useLocation } from "react-router";
-import { useState } from "react";
-import { pageTitle } from "../../utils/constants/page-title";
+import SideNavBar from '../side-navbar/SideNavBar';
+import { LayoutTypes } from './Layout.types';
+import './Layout.scss';
+import { useLocation } from 'react-router';
+import { useState } from 'react';
+import { pageTitle } from '../../utils/constants/page-title';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import Toast from '../../UI/toast/Toast';
+import { createPortal } from 'react-dom';
+import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
+import { backdropConstants } from '../../utils/constants/backdrop';
+import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
+import DeletePopup from '../../components/delete-popup/DeletePopup';
+import { Popover } from '@mui/material';
+import { usePopoverContext } from '../../store/context/popover-context/popover-context';
 
 const Layout = ({ currentPageComponent }: LayoutTypes) => {
-    const location = useLocation();
+	const location = useLocation();
+	const { openLoader } = useCircularLoaderContext();
+	const { popoverOpen, popoverContent, popoverAnchorElement, closePopoverHandler } =
+		usePopoverContext();
 
-    const [isSideNavbarShown, setIsSideNavbarShown] = useState(false);
+	const [isSideNavbarShown, setIsSideNavbarShown] = useState(false);
 
-    const sideNavbarHandler = () =>
-        setIsSideNavbarShown((prevState) => !prevState);
+	const sideNavbarHandler = () => setIsSideNavbarShown((prevState) => !prevState);
 
-    return (
-        <section className="layout">
-            <div className="layout__header">
-                <span
-                    className="material-symbols-rounded"
-                    onClick={sideNavbarHandler}
-                >
-                    menu
-                </span>
-                <h1 className="exercises__title">
-                    {
-                        (pageTitle as any)[
-                            location.pathname.slice(1).toUpperCase()
-                        ]
-                    }
-                </h1>
-            </div>
-            {/* <SideNavBar showSideNavbar={isSideNavbarShown} />
-            {currentPageComponent} */}
-            <div className="layout__body">
-                <SideNavBar showSideNavbar={isSideNavbarShown} />
-                <div className="layout__main-content">
-                    {currentPageComponent}
-                </div>
-            </div>
-        </section>
-    );
+	return (
+		<section className='layout'>
+			<div className='layout__header'>
+				{isSideNavbarShown ? (
+					<CloseRoundedIcon onClick={sideNavbarHandler} />
+				) : (
+					<MenuRoundedIcon onClick={sideNavbarHandler} />
+				)}
+				<h1 className='exercises__title'>
+					{(pageTitle as any)[location.pathname.slice(1).toUpperCase()]}
+				</h1>
+			</div>
+
+			<div className='layout__body'>
+				<SideNavBar
+					showSideNavbar={isSideNavbarShown}
+					setIsSideNavbarShown={setIsSideNavbarShown}
+				/>
+				<div className='layout__main-content'>{currentPageComponent}</div>
+			</div>
+
+			<Toast />
+
+			<Popover
+				open={popoverOpen}
+				anchorEl={popoverAnchorElement}
+				onClose={closePopoverHandler}
+				className='popover-component'>
+				<span>{popoverContent}</span>
+			</Popover>
+
+			{createPortal(
+				<BackdropLoader open={openLoader} position={backdropConstants.POSITION.FIXED} />,
+				document.querySelector('#modal-root')!,
+			)}
+
+			{createPortal(<DeletePopup />, document.querySelector('#modal-root')!)}
+		</section>
+	);
 };
 
 export default Layout;

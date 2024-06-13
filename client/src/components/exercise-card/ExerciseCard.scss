@@ -1,13 +1,13 @@
-@import "../../styles/main-styles.scss";
+@import '../../styles/main-styles.scss';
 
 .exercise-card {
 	background-color: $color-background-dark-5;
 	box-shadow: $elevation-4;
-	padding: $spacing-3;
+	padding: $spacing-1 $spacing-3;
 	border-radius: $border-radius-2;
 	display: flex;
 	flex-direction: column;
-	gap: $spacing-2;
+	gap: $spacing-1;
 
 	h3,
 	h2 {
@@ -43,10 +43,13 @@
 	&__content {
 		display: flex;
 		flex-direction: row;
-		align-items: center;
+		align-items: stretch;
 		justify-content: space-between;
 
 		> div {
+			flex: 1;
+			overflow-x: hidden;
+			text-overflow: ellipsis;
 			text-align: center;
 
 			> span {
@@ -62,6 +65,7 @@
 
 		> div {
 			cursor: pointer;
+			height: 24px;
 		}
 
 		svg {

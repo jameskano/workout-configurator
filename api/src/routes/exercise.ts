@@ -1,23 +1,29 @@
 import {
-    getExercise,
-    getAllExercises,
-    createExercise,
-    updateExercise,
-    deleteExercise,
-} from "../controllers/exercise-controller";
+	getExercise,
+	getAllExercises,
+	createExercise,
+	updateExercise,
+	deleteExercise,
+	getFilteredExercises,
+	getExercisesByIds,
+} from '../controllers/exercise-controller';
 
-import express from "express";
+import express from 'express';
 
 const router = express.Router();
 
-router.get("/", getAllExercises);
+router.get('/', getAllExercises);
 
-router.get("/:id", getExercise);
+router.get('/:id', getExercise);
 
-router.post("/", createExercise);
+router.post('/ids', getExercisesByIds);
 
-router.put("/", updateExercise);
+router.post('/', createExercise);
 
-router.delete("/", deleteExercise);
+router.post('/filter', getFilteredExercises);
+
+router.put('/', updateExercise);
+
+router.delete('/', deleteExercise);
 
 export default router;

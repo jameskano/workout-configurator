@@ -1,0 +1,44 @@
+@import '../../styles/main-styles.scss';
+
+.modal {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&__main-container {
+		background-color: $color-background-dark-3;
+		border-radius: $border-radius-2;
+
+		&:focus-visible {
+			outline: 0;
+		}
+	}
+
+	&__container {
+		padding: $spacing-5;
+
+		&--header {
+			padding-top: 0;
+		}
+	}
+
+	&__header {
+		font-weight: $font-weight-semi-bold;
+		margin-bottom: $spacing-3;
+		background-color: $color-background-dark-4;
+		padding: $spacing-1 $spacing-5;
+	}
+
+	&__buttons {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		margin-top: $spacing-3;
+	}
+
+	&__close-icon {
+		position: absolute;
+		top: $spacing-1;
+		right: $spacing-1;
+	}
+}

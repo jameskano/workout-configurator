@@ -1,0 +1,32 @@
+@import '../../styles/main-styles.scss';
+
+.workout-table {
+	display: flex;
+
+	> div {
+		background-color: $color-background-dark-5;
+	}
+
+	tr {
+		width: 100%;
+		display: flex;
+	}
+
+	td,
+	th {
+		padding-left: $spacing-1;
+		padding-right: $spacing-1;
+		color: $color-text-white-base;
+		width: 20% !important;
+		flex: 1;
+		overflow-x: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	td:first-of-type,
+	th:first-of-type {
+		width: 40%;
+		flex: 2;
+	}
+}

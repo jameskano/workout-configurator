@@ -1,10 +1,10 @@
 html {
-    font-size: 1rem;
+	font-size: 1rem;
 }
 
 // Font families
-$font-primary: "Roboto";
-$font-secondary: "Montserrat";
+$font-primary: 'Roboto';
+$font-secondary: 'Montserrat';
 
 // Font weights
 $font-weight-extra-light: 200;
@@ -55,31 +55,46 @@ $border-radius-4: 10px;
 $border-radius-sphere: 50%;
 
 // Shadows
-$elevation-1: 0 0 2px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1),
-    0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-$elevation-2: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 3px 4px 0 rgba(0, 0, 0, 0.16),
-    0 1px 5px 0 rgba(0, 0, 0, 0.16);
-$elevation-3: 0 3px 3px 0 rgba(0, 0, 0, 0.16), 0 3px 4px 0 rgba(0, 0, 0, 0.18),
-    0 1px 8px 0 rgba(0, 0, 0, 0.2);
-$elevation-4: 0 2px 4px 0 rgba(0, 0, 0, 0.14), 0 4px 5px 0 rgba(0, 0, 0, 0.16),
-    0 1px 10px 0 rgba(0, 0, 0, 0.18);
-$elevation-5: 0 5px 10px 0 rgba(0, 0, 0, 0.14), 0 2px 6px 0 rgba(0, 0, 0, 0.16),
-    0 2px 8px 0 rgba(0, 0, 0, 0.18);
-$elevation-6: 0 6px 10px 0 rgba(0, 0, 0, 0.16), 0 1px 12px 0 rgba(0, 0, 0, 0.18),
-    0 3px 5px 0 rgba(0, 0, 0, 0.2);
+$elevation-1:
+	0 0 2px 0 rgba(0, 0, 0, 0.1),
+	0 2px 2px 0 rgba(0, 0, 0, 0.1),
+	0 1px 3px 0 rgba(0, 0, 0, 0.1),
+	0 1px 3px 0 rgba(0, 0, 0, 0.1);
+$elevation-2:
+	0 2px 4px 0 rgba(0, 0, 0, 0.16),
+	0 3px 4px 0 rgba(0, 0, 0, 0.16),
+	0 1px 5px 0 rgba(0, 0, 0, 0.16);
+$elevation-3:
+	0 3px 3px 0 rgba(0, 0, 0, 0.16),
+	0 3px 4px 0 rgba(0, 0, 0, 0.18),
+	0 1px 8px 0 rgba(0, 0, 0, 0.2);
+$elevation-4:
+	0 2px 4px 0 rgba(0, 0, 0, 0.14),
+	0 4px 5px 0 rgba(0, 0, 0, 0.16),
+	0 1px 10px 0 rgba(0, 0, 0, 0.18);
+$elevation-5:
+	0 5px 10px 0 rgba(0, 0, 0, 0.14),
+	0 2px 6px 0 rgba(0, 0, 0, 0.16),
+	0 2px 8px 0 rgba(0, 0, 0, 0.18);
+$elevation-6:
+	0 6px 10px 0 rgba(0, 0, 0, 0.16),
+	0 1px 12px 0 rgba(0, 0, 0, 0.18),
+	0 3px 5px 0 rgba(0, 0, 0, 0.2);
 
-$elevation-bottom: 0 1px 0px 0 rgba(0, 0, 0, 0.12),
-    0 2px 0px 0 rgba(0, 0, 0, 0.15), 0 1px 0px 0 rgba(0, 0, 0, 0.1);
+$elevation-bottom:
+	0 1px 0px 0 rgba(0, 0, 0, 0.12),
+	0 2px 0px 0 rgba(0, 0, 0, 0.15),
+	0 1px 0px 0 rgba(0, 0, 0, 0.1);
 $elevation-portal: 0 0 10px 2px rgba(0, 0, 0, 0.35);
 $popover-tooltip-elevation: 1px 3px 2px rgba(0, 0, 0, 0.4);
 
 // Primary color
-$color-primary-brighter-2: #a2d1ff;
-$color-primary-brighter-1: #8ac4ff;
-$color-primary: #66b2ff;
-$color-primary-darker-1: #528eca;
-$color-primary-darker-2: #3d6a96;
-$color-primary-hover: #549ce3;
+$color-primary-brighter-2: #90c7ff;
+$color-primary-brighter-1: #76b6f6;
+$color-primary: #549ce3;
+$color-primary-darker-1: #4b81b8;
+$color-primary-darker-2: #375f87;
+$color-primary-hover: #4c8dcd;
 // Secondary color
 $color-secondary-brighter-2: #f8bbd0;
 $color-secondary-brighter-1: #f06292;
@@ -134,4 +149,4 @@ $color-background-dark-grey: rgba(67, 78, 84, 0.8);
 $color-light-grey: #9fa3a6;
 
 // Misc
-$side-navbar-size: clamp(300px, 30%, 500px);
+$side-navbar-size: clamp(250px, 20%, 350px);

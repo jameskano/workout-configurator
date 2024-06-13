@@ -1,25 +1,22 @@
-import express from "express";
+import {
+	createWorkout,
+	deleteWorkout,
+	getAllWorkouts,
+	updateWorkout,
+	getFilteredWorkouts,
+} from '../controllers/workout-controller';
+import express from 'express';
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    // Return all workouts
-});
+router.get('/', getAllWorkouts);
 
-router.get("/:id", (req, res) => {
-    // Return one workout
-});
+router.post('/', createWorkout);
 
-router.post("/", (req, res) => {
-    // Post new workout
-});
+router.post('/filter', getFilteredWorkouts);
 
-router.put("/", (req, res) => {
-    // Update a workout
-});
+router.put('/', updateWorkout);
 
-router.delete("/excersise", (req, res) => {
-    // Delete a workout
-});
+router.delete('/', deleteWorkout);
 
 export default router;

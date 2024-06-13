@@ -1,3 +1,4 @@
 export interface SideNavbarTypes {
-    showSideNavbar: boolean;
+	showSideNavbar: boolean;
+	setIsSideNavbarShown: (value: boolean) => void;
 }
