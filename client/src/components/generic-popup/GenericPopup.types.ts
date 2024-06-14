@@ -4,8 +4,9 @@ export interface GenericPopupType {
 	classes?: string;
 	onClose: () => void;
 	headerText?: string;
-	text: string;
+	text?: string;
 	buttons?: GenericModalButtonType[];
+	content?: React.ReactNode;
 }
 
 export interface GenericModalButtonType {

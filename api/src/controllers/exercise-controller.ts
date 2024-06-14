@@ -2,6 +2,7 @@ import { RequestHandler } from 'express';
 import ExerciseModel from '../models/exercise-model';
 import mongoose from 'mongoose';
 import { CustomError } from '../utils/classes/errors';
+import { removeExercise } from '../services/exercise-service';
 const diacriticLess = require('diacriticless');
 
 export const getAllExercises: RequestHandler = async (req, res, next) => {
@@ -42,17 +43,7 @@ export const deleteExercise: RequestHandler = async (req, res, next) => {
 	const { exerciseIds } = req.body;
 
 	try {
-		for (const _id of exerciseIds) {
-			if (!mongoose.isValidObjectId(_id)) {
-				throw new CustomError(400, `Invalid exercise id: ${_id}`);
-			}
-		}
-
-		const deletedExercises = await ExerciseModel.deleteMany({ _id: { $in: exerciseIds } });
-
-		if (deletedExercises.deletedCount === 0) {
-			throw new CustomError(400, 'No exercises were deleted');
-		}
+		await removeExercise(exerciseIds);
 
 		res.status(204).send();
 	} catch (error) {

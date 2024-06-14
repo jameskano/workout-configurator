@@ -9,6 +9,7 @@ const GenericPopup = ({
 	classes,
 	headerText,
 	text,
+	content,
 	buttons,
 }: GenericPopupType) => {
 	const closeModalHandler = () => {
@@ -25,7 +26,8 @@ const GenericPopup = ({
 			<div className='modal__main-container'>
 				{headerText && <div className='modal__header'>{headerText}</div>}
 				<div className={`modal__container ${headerText ? 'modal__container--header' : ''}`}>
-					<div className='modal__content'>{text}</div>
+					<div className='modal__content'>{content}</div>
+					<div className='modal__text'>{text}</div>
 					{buttons?.length && (
 						<div className='modal__buttons'>
 							{buttons.map((button: GenericModalButtonType, index) => (

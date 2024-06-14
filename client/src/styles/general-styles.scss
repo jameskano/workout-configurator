@@ -21,3 +21,8 @@
 		border-color: $color-primary-darker-1 !important;
 	}
 }
+.delete-popup {
+	.modal__main-container {
+		max-width: 80%;
+	}
+}

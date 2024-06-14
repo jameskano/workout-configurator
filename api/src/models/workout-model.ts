@@ -1,4 +1,4 @@
-import { InferSchemaType, Schema, model } from "mongoose";
+import { InferSchemaType, Schema, model } from 'mongoose';
 
 const workoutSchema = new Schema(
 	{
@@ -11,7 +11,7 @@ const workoutSchema = new Schema(
 			required: true,
 		},
 		exercises: {
-			type: Array<Number>,
+			type: Array<String>,
 			required: true,
 		},
 		metadata: {
@@ -26,4 +26,4 @@ const workoutSchema = new Schema(
 
 export type WorkoutType = InferSchemaType<typeof workoutSchema>;
 
-export default model<WorkoutType>("Workout", workoutSchema);
+export default model<WorkoutType>('Workout', workoutSchema);
