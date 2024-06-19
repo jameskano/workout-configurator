@@ -33,9 +33,10 @@ const WorkoutModal = ({
 	});
 
 	const {
-		workoutItem: { title, favourite, exercises, metadata },
+		workoutItem: { title, favourite, exercises, metadata, _id },
 		workoutItem,
 		setWorkoutItemDisp,
+		setWorkoutId,
 	} = useWorkoutContext();
 	const { setOpenLoader } = useCircularLoaderContext();
 	const { openToastHandler } = useToast();
@@ -53,13 +54,14 @@ const WorkoutModal = ({
 		setOpenLoader(true);
 		try {
 			isEditMode ? await updateWorkout(workoutItem) : await createWorkout(workoutItem);
-			queryClient.invalidateQueries({ queryKey: ['workouts'] });
+			queryClient.invalidateQueries({ queryKey: [`card-exercises-${_id}`, 'workouts'] });
 			openToastHandler(
 				isEditMode
 					? toastMessages.WORKOUT_UPDATE_SUCCESS
 					: toastMessages.WORKOUT_CREATE_SUCCESS,
 				toastConstants.TYPES.SUCCESS,
 			);
+			_id && setWorkoutId(_id);
 			refetchWorkouts();
 		} catch (error) {
 			openToastHandler(

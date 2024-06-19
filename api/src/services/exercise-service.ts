@@ -1,14 +1,23 @@
-import mongoose from 'mongoose';
 import { CustomError } from '../utils/classes/errors';
-import { deleteMany } from '../data-access/exercise-repository';
-import { findByIdInArray, updateWorkout } from '../data-access/workout-repository';
-import { WorkoutType } from '../models/workout-model';
+import {
+	deleteMany,
+	getAllExercisesRepository,
+	getExerciseByIdRepository,
+	getExercisesByIdsRepository,
+	updateExerciseRepository,
+} from '../data-access/exercise-repository';
+import {
+	findByIdInArrayRepository,
+	updateWorkoutRepository,
+} from '../data-access/workout-repository';
+import { checkIfElementExists, exerciseIdValidation } from '../utils/functions/db-validations';
+import { ExerciseType } from '../models/exercise-model';
+const diacriticLess = require('diacriticless');
+import mongoose from 'mongoose';
 
-export const removeExercise = async (exerciseIds: string[]) => {
+export const deleteExerciseService = async (exerciseIds: string[]) => {
 	for (const _id of exerciseIds) {
-		if (!mongoose.isValidObjectId(_id)) {
-			throw new CustomError(400, `Invalid exercise id: ${_id}`);
-		}
+		await exerciseIdValidation(_id);
 	}
 
 	const deletedExercises = await deleteMany(exerciseIds);
@@ -17,13 +26,69 @@ export const removeExercise = async (exerciseIds: string[]) => {
 		throw new CustomError(400, 'No exercises were deleted');
 	}
 
-	const workouts = await findByIdInArray(exerciseIds);
+	const workouts = await findByIdInArrayRepository(exerciseIds);
 
 	for (const workout of workouts) {
-		console.log(workout.exercises);
 		// @ts-expect-error
 		workout.exercises = workout.exercises.filter((id: string) => !exerciseIds.includes(id));
-		console.log(workout.exercises);
-		await updateWorkout(workout.id, workout);
+		await updateWorkoutRepository(workout.id, workout);
 	}
+};
+
+export const getExerciseService = async (_id: string) => {
+	await exerciseIdValidation(_id);
+
+	const exercise = await getExerciseByIdRepository(_id);
+
+	await checkIfElementExists(exercise);
+
+	return exercise;
+};
+
+export const updateExerciseService = async (_id: string, data: ExerciseType) => {
+	await exerciseIdValidation(_id);
+
+	const updatedExercise = await updateExerciseRepository(_id, data);
+
+	await checkIfElementExists(updatedExercise);
+
+	return updatedExercise;
+};
+
+export const getFilteredExercisesService = async (textFilter: string, bodyPartFilter: string) => {
+	const formattedFilter = diacriticLess(textFilter.toLowerCase());
+	const exercises = await getAllExercisesRepository();
+	const filteredExercises = exercises.filter((exercise) => {
+		const titleWithoutDiacritics = diacriticLess(exercise.title.toLowerCase());
+		switch (true) {
+			case formattedFilter && bodyPartFilter !== '':
+				return (
+					titleWithoutDiacritics.includes(formattedFilter) &&
+					exercise.bodyPart === bodyPartFilter
+				);
+			case formattedFilter && !bodyPartFilter:
+				return titleWithoutDiacritics.includes(formattedFilter);
+			case !formattedFilter && bodyPartFilter !== '':
+				return exercise.bodyPart === bodyPartFilter;
+			case !formattedFilter && !bodyPartFilter:
+				return exercises;
+		}
+	});
+
+	return filteredExercises;
+};
+
+export const getExercisesByIdsService = async (exerciseIds: string[]) => {
+	const invalidIds = exerciseIds.filter((id) => !mongoose.isValidObjectId(id));
+	if (invalidIds.length > 0) {
+		throw new CustomError(400, 'Invalid exercise ID');
+	}
+
+	const exercises = await getExercisesByIdsRepository(exerciseIds);
+
+	if (exercises.length !== exerciseIds.length) {
+		throw new CustomError(400, 'No exercises found for the provided IDs');
+	}
+
+	return exercises;
 };

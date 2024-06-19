@@ -8,6 +8,7 @@ import { Tooltip } from '@mui/material';
 import { useModalContext } from '../../store/context/modal-context/modal-context';
 import CommentRoundedIcon from '@mui/icons-material/CommentRounded';
 import { usePopoverContext } from '../../store/context/popover-context/popover-context';
+import { useWorkoutContext } from '../../store/context/workout-context/workout-context';
 
 const ExerciseCard = ({
 	title,
@@ -24,6 +25,7 @@ const ExerciseCard = ({
 	const { setExerciseItemDisp } = useExerciseContext();
 	const { setShowDeleteModal, setDeleteIds, setTriggerFunctions } = useModalContext();
 	const { openPopoverHandler } = usePopoverContext();
+	const { setRefetchWorkouts } = useWorkoutContext();
 	const queryClient = useQueryClient();
 
 	const editExerciseHandler = () => {
@@ -38,7 +40,10 @@ const ExerciseCard = ({
 		setDeleteIds([_id]);
 		setTriggerFunctions({
 			onSuccess: () => {
-				queryClient.invalidateQueries({ queryKey: ['exercises'] });
+				queryClient.invalidateQueries({
+					queryKey: ['exercises', 'workouts'],
+				});
+				setRefetchWorkouts(true);
 				refetchExercises();
 			},
 		});
