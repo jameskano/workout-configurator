@@ -1,4 +1,3 @@
-import { useWorkoutContext } from '../../../store/context/workout-context/workout-context';
 import { getExercisesByIds } from '../../../services/exercises';
 
 const useGetExerciseTable = () => {

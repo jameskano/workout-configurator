@@ -17,8 +17,7 @@
 		padding-left: $spacing-1;
 		padding-right: $spacing-1;
 		color: $color-text-white-base;
-		width: 20% !important;
-		flex: 1;
+		flex: 0.65;
 		overflow-x: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -26,7 +25,26 @@
 
 	td:first-of-type,
 	th:first-of-type {
-		width: 40%;
 		flex: 2;
+	}
+
+	td:last-of-type,
+	th:last-of-type {
+		flex: 0.3;
+		display: flex;
+		align-items: center;
+
+		> svg {
+			font-size: 16px;
+		}
+	}
+
+	.MuiTable-root {
+		position: relative;
+	}
+
+	.no-data-text {
+		display: block;
+		margin: $spacing-2 0 0;
 	}
 }
