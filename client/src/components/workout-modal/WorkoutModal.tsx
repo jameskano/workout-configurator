@@ -17,6 +17,7 @@ import { createPortal } from 'react-dom';
 import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
 import { miscellaneous } from '../../utils/constants/app-constants';
 import useCustomQuery from '../../utils/hooks/custom-query-hook/use-custom-query';
+import Switch from '@mui/material/Switch';
 
 const WorkoutModal = ({
 	isEditMode,
@@ -111,6 +112,7 @@ const WorkoutModal = ({
 					required
 				/>
 				<FormControlLabel
+					className='workout-modal__favourites'
 					control={
 						<Checkbox
 							checked={favourite}
@@ -121,9 +123,26 @@ const WorkoutModal = ({
 					label='Favourite'
 				/>
 				<div className='workout-modal__exercises'>
-					<span>Select workout exercises *</span>
+					<div className='workout-modal__exercises-header'>
+						<span>Select workout exercises *</span>
 
-					<div>
+						<div>
+							<TextField
+								// label='Workout name'
+								placeholder='Search exercise'
+								type='text'
+								variant='outlined'
+								className='workout-modal__filter workout-modal__input'
+								size='small'
+								// value={title}
+								// onChange={(e) => changeFieldHandler(e.target.value, 'title')}
+							/>
+
+							<FormControlLabel control={<Switch />} label='Show selected' />
+						</div>
+					</div>
+
+					<div className='workout-modal__exercises-list'>
 						{data?.map(({ _id, title }: ExerciseType) => {
 							return (
 								<FormControlLabel
