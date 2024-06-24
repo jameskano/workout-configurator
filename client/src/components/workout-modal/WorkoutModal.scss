@@ -88,16 +88,16 @@
 		flex-grow: 1;
 		overflow-y: hidden;
 		overflow-x: visible;
-
-		label {
-			margin-left: -8px;
-		}
 	}
 
 	&__exercises-header {
 		display: flex;
 		flex-direction: column;
 		gap: $spacing-1;
+
+		.MuiFormControlLabel-root {
+			margin-left: -8px;
+		}
 
 		> span {
 			font-weight: $font-weight-semi-bold;
