@@ -28,7 +28,7 @@ const WorkoutTable = ({ exercises, workoutId, expandedCard }: WorkoutTableType) 
 	const { openPopoverHandler } = usePopoverContext();
 	const { getExercisesByIdsFn } = useGetExerciseTable();
 	const { openToastHandler } = useToast();
-	const { workoutId: workoutIdToRefertch, setWorkoutId } = useWorkoutContext();
+	const { workoutId: workoutIdToRefetch, setWorkoutId } = useWorkoutContext();
 
 	const { isLoading, isError, data, refetch } = useCustomQuery({
 		queryKey: [`card-exercises-${workoutId}`],
@@ -37,12 +37,12 @@ const WorkoutTable = ({ exercises, workoutId, expandedCard }: WorkoutTableType) 
 	});
 
 	useEffect(() => {
-		if (workoutIdToRefertch === workoutId) {
+		if (workoutIdToRefetch === workoutId) {
 			refetch();
 			console.log('yesso');
 			setWorkoutId('');
 		}
-	}, [workoutIdToRefertch]);
+	}, [exercises]);
 
 	useEffect(() => {
 		if (isError)
