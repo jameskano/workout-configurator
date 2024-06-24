@@ -35,6 +35,8 @@ const WorkoutCard = ({
 	const { setOpenLoader } = useCircularLoaderContext();
 	const { openPopoverHandler } = usePopoverContext();
 
+	const [expandedCard, setExpandedCard] = useState(false);
+
 	const editWorkoutHandler = (e: React.MouseEvent) => {
 		e.stopPropagation();
 		setIsEditWorkoutMode(true);
@@ -75,10 +77,12 @@ const WorkoutCard = ({
 		openPopoverHandler(e.target as Element, metadata);
 	};
 
+	const expandCardHandler = () => setExpandedCard((prevState) => !prevState);
+
 	return (
 		<div className='workout-card'>
-			<Accordion>
-				<AccordionSummary>
+			<Accordion expanded={expandedCard}>
+				<AccordionSummary onClick={expandCardHandler}>
 					<div className='workout-card__title'>
 						<h2>{title}</h2>
 						<div className='workout-card__actions'>
@@ -112,7 +116,11 @@ const WorkoutCard = ({
 				</AccordionSummary>
 				<AccordionDetails>
 					<div className='workout-card__table'>
-						<WorkoutTable exercises={exercises} workoutId={_id || ''} />
+						<WorkoutTable
+							expandedCard={expandedCard}
+							exercises={exercises}
+							workoutId={_id || ''}
+						/>
 					</div>
 				</AccordionDetails>
 			</Accordion>

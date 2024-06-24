@@ -10,7 +10,19 @@ const DeletePopup = () => {
 	const { deleteRequest } = useDelete();
 	const { pathname } = useLocation();
 
-	const deletePopupText = `Do you want to delete these ${pathname.replace('/', '')}?`;
+	const DeletePopupContent = () => {
+		return (
+			<div>
+				<span
+					style={{
+						display: 'block',
+					}}>{`Do you want to delete these ${pathname.replace('/', '')}?`}</span>
+				{pathname === '/exercises' && (
+					<span>All deleted exercises also will be removed from workouts</span>
+				)}
+			</div>
+		);
+	};
 
 	const closeHandler = () => {
 		setShowDeleteModal(false);
@@ -40,10 +52,11 @@ const DeletePopup = () => {
 	return (
 		<GenericPopup
 			onClose={closeHandler}
-			text={deletePopupText}
+			content={<DeletePopupContent />}
 			showModal={showDeleteModal}
 			setShowModal={setShowDeleteModal}
 			buttons={[cancelButton, removeButton]}
+			classes='delete-popup'
 		/>
 	);
 };

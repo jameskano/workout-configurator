@@ -16,9 +16,11 @@ import { backdropConstants } from '../../utils/constants/backdrop';
 import { toastMessages } from '../../utils/constants/toast-messages';
 import { miscellaneous } from '../../utils/constants/app-constants';
 import useCustomQuery from '../../utils/hooks/custom-query-hook/use-custom-query';
+import { useWorkoutContext } from '../../store/context/workout-context/workout-context';
 
 const WorkoutsPage = () => {
 	const { workoutTitle } = useFiltersContext();
+	const { refetchWorkouts, setRefetchWorkouts } = useWorkoutContext();
 	const { openToastHandler } = useToast();
 
 	const firstRenderRef = useRef(true);
@@ -52,6 +54,13 @@ const WorkoutsPage = () => {
 		if (showWorkoutModal) document.body.style.overflow = 'hidden';
 		else document.body.style.overflow = 'auto';
 	}, [showWorkoutModal]);
+
+	useEffect(() => {
+		if (refetchWorkouts) {
+			refetch();
+			setRefetchWorkouts(false);
+		}
+	}, [refetchWorkouts]);
 
 	const updateDebouncedFilter = useCallback(
 		debounce((filter: string) => {
