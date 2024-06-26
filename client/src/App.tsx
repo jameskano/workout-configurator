@@ -11,34 +11,40 @@ import { Suspense } from 'react';
 import { ModalProvider } from './store/context/modal-context/modal-provider';
 import CircularLoader from './UI/circular-loader/CircularLoader';
 import { PopoverProvider } from './store/context/popover-context/popover-provider';
+import { RegisterProvider } from './store/context/register-context/register-provider';
+import { LoginProvider } from './store/context/login-context/login-provider';
 
 function App() {
 	const queryClient = new QueryClient();
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<CircularLoaderProvider>
-				<ExerciseProvider>
-					<WorkoutProvider>
-						<FiltersProvider>
-							<ToastProvider>
-								<ModalProvider>
-									<PopoverProvider>
-										<Suspense
-											fallback={
-												<div className='app-loader'>
-													<CircularLoader />
-												</div>
-											}>
-											<RouterProvider router={routes} />
-										</Suspense>
-									</PopoverProvider>
-								</ModalProvider>
-							</ToastProvider>
-						</FiltersProvider>
-					</WorkoutProvider>
-				</ExerciseProvider>
-			</CircularLoaderProvider>
+			<RegisterProvider>
+				<LoginProvider>
+					<CircularLoaderProvider>
+						<ExerciseProvider>
+							<WorkoutProvider>
+								<FiltersProvider>
+									<ToastProvider>
+										<ModalProvider>
+											<PopoverProvider>
+												<Suspense
+													fallback={
+														<div className='app-loader'>
+															<CircularLoader />
+														</div>
+													}>
+													<RouterProvider router={routes} />
+												</Suspense>
+											</PopoverProvider>
+										</ModalProvider>
+									</ToastProvider>
+								</FiltersProvider>
+							</WorkoutProvider>
+						</ExerciseProvider>
+					</CircularLoaderProvider>
+				</LoginProvider>
+			</RegisterProvider>
 		</QueryClientProvider>
 	);
 }

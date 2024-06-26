@@ -48,6 +48,7 @@
 		> button {
 			text-transform: none;
 			background-color: $color-primary !important;
+			border-radius: $border-radius-3;
 
 			&:hover {
 				background-color: $color-primary-darker-1 !important;
