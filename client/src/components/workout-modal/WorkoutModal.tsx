@@ -1,8 +1,8 @@
 import { createWorkout, updateWorkout } from '../../services/workouts';
 import { WorkoutModalTypes } from './WorkoutModal.types';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
-import { ArrowBack } from '@mui/icons-material';
+import { ArrowBackRounded } from '@mui/icons-material';
 import './WorkoutModal.scss';
 import { ExerciseType } from '../../utils/types/exercise.types';
 import { getAllExercisesFn } from '../../pages/exercises/functions/services';
@@ -137,7 +137,7 @@ const WorkoutModal = ({
 		<form className={`workout-modal ${showModal ? 'workout-modal--open' : ''}`}>
 			<div className='workout-modal__header'>
 				<div onClick={closeModalHandler}>
-					<ArrowBack />
+					<ArrowBackRounded />
 				</div>
 				<span className='workout-modal__info'>{isEditMode ? 'Edit ' : 'Add '} workout</span>
 			</div>

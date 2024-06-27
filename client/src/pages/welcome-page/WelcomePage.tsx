@@ -21,40 +21,46 @@ const WelcomePage = () => {
 
 	const showRegisterHandler = () => {
 		setShowRegister(true);
-
-		if (showLogin) setTimeout(() => setShowLogin(false), timer.loginAnimationTime);
 	};
 
 	const showLoginHandler = () => {
 		setShowLogin(true);
-
-		if (showRegister) setTimeout(() => setShowRegister(false), timer.loginAnimationTime);
 	};
 
 	return (
 		<section className='welcome-page'>
-			<div className='welcome-page__title'>
-				{/* <FitnessCenterRoundedIcon fontSize='large' /> */}
-				<img src='src/assets/workout-configurator-logo-light.png' alt='' />
-				<h1>Workout</h1>
-				<h1>Configurator</h1>
-			</div>
-			<div className='welcome-page__actions'>
-				<Button onClick={showLoginHandler} variant='outlined'>
-					Sign In
-				</Button>
-				<Button onClick={showRegisterHandler} variant='contained'>
-					Sign Up
-				</Button>
+			<div
+				className={`welcome-page__container${showLogin || showRegister ? ' welcome-page__container--close' : ''}`}>
+				<div className='welcome-page__title'>
+					<img src='src/assets/workout-configurator-logo-light.png' alt='' />
+					<h1>Workout</h1>
+					<h1>Configurator</h1>
+				</div>
+				<div className='welcome-page__actions'>
+					<Button onClick={showLoginHandler} variant='outlined'>
+						Sign In
+					</Button>
+					<Button onClick={showRegisterHandler} variant='contained'>
+						Sign Up
+					</Button>
+				</div>
 			</div>
 
 			{createPortal(
-				<LoginModal showLogin={showLogin} setShowLogin={setShowLogin} />,
+				<LoginModal
+					showLogin={showLogin}
+					setShowLogin={setShowLogin}
+					setShowRegister={setShowRegister}
+				/>,
 				document.querySelector('#modal-root')!,
 			)}
 
 			{createPortal(
-				<RegisterModal showRegister={showRegister} setShowRegister={setShowRegister} />,
+				<RegisterModal
+					showRegister={showRegister}
+					setShowRegister={setShowRegister}
+					setShowLogin={setShowLogin}
+				/>,
 				document.querySelector('#modal-root')!,
 			)}
 		</section>

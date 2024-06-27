@@ -1,13 +1,12 @@
-import Modal from '@mui/material/Modal';
 import { ExerciseModalTypes } from './ExerciseModal.types';
-import { Autocomplete, Box, Button, TextField } from '@mui/material';
+import { Autocomplete, Button, TextField } from '@mui/material';
 import './ExerciseModal.scss';
 import { bodyParts } from '../../utils/constants/app-constants';
 import { useExerciseContext } from '../../store/context/exercise-context/exercise-context';
 import { createExercise, updateExercise } from '../../services/exercises';
 import { useQueryClient } from '@tanstack/react-query';
 import { bodyPartToLowerCase } from '../../utils/functions/format-body-part-value';
-import { ArrowBack } from '@mui/icons-material';
+import { ArrowBackRounded } from '@mui/icons-material';
 import useToast from '../../utils/hooks/toast-hook/use-toast';
 import { toastMessages } from '../../utils/constants/toast-messages';
 import { toastConstants } from '../../utils/constants/toast';
@@ -71,7 +70,7 @@ const ExerciseModal = ({
 		<form className={`exercise-modal ${showModal ? 'exercise-modal--open' : ''}`}>
 			<div className='exercise-modal__header'>
 				<div onClick={closeModalHandler}>
-					<ArrowBack />
+					<ArrowBackRounded />
 				</div>
 				<span className='exercise-modal__info'>
 					{isEditMode ? 'Edit ' : 'Add '} exercise

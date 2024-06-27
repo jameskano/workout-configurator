@@ -3,8 +3,9 @@ import { useLoginContext } from '../../store/context/login-context/login-context
 import { LoginModalType } from './login-modal.types';
 import './LoginModal.scss';
 import { ArrowBack } from '@mui/icons-material';
+import { timer } from '../../utils/constants/app-constants';
 
-const LoginModal = ({ showLogin, setShowLogin }: LoginModalType) => {
+const LoginModal = ({ showLogin, setShowLogin, setShowRegister }: LoginModalType) => {
 	const { loginData, setLoginDataHandler } = useLoginContext();
 
 	const loginHandler = () => {};
@@ -18,11 +19,16 @@ const LoginModal = ({ showLogin, setShowLogin }: LoginModalType) => {
 		setLoginDataHandler();
 	};
 
+	const changeToRegisterHandler = () => {
+		setShowLogin(false);
+		setShowRegister(true);
+	};
+
 	return (
 		<section className={`login-modal${showLogin ? ' login-modal--open' : ''}`}>
 			<div className='login-modal__header'>
 				<div onClick={closeModalHandler}>
-					<ArrowBack />
+					<ArrowBack fontSize='medium' />
 				</div>
 			</div>
 			<div className='login-modal__logo'>
@@ -54,6 +60,10 @@ const LoginModal = ({ showLogin, setShowLogin }: LoginModalType) => {
 				<Button variant='contained' onClick={loginHandler}>
 					Sign In
 				</Button>
+			</div>
+			<div className='login-modal__register'>
+				<span>New user?</span>
+				<span onClick={changeToRegisterHandler}>Register now</span>
 			</div>
 			<div className='login-modal__bottom'></div>
 		</section>

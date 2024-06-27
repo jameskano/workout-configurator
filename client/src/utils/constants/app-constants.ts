@@ -12,5 +12,5 @@ export const miscellaneous = {
 };
 
 export const timer = {
-	loginAnimationTime: 300,
+	loginAnimationTime: 200,
 };

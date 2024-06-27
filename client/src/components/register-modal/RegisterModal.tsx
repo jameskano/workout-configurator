@@ -2,9 +2,10 @@ import { useRegisterContext } from '../../store/context/register-context/registe
 import { RegisterModalType } from './register-modal.types';
 import { Button, TextField } from '@mui/material';
 import './RegisterModal.scss';
-import { ArrowBack } from '@mui/icons-material';
+import { ArrowBackRounded } from '@mui/icons-material';
+import { timer } from '../../utils/constants/app-constants';
 
-const RegisterModal = ({ showRegister, setShowRegister }: RegisterModalType) => {
+const RegisterModal = ({ showRegister, setShowRegister, setShowLogin }: RegisterModalType) => {
 	const { registerData, setRegisterDataHandler } = useRegisterContext();
 
 	const registerHandler = () => {};
@@ -18,11 +19,16 @@ const RegisterModal = ({ showRegister, setShowRegister }: RegisterModalType) => 
 		setRegisterDataHandler();
 	};
 
+	const changeToLoginHandler = () => {
+		setShowRegister(false);
+		setShowLogin(true);
+	};
+
 	return (
 		<section className={`register-modal${showRegister ? ' register-modal--open' : ''}`}>
 			<div className='login-modal__header'>
 				<div onClick={closeModalHandler}>
-					<ArrowBack />
+					<ArrowBackRounded />
 				</div>
 			</div>
 			<div className='register-modal__logo'>
@@ -44,7 +50,7 @@ const RegisterModal = ({ showRegister, setShowRegister }: RegisterModalType) => 
 					label='Email'
 					type='text'
 					variant='outlined'
-					className='logiregister-modal__input'
+					className='register-modal__input'
 					size='small'
 					fullWidth={false}
 					value={registerData.email}
@@ -76,6 +82,10 @@ const RegisterModal = ({ showRegister, setShowRegister }: RegisterModalType) => 
 				<Button variant='contained' onClick={registerHandler}>
 					Sign Up
 				</Button>
+			</div>
+			<div className='register-modal__login'>
+				<span>Already a member?</span>
+				<span onClick={changeToLoginHandler}>Sign in</span>
 			</div>
 			<div className='register-modal__bottom'></div>
 		</section>

@@ -1,36 +1,77 @@
 @mixin generic-input {
-    border-radius: $border-radius-2;
-    background-color: $color-background-dark-5;
+	border-radius: $border-radius-3;
+	background-color: $color-background-dark-5;
 
-    &:hover {
-        fieldset {
-            border-color: $color-primary-hover !important;
-        }
-    }
+	&:hover {
+		fieldset {
+			border-color: $color-primary-hover !important;
+		}
+	}
 
-    input:focus + fieldset {
-        border: 2px solid $color-primary-hover !important;
-    }
+	input:focus + fieldset {
+		border: 2px solid $color-primary-hover !important;
+	}
 
-    input {
-        font-size: $font-s;
-        color: $color-text-white-base;
-    }
+	input {
+		font-size: $font-s;
+		color: $color-text-white-base;
+	}
 
-    label {
-        color: $color-text-black-brighter-2;
-    }
+	label {
+		color: $color-text-black-brighter-2;
+	}
 
-    fieldset {
-        border: 1px solid $color-background-dark-1 !important;
-        transition: all 0.2s;
+	fieldset {
+		border: 1px solid $color-background-dark-1 !important;
+		transition: all 0.2s;
 
-        span {
-            color: $color-primary-darker-2;
-        }
-    }
+		span {
+			color: $color-primary-darker-2;
+		}
+	}
 
-    svg {
-        color: $color-text-black-brighter-2;
-    }
+	svg {
+		color: $color-text-black-brighter-2;
+	}
+}
+
+@mixin register-input {
+	border-radius: $border-radius-3;
+	background-color: transparent;
+
+	.Mui-focused {
+		color: $color-primary-brighter-2;
+	}
+
+	&:hover {
+		fieldset {
+			border-color: $color-primary-hover !important;
+		}
+	}
+
+	input:focus + fieldset {
+		border: 2px solid $color-primary-hover !important;
+	}
+
+	input {
+		font-size: $font-s;
+		color: $color-text-white-base;
+	}
+
+	label {
+		color: $color-text-white-darker-1;
+	}
+
+	fieldset {
+		border: 1px solid $color-background-light-5 !important;
+		transition: all 0.2s;
+
+		span {
+			color: $color-primary-darker-1;
+		}
+	}
+
+	svg {
+		color: $color-text-white-darker-2;
+	}
 }
