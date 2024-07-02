@@ -14,6 +14,6 @@ export const workoutIdValidation = async (_id: string) => {
 	}
 };
 
-export const checkIfElementExists = async (element: CommonEntityType) => {
-	if (!element) throw new CustomError(400, 'Exercise does not exist');
+export const checkIfElementExists = async (element: CommonEntityType, elementType?: string) => {
+	if (!element) throw new CustomError(400, `${elementType || 'Element'} does not exist`);
 };
