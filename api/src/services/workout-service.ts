@@ -30,9 +30,9 @@ export const updateWorkoutService = async (_id: string, data: WorkoutType) => {
 	return updatedWorkout;
 };
 
-export const getFilteredWorkoutsService = async (filter: string) => {
+export const getFilteredWorkoutsService = async (filter: string, userId: string) => {
 	const formattedFilter = diacriticLess(filter.toLowerCase());
-	const workouts = await getAllWorkoutsRepository();
+	const workouts = await getAllWorkoutsRepository(userId);
 	const filteredWorkouts = workouts.filter((workout) => {
 		const titleWithoutDiacritics = diacriticLess(workout.title.toLowerCase());
 		return titleWithoutDiacritics.includes(formattedFilter);

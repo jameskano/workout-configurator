@@ -3,12 +3,31 @@ import { useLoginContext } from '../../store/context/login-context/login-context
 import { LoginModalType } from './login-modal.types';
 import './LoginModal.scss';
 import { ArrowBack } from '@mui/icons-material';
-import { timer } from '../../utils/constants/app-constants';
+import { loginUser } from '../../services/users';
+import { useAuth } from '../../utils/hooks/auth-hook/use-auth';
+import useToast from '../../utils/hooks/toast-hook/use-toast';
+import { signError } from '../../utils/functions/errors';
+import { toastConstants } from '../../utils/constants/toast';
 
 const LoginModal = ({ showLogin, setShowLogin, setShowRegister }: LoginModalType) => {
 	const { loginData, setLoginDataHandler } = useLoginContext();
+	const { saveAuthData } = useAuth();
+	const { openToastHandler } = useToast();
 
-	const loginHandler = () => {};
+	const loginHandler = async () => {
+		const { email, password } = loginData;
+
+		try {
+			const response = await loginUser(email, password);
+			saveAuthData(response.data.accessToken, response.data.userId);
+			setLoginDataHandler();
+		} catch (error) {
+			const errorMessage = (error as any).response.data.error;
+			const errorStatus = (error as any).response.status;
+			const toastMessage = signError(errorStatus, errorMessage);
+			openToastHandler(toastMessage, toastConstants.TYPES.ERROR);
+		}
+	};
 
 	const changeFieldHandler = (value: string, name: string) => {
 		setLoginDataHandler({ ...loginData, [name]: value });

@@ -55,9 +55,13 @@ export const updateExerciseService = async (_id: string, data: ExerciseType) => 
 	return updatedExercise;
 };
 
-export const getFilteredExercisesService = async (textFilter: string, bodyPartFilter: string) => {
+export const getFilteredExercisesService = async (
+	textFilter: string,
+	bodyPartFilter: string,
+	userId: string,
+) => {
 	const formattedFilter = diacriticLess(textFilter.toLowerCase());
-	const exercises = await getAllExercisesRepository();
+	const exercises = await getAllExercisesRepository(userId);
 	const filteredExercises = exercises.filter((exercise) => {
 		const titleWithoutDiacritics = diacriticLess(exercise.title.toLowerCase());
 		switch (true) {

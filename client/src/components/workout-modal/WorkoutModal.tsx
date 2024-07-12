@@ -5,7 +5,7 @@ import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import { ArrowBackRounded } from '@mui/icons-material';
 import './WorkoutModal.scss';
 import { ExerciseType } from '../../utils/types/exercise.types';
-import { getAllExercisesFn } from '../../pages/exercises/functions/services';
+import { useExerciseServices } from '../../pages/exercises/hooks/use-exercise-services';
 import { useWorkoutContext } from '../../store/context/workout-context/workout-context';
 import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
 import useToast from '../../utils/hooks/toast-hook/use-toast';
@@ -27,6 +27,7 @@ const WorkoutModal = ({
 	refetchWorkouts,
 }: WorkoutModalTypes) => {
 	const queryClient = useQueryClient();
+	const { getAllExercisesFn } = useExerciseServices();
 
 	const { isLoading, isError, data } = useCustomQuery({
 		queryKey: ['exercises'],

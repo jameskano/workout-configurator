@@ -7,7 +7,8 @@ import userRoutes from './routes/user';
 import errorHandler from './middleware/error-handler';
 import { CustomError } from './utils/classes/errors';
 import { corsOptions } from './middleware/cors';
-import passport from './utils/config/passport';
+import passport from 'passport';
+import './utils/config/passport';
 const cors = require('cors');
 
 const app = express();

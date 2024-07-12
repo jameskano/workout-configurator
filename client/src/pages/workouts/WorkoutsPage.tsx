@@ -7,7 +7,6 @@ import WorkoutCard from '../../components/workout-card/WorkoutCard';
 import { WorkoutType } from '../../utils/types/workout.types';
 import './WorkoutPage.scss';
 import { useFiltersContext } from '../../store/context/filters-context/filters-context';
-import { getFilteredWorkouts } from '../../services/workouts';
 import useToast from '../../utils/hooks/toast-hook/use-toast';
 import { toastConstants } from '../../utils/constants/toast';
 import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
@@ -17,11 +16,13 @@ import { toastMessages } from '../../utils/constants/toast-messages';
 import { miscellaneous } from '../../utils/constants/app-constants';
 import useCustomQuery from '../../utils/hooks/custom-query-hook/use-custom-query';
 import { useWorkoutContext } from '../../store/context/workout-context/workout-context';
+import { useWorkoutServices } from './hooks/use-workout-services';
 
 const WorkoutsPage = () => {
 	const { workoutTitle } = useFiltersContext();
 	const { refetchWorkouts, setRefetchWorkouts } = useWorkoutContext();
 	const { openToastHandler } = useToast();
+	const { getFilteredWorkoutsFn } = useWorkoutServices();
 
 	const firstRenderRef = useRef(true);
 
@@ -33,7 +34,7 @@ const WorkoutsPage = () => {
 
 	const { isLoading, isError, data, refetch } = useCustomQuery({
 		queryKey: ['workouts', debouncedFilter],
-		queryFn: () => getFilteredWorkouts(debouncedFilter!),
+		queryFn: () => getFilteredWorkoutsFn(debouncedFilter),
 		enabled: !!debouncedFilter || firstRenderRef.current,
 	});
 
@@ -102,7 +103,7 @@ const WorkoutsPage = () => {
 					/>
 				))}
 
-				{!filteredWorkouts.length && !isLoading && (
+				{!(filteredWorkouts && filteredWorkouts.length) && !isLoading && (
 					<span className='no-data-text'>{miscellaneous.NO_DATA_TEXT}</span>
 				)}
 			</div>

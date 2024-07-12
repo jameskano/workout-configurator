@@ -1,3 +1,3 @@
-import passport from 'passport';
+import passportConfig from '../utils/config/passport';
 
-export const requireAuth = passport.authenticate('jwt', { session: false });
+export const requireAuth = passportConfig.authenticate('jwt', { session: false });

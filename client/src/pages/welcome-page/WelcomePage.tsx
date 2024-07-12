@@ -1,23 +1,22 @@
 import { useEffect, useState } from 'react';
-import { useAppContext } from '../../store/context/app-context/app-context';
 import { useNavigate } from 'react-router';
 import './WelcomePage.scss';
 import { Button } from '@mui/material';
-import { timer } from '../../utils/constants/app-constants';
 import { createPortal } from 'react-dom';
 import LoginModal from '../../components/login-modal/LoginModal';
 import RegisterModal from '../../components/register-modal/RegisterModal';
+import { useLoginContext } from '../../store/context/login-context/login-context';
 
 const WelcomePage = () => {
-	const { logged } = useAppContext();
 	const navigate = useNavigate();
+	const { token } = useLoginContext();
 
 	const [showLogin, setShowLogin] = useState(false);
 	const [showRegister, setShowRegister] = useState(false);
 
 	useEffect(() => {
-		if (logged) navigate('/exercises');
-	}, []);
+		if (token) navigate('/workouts');
+	}, [token]);
 
 	const showRegisterHandler = () => {
 		setShowRegister(true);

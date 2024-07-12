@@ -3,12 +3,31 @@ import { RegisterModalType } from './register-modal.types';
 import { Button, TextField } from '@mui/material';
 import './RegisterModal.scss';
 import { ArrowBackRounded } from '@mui/icons-material';
-import { timer } from '../../utils/constants/app-constants';
+import { registerUser } from '../../services/users';
+import { useAuth } from '../../utils/hooks/auth-hook/use-auth';
+import { signError } from '../../utils/functions/errors';
+import { toastConstants } from '../../utils/constants/toast';
+import useToast from '../../utils/hooks/toast-hook/use-toast';
 
 const RegisterModal = ({ showRegister, setShowRegister, setShowLogin }: RegisterModalType) => {
 	const { registerData, setRegisterDataHandler } = useRegisterContext();
+	const { saveAuthData } = useAuth();
+	const { openToastHandler } = useToast();
 
-	const registerHandler = () => {};
+	const registerHandler = async () => {
+		const { username, password, email } = registerData;
+
+		try {
+			const response = await registerUser(username, email, password);
+			saveAuthData(response.data.accessToken, response.data.userId);
+			setRegisterDataHandler();
+		} catch (error) {
+			const errorMessage = (error as any).response.data.error;
+			const errorStatus = (error as any).response.status;
+			const toastMessage = signError(errorStatus, errorMessage);
+			openToastHandler(toastMessage, toastConstants.TYPES.ERROR);
+		}
+	};
 
 	const changeFieldHandler = (value: string, name: string) => {
 		setRegisterDataHandler({ ...registerData, [name]: value });

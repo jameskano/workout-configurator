@@ -12,8 +12,10 @@ import {
 } from '../data-access/exercise-repository';
 
 export const getAllExercises: RequestHandler = async (req, res, next) => {
+	const { userId } = req.body;
+
 	try {
-		const exercises = await getAllExercisesRepository();
+		const exercises = await getAllExercisesRepository(userId);
 		res.status(200).json(exercises);
 	} catch (error) {
 		next(error);
@@ -66,10 +68,14 @@ export const updateExercise: RequestHandler = async (req, res, next) => {
 };
 
 export const getFilteredExercises: RequestHandler = async (req, res, next) => {
-	const { textFilter, bodyPartFilter } = req.body;
+	const { textFilter, bodyPartFilter, userId } = req.body;
 
 	try {
-		const filteredExercises = await getFilteredExercisesService(textFilter, bodyPartFilter);
+		const filteredExercises = await getFilteredExercisesService(
+			textFilter,
+			bodyPartFilter,
+			userId,
+		);
 
 		res.status(200).json(filteredExercises);
 	} catch (error) {

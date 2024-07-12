@@ -1,3 +1,4 @@
+import { requireAuth } from '../middleware/authentication';
 import {
 	createWorkout,
 	deleteWorkout,
@@ -8,6 +9,8 @@ import {
 import express from 'express';
 
 const router = express.Router();
+
+router.use(requireAuth);
 
 router.get('/', getAllWorkouts);
 

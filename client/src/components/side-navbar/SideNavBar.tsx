@@ -6,11 +6,14 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 import FitnessCenterRoundedIcon from '@mui/icons-material/FitnessCenterRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import ContentPasteRoundedIcon from '@mui/icons-material/ContentPasteRounded';
+import { useAuth } from '../../utils/hooks/auth-hook/use-auth';
 // import EqualizerRoundedIcon from '@mui/icons-material/EqualizerRounded';
 // import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 
 const SideNavBar = ({ showSideNavbar, setIsSideNavbarShown }: SideNavbarTypes) => {
-	const logOutHandler = () => {};
+	const { removeAuthData } = useAuth();
+
+	const logOutHandler = () => removeAuthData();
 
 	const sideNavbarHandler = () => setIsSideNavbarShown(false);
 

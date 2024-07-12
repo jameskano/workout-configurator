@@ -1,3 +1,4 @@
+import { requireAuth } from '../middleware/authentication';
 import {
 	getExercise,
 	getAllExercises,
@@ -11,6 +12,8 @@ import {
 import express from 'express';
 
 const router = express.Router();
+
+router.use(requireAuth);
 
 router.get('/', getAllExercises);
 

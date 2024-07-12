@@ -14,11 +14,12 @@ import { toastConstants } from '../../utils/constants/toast';
 import BackdropLoader from '../../UI/backdrop-loader/BackdropLoader';
 import { backdropConstants } from '../../utils/constants/backdrop';
 import useCustomQuery from '../../utils/hooks/custom-query-hook/use-custom-query';
-import { getFilteredExercises } from '../../services/exercises';
+import { useExerciseServices } from './hooks/use-exercise-services';
 
 const ExercisesPage = () => {
 	const { exerciseTitle, bodyPartFilter } = useFiltersContext();
 	const { openToastHandler } = useToast();
+	const { getFilteredExercisesFn } = useExerciseServices();
 
 	const firstRenderRef = useRef(true);
 
@@ -28,7 +29,7 @@ const ExercisesPage = () => {
 
 	const { isLoading, isError, data, refetch } = useCustomQuery({
 		queryKey: ['exercises', exerciseFilter],
-		queryFn: () => getFilteredExercises(exerciseTitle, bodyPartFilter.toLocaleLowerCase()),
+		queryFn: () => getFilteredExercisesFn(exerciseTitle, bodyPartFilter.toLocaleLowerCase()),
 		enabled: !!exerciseFilter || firstRenderRef.current,
 	});
 

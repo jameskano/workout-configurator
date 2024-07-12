@@ -6,8 +6,8 @@ export const findByIdInArrayRepository = async (exerciseIds: string[]) =>
 export const updateWorkoutRepository = async (id: string, data: WorkoutType) =>
 	await WorkoutModel.findByIdAndUpdate({ _id: id }, data, { new: true });
 
-export const getAllWorkoutsRepository = async () =>
-	await WorkoutModel.find({}).sort({ createdAt: -1 });
+export const getAllWorkoutsRepository = async (userId: string) =>
+	await WorkoutModel.find({ userId }).sort({ createdAt: -1 });
 
 export const createWorkoutRepository = async (data: WorkoutType) => await WorkoutModel.create(data);
 
