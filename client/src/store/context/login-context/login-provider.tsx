@@ -35,7 +35,7 @@ export const LoginProvider = ({ children }: { children: React.ReactNode }) => {
 			setLoadingTokenChecking(false);
 		}
 	};
-	console.log(token);
+
 	useEffect(() => {
 		if (!loadingTokenChecking) return;
 

@@ -7,8 +7,6 @@ import { toastConstants } from '../../utils/constants/toast';
 
 const axiosInstance = axios.create();
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 const useAxiosInterceptor = () => {
 	const { token } = useLoginContext();
 	const { removeAuthData } = useAuth();
@@ -16,9 +14,8 @@ const useAxiosInterceptor = () => {
 
 	axiosInstance.interceptors.request.use(
 		(config) => {
-			console.log(token);
 			if (token && !config.headers['Skip-Authorization']) {
-				config.headers.Authorization = `Bearer ${token}`;
+				config.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('wcToken')!)}`;
 			}
 			return config;
 		},
