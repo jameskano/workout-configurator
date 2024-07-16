@@ -48,7 +48,7 @@ const WorkoutsPage = () => {
 	}, [isError]);
 
 	useEffect(() => {
-		if (data) setFilteredWorkouts(updatedFilteredWorkouts(data.data));
+		if (data) setFilteredWorkouts(updatedFilteredWorkouts(data));
 	}, [data, showFavourites]);
 
 	useEffect(() => {

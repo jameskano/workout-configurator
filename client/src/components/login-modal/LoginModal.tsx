@@ -8,11 +8,18 @@ import { useAuth } from '../../utils/hooks/auth-hook/use-auth';
 import useToast from '../../utils/hooks/toast-hook/use-toast';
 import { signError } from '../../utils/functions/errors';
 import { toastConstants } from '../../utils/constants/toast';
+import { Controller, useForm } from 'react-hook-form';
 
 const LoginModal = ({ showLogin, setShowLogin, setShowRegister }: LoginModalType) => {
 	const { loginData, setLoginDataHandler } = useLoginContext();
 	const { saveAuthData } = useAuth();
 	const { openToastHandler } = useToast();
+	const {
+		handleSubmit,
+		control,
+		setValue,
+		formState: { errors },
+	} = useForm();
 
 	const loginHandler = async () => {
 		const { email, password } = loginData;
@@ -31,6 +38,7 @@ const LoginModal = ({ showLogin, setShowLogin, setShowRegister }: LoginModalType
 
 	const changeFieldHandler = (value: string, name: string) => {
 		setLoginDataHandler({ ...loginData, [name]: value });
+		setValue(name, value);
 	};
 
 	const closeModalHandler = () => {
@@ -53,33 +61,61 @@ const LoginModal = ({ showLogin, setShowLogin, setShowRegister }: LoginModalType
 			<div className='login-modal__logo'>
 				<img src='src/assets/workout-configurator-logo-light.png' alt='' />
 			</div>
-			<div className='login-modal__form'>
-				<TextField
-					label='Email'
-					type='text'
-					variant='outlined'
-					className='login-modal__input'
-					size='small'
-					fullWidth={false}
-					value={loginData.email}
-					onChange={(e) => changeFieldHandler(e.target.value, 'email')}
-					required
+			<form className='login-modal__form' onSubmit={handleSubmit(loginHandler)}>
+				<Controller
+					name='email'
+					control={control}
+					defaultValue={loginData.email}
+					rules={{
+						required: 'Email is required',
+						pattern: {
+							value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+							message: 'Invalid email address',
+						},
+					}}
+					render={({ field }) => (
+						<TextField
+							{...field}
+							label='Email'
+							type='text'
+							variant='outlined'
+							className='login-modal__input'
+							size='small'
+							fullWidth={false}
+							value={loginData.email}
+							onChange={(e) => changeFieldHandler(e.target.value, 'email')}
+							error={!!errors.email}
+							helperText={errors.email ? errors.email.message?.toString() : ''}
+						/>
+					)}
 				/>
-				<TextField
-					label='Password'
-					type='password'
-					variant='outlined'
-					className='login-modal__input'
-					size='small'
-					fullWidth={false}
-					value={loginData.password}
-					onChange={(e) => changeFieldHandler(e.target.value, 'password')}
-					required
+				<Controller
+					name='password'
+					control={control}
+					defaultValue={loginData.password}
+					rules={{
+						required: 'Password is required',
+					}}
+					render={({ field }) => (
+						<TextField
+							{...field}
+							label='Password'
+							type='password'
+							variant='outlined'
+							className='login-modal__input'
+							size='small'
+							fullWidth={false}
+							value={loginData.password}
+							onChange={(e) => changeFieldHandler(e.target.value, 'password')}
+							error={!!errors.password}
+							helperText={errors.password ? errors.password.message?.toString() : ''}
+						/>
+					)}
 				/>
-				<Button variant='contained' onClick={loginHandler}>
+				<Button variant='contained' type='submit'>
 					Sign In
 				</Button>
-			</div>
+			</form>
 			<div className='login-modal__register'>
 				<span>New user?</span>
 				<span onClick={changeToRegisterHandler}>Register now</span>

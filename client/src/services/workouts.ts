@@ -11,11 +11,11 @@ export const getAllWorkouts = (userId: string) => {
 	return axiosInstance(config);
 };
 
-export const createWorkout = (workoutData: WorkoutType) => {
+export const createWorkout = (workoutData: WorkoutType, userId: string) => {
 	const config = {
 		method: 'POST',
 		url: `${import.meta.env.VITE_WORKOUT_API}/workout`,
-		data: workoutData,
+		data: { workoutData, userId },
 	};
 
 	return axiosInstance(config);

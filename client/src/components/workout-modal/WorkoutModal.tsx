@@ -19,6 +19,8 @@ import { miscellaneous } from '../../utils/constants/app-constants';
 import useCustomQuery from '../../utils/hooks/custom-query-hook/use-custom-query';
 import Switch from '@mui/material/Switch';
 import useDebounce from '../../utils/hooks/debounce-hook/use-debounce';
+import { Controller, useForm } from 'react-hook-form';
+import { useLoginContext } from '../../store/context/login-context/login-context';
 
 const WorkoutModal = ({
 	isEditMode,
@@ -28,6 +30,15 @@ const WorkoutModal = ({
 }: WorkoutModalTypes) => {
 	const queryClient = useQueryClient();
 	const { getAllExercisesFn } = useExerciseServices();
+	const { userId } = useLoginContext();
+	const {
+		handleSubmit,
+		control,
+		setValue,
+		setError,
+		clearErrors,
+		formState: { errors },
+	} = useForm();
 
 	const { isLoading, isError, data } = useCustomQuery({
 		queryKey: ['exercises'],
@@ -59,9 +70,20 @@ const WorkoutModal = ({
 	};
 
 	const saveWorkoutHandler = async () => {
+		if (exercises.length === 0) {
+			setError('exercises', {
+				type: 'manual',
+				message: 'At least one exercise must be selected',
+			});
+			return;
+		}
+		clearErrors('exercises');
+
 		setOpenLoader(true);
 		try {
-			isEditMode ? await updateWorkout(workoutItem) : await createWorkout(workoutItem);
+			isEditMode
+				? await updateWorkout(workoutItem)
+				: await createWorkout(workoutItem, userId);
 			queryClient.invalidateQueries({ queryKey: [`card-exercises-${_id}`, 'workouts'] });
 			openToastHandler(
 				isEditMode
@@ -87,6 +109,7 @@ const WorkoutModal = ({
 	const changeFieldHandler = (value: string | boolean, name: string) => {
 		const updateExerciseItem = { ...workoutItem, [name]: value };
 		setWorkoutItemDisp(updateExerciseItem);
+		if (name === 'title') setValue(name, value);
 	};
 
 	const changeExerciseSelectionHandler = (value: boolean, exerciseId: string) => {
@@ -96,6 +119,10 @@ const WorkoutModal = ({
 		else exercisesUpdated = workoutItem.exercises.filter((exercise) => exercise !== exerciseId);
 
 		setWorkoutItemDisp({ ...workoutItem, exercises: exercisesUpdated });
+
+		if (exercisesUpdated.length > 0) {
+			clearErrors('exercises');
+		}
 	};
 
 	const changeSelectionHandler = (checked: boolean) => setShowSelected(checked);
@@ -135,7 +162,9 @@ const WorkoutModal = ({
 	};
 
 	return (
-		<form className={`workout-modal ${showModal ? 'workout-modal--open' : ''}`}>
+		<form
+			className={`workout-modal ${showModal ? 'workout-modal--open' : ''}`}
+			onSubmit={handleSubmit(saveWorkoutHandler)}>
 			<div className='workout-modal__header'>
 				<div onClick={closeModalHandler}>
 					<ArrowBackRounded />
@@ -144,15 +173,35 @@ const WorkoutModal = ({
 			</div>
 
 			<div className='workout-modal__body'>
-				<TextField
-					label='Workout name'
-					type='text'
-					variant='outlined'
-					className='workout-modal__name workout-modal__input'
-					size='small'
-					value={title}
-					onChange={(e) => changeFieldHandler(e.target.value, 'title')}
-					required
+				<Controller
+					name='title'
+					control={control}
+					defaultValue={title}
+					rules={{
+						required: 'Name is required',
+						minLength: {
+							value: 3,
+							message: 'Name must be at least 8 characters long',
+						},
+						maxLength: {
+							value: 20,
+							message: 'Name must be no more than 20 characters long',
+						},
+					}}
+					render={({ field }) => (
+						<TextField
+							{...field}
+							label='Workout name*'
+							type='text'
+							variant='outlined'
+							className='workout-modal__name workout-modal__input'
+							size='small'
+							value={title}
+							onChange={(e) => changeFieldHandler(e.target.value, 'title')}
+							error={!!errors.title}
+							helperText={errors.title ? errors.title.message?.toString() : ''}
+						/>
+					)}
 				/>
 				<FormControlLabel
 					className='workout-modal__favourites'
@@ -192,7 +241,14 @@ const WorkoutModal = ({
 						</div>
 					</div>
 
-					<div className='workout-modal__exercises-list'>{exerciseList()}</div>
+					<div className='workout-modal__exercises-list'>
+						{errors.exercises && (
+							<span className='error-text'>
+								{errors.exercises.message?.toString()}
+							</span>
+						)}
+						{exerciseList()}
+					</div>
 				</div>
 				<TextField
 					className='workout-modal__metadata workout-modal__input'
@@ -204,7 +260,7 @@ const WorkoutModal = ({
 				/>
 			</div>
 			<div className='workout-modal__bottom'>
-				<Button onClick={saveWorkoutHandler} variant='contained'>
+				<Button type='submit' variant='contained'>
 					Save workout
 				</Button>
 			</div>

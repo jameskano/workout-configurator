@@ -1,6 +1,13 @@
 @mixin generic-input {
-	border-radius: $border-radius-3;
-	background-color: $color-background-dark-5;
+	.MuiInputBase-root {
+		background-color: $color-background-dark-5;
+		border-radius: $border-radius-3;
+	}
+
+	.Mui-error {
+		color: $color-system-feedback-error;
+		background-color: transparent;
+	}
 
 	&:hover {
 		fieldset {
@@ -33,6 +40,11 @@
 	svg {
 		color: $color-text-black-brighter-2;
 	}
+
+	p {
+		letter-spacing: normal;
+		line-height: normal;
+	}
 }
 
 @mixin register-input {
@@ -41,6 +53,10 @@
 
 	.Mui-focused {
 		color: $color-primary-brighter-2;
+	}
+
+	.Mui-error {
+		color: $color-system-feedback-error-brighter;
 	}
 
 	&:hover {
@@ -73,5 +89,10 @@
 
 	svg {
 		color: $color-text-white-darker-2;
+	}
+
+	p {
+		letter-spacing: normal;
+		line-height: normal;
 	}
 }

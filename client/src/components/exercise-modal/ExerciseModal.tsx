@@ -11,6 +11,8 @@ import useToast from '../../utils/hooks/toast-hook/use-toast';
 import { toastMessages } from '../../utils/constants/toast-messages';
 import { toastConstants } from '../../utils/constants/toast';
 import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
+import { useLoginContext } from '../../store/context/login-context/login-context';
+import { Controller, useForm } from 'react-hook-form';
 
 const ExerciseModal = ({
 	showModal,
@@ -27,22 +29,34 @@ const ExerciseModal = ({
 
 	const { openToastHandler } = useToast();
 	const { setOpenLoader } = useCircularLoaderContext();
+	const { userId } = useLoginContext();
+	const {
+		handleSubmit,
+		control,
+		setValue,
+		reset,
+		formState: { errors },
+	} = useForm();
 
 	const closeModalHandler = () => {
 		setShowModal(false);
 		setExerciseItemDisp();
+		reset();
 	};
 
 	const changeFieldHandler = (value: string | number | null, name: string) => {
 		const formattedValue = bodyPartToLowerCase(value, name);
 		const updateExerciseItem = { ...exerciseItem, [name]: formattedValue };
 		setExerciseItemDisp(updateExerciseItem);
+		setValue(name, value);
 	};
 
 	const saveExerciseHandler = async () => {
 		setOpenLoader(true);
 		try {
-			isEditMode ? await updateExercise(exerciseItem) : await createExercise(exerciseItem);
+			isEditMode
+				? await updateExercise(exerciseItem)
+				: await createExercise(exerciseItem, userId);
 			queryClient.invalidateQueries({
 				queryKey: ['exercises'],
 			});
@@ -67,7 +81,9 @@ const ExerciseModal = ({
 	};
 
 	return (
-		<form className={`exercise-modal ${showModal ? 'exercise-modal--open' : ''}`}>
+		<form
+			className={`exercise-modal ${showModal ? 'exercise-modal--open' : ''}`}
+			onSubmit={handleSubmit(saveExerciseHandler)}>
 			<div className='exercise-modal__header'>
 				<div onClick={closeModalHandler}>
 					<ArrowBackRounded />
@@ -77,55 +93,155 @@ const ExerciseModal = ({
 				</span>
 			</div>
 			<div className='exercise-modal__body'>
-				<TextField
-					label='Exercise title'
-					type='text'
-					variant='outlined'
-					className='exercise-modal__title exercise-modal__input'
-					size='small'
-					value={title}
-					onChange={(e) => changeFieldHandler(e.target.value, 'title')}
-					required
+				<Controller
+					name='title'
+					control={control}
+					defaultValue={title}
+					rules={{
+						required: 'Name is required',
+						minLength: {
+							value: 3,
+							message: 'Name must be at least 8 characters long',
+						},
+						maxLength: {
+							value: 20,
+							message: 'Name must be no more than 20 characters long',
+						},
+					}}
+					render={({ field }) => (
+						<TextField
+							{...field}
+							label='Exercise title*'
+							type='text'
+							variant='outlined'
+							className='exercise-modal__title exercise-modal__input'
+							size='small'
+							value={title}
+							onChange={(e) => changeFieldHandler(e.target.value, 'title')}
+							error={!!errors.title}
+							helperText={errors.title ? errors.title.message?.toString() : ''}
+						/>
+					)}
 				/>
-				<Autocomplete
-					disablePortal
-					value={bodyPart || null}
-					options={Object.values(bodyParts)}
-					onChange={(e, value) => changeFieldHandler(value, 'bodyPart')}
-					renderInput={(params) => <TextField {...params} label='Body part' required />}
-					className='exercise-modal__option exercise-modal__input'
-					size='small'
+				<Controller
+					name='bodyPart'
+					control={control}
+					defaultValue={bodyPart || null}
+					rules={{
+						required: 'Body part is required',
+					}}
+					render={({ field }) => (
+						<Autocomplete
+							{...field}
+							disablePortal
+							value={bodyPart || null}
+							options={Object.values(bodyParts)}
+							onChange={(e, value) => changeFieldHandler(value, 'bodyPart')}
+							renderInput={(params) => (
+								<TextField
+									{...params}
+									label='Body part*'
+									error={!!errors.bodyPart}
+									helperText={
+										errors.bodyPart ? errors.bodyPart.message?.toString() : ''
+									}
+								/>
+							)}
+							className='exercise-modal__option exercise-modal__input'
+							size='small'
+						/>
+					)}
 				/>
-				<TextField
-					label='Reps'
-					type='number'
-					variant='outlined'
-					className='exercise-modal__option exercise-modal__input'
-					size='small'
-					value={reps}
-					onChange={(e) => changeFieldHandler(e.target.value, 'reps')}
-					required
+				<Controller
+					name='reps'
+					control={control}
+					defaultValue={reps}
+					rules={{
+						required: 'Reps is required',
+						min: {
+							value: 1,
+							message: 'The value must be more than 0',
+						},
+						max: {
+							value: 9999,
+							message: 'Max value is 9999',
+						},
+					}}
+					render={({ field }) => (
+						<TextField
+							{...field}
+							label='Reps*'
+							type='number'
+							variant='outlined'
+							className='exercise-modal__option exercise-modal__input'
+							size='small'
+							value={reps}
+							onChange={(e) => changeFieldHandler(e.target.value, 'reps')}
+							error={!!errors.reps}
+							helperText={errors.reps ? errors.reps.message?.toString() : ''}
+						/>
+					)}
 				/>
-				<TextField
-					label='Sets'
-					type='number'
-					variant='outlined'
-					className='exercise-modal__option exercise-modal__input'
-					size='small'
-					value={sets}
-					onChange={(e) => changeFieldHandler(e.target.value, 'sets')}
-					required
+				<Controller
+					name='sets'
+					control={control}
+					defaultValue={sets}
+					rules={{
+						required: 'Sets is required',
+						min: {
+							value: 1,
+							message: 'The value must be more than 0',
+						},
+						max: {
+							value: 100,
+							message: 'Max value is 100',
+						},
+					}}
+					render={({ field }) => (
+						<TextField
+							{...field}
+							label='Sets*'
+							type='number'
+							variant='outlined'
+							className='exercise-modal__option exercise-modal__input'
+							size='small'
+							value={sets}
+							onChange={(e) => changeFieldHandler(e.target.value, 'sets')}
+							error={!!errors.sets}
+							helperText={errors.sets ? errors.sets.message?.toString() : ''}
+						/>
+					)}
 				/>
-				<TextField
-					label='RPE'
-					type='number'
-					variant='outlined'
-					className='exercise-modal__option exercise-modal__input'
-					size='small'
-					fullWidth={false}
-					value={RPE}
-					onChange={(e) => changeFieldHandler(e.target.value, 'RPE')}
-					required
+				<Controller
+					name='RPE'
+					control={control}
+					defaultValue={RPE}
+					rules={{
+						required: 'RPE is required',
+						min: {
+							value: 1,
+							message: 'The value must be more than 0',
+						},
+						max: {
+							value: 10,
+							message: 'Max value is 10',
+						},
+					}}
+					render={({ field }) => (
+						<TextField
+							{...field}
+							label='RPE*'
+							type='number'
+							variant='outlined'
+							className='exercise-modal__option exercise-modal__input'
+							size='small'
+							fullWidth={false}
+							value={RPE}
+							onChange={(e) => changeFieldHandler(e.target.value, 'RPE')}
+							error={!!errors.RPE}
+							helperText={errors.RPE ? errors.RPE.message?.toString() : ''}
+						/>
+					)}
 				/>
 				<TextField
 					className='exercise-modal__metadata exercise-modal__input'
@@ -137,7 +253,7 @@ const ExerciseModal = ({
 				/>
 			</div>
 			<div className='exercise-modal__bottom'>
-				<Button onClick={saveExerciseHandler} variant='contained'>
+				<Button type='submit' variant='contained' onClick={() => console.log(exerciseItem)}>
 					Save exercise
 				</Button>
 			</div>

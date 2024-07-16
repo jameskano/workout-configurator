@@ -70,7 +70,7 @@ const ExercisesPage = () => {
 			<GenericFilters />
 
 			<div className='exercises__list'>
-				{data?.data?.map((exercise: ExerciseType) => {
+				{data?.map((exercise: ExerciseType) => {
 					return (
 						<ExerciseCard
 							key={exercise._id}
@@ -82,7 +82,7 @@ const ExercisesPage = () => {
 					);
 				})}
 
-				{!data?.data?.length && !isLoading && (
+				{!(data && data.length) && !isLoading && (
 					<span className='no-data-text'>{miscellaneous.NO_DATA_TEXT}</span>
 				)}
 			</div>

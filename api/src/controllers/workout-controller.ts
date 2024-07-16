@@ -21,8 +21,11 @@ export const getAllWorkouts: RequestHandler = async (req, res, next) => {
 };
 
 export const createWorkout: RequestHandler = async (req, res, next) => {
+	const { workoutData, userId } = req.body;
+	const data = { ...workoutData, userId };
+
 	try {
-		const newWorkout = await createWorkoutRepository(req.body);
+		const newWorkout = await createWorkoutRepository(data);
 		res.status(201).json(newWorkout);
 	} catch (error) {
 		next(error);

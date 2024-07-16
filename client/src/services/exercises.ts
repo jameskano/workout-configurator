@@ -20,11 +20,11 @@ export const getExercise = (id: number) => {
 	return axiosInstance(config);
 };
 
-export const createExercise = (exerciseData: ExerciseType) => {
+export const createExercise = (exerciseData: ExerciseType, userId: string) => {
 	const config = {
 		method: 'POST',
 		url: `${import.meta.env.VITE_WORKOUT_API}/exercise`,
-		data: exerciseData,
+		data: { exerciseData, userId },
 	};
 
 	return axiosInstance(config);

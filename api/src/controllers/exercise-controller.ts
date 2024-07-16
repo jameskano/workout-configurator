@@ -35,8 +35,11 @@ export const getExercise: RequestHandler = async (req, res, next) => {
 };
 
 export const createExercise: RequestHandler = async (req, res, next) => {
+	const { exerciseData, userId } = req.body;
+	const data = { ...exerciseData, userId };
+
 	try {
-		const newExercise = await createExerciseRepository(req.body);
+		const newExercise = await createExerciseRepository(data);
 		res.status(201).json(newExercise);
 	} catch (error) {
 		next(error);
