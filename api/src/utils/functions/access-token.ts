@@ -8,6 +8,6 @@ export const createAccessToken = (user: any) =>
 		},
 		process.env.JWT_SECRET!,
 		{
-			expiresIn: '10w',
+			expiresIn: '1w',
 		},
 	);
