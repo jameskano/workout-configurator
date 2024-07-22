@@ -1,0 +1,108 @@
+@import '../../styles/main-styles.scss';
+
+.welcome-page {
+	background: linear-gradient(
+		217deg,
+		rgba(55, 95, 135, 0.5),
+		rgba(144, 199, 255, 0.5),
+		rgba(236, 64, 122, 0.5)
+	);
+	background-size: 300% 300%;
+	animation: BackgroundGradientAnimation 15s ease infinite;
+
+	&__container {
+		position: relative;
+		height: 100vh;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		transition: left 0.2s ease-in-out;
+		overflow: hidden;
+		left: 0;
+
+		&--close {
+			left: -100vw;
+		}
+	}
+
+	&__title {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		height: 100%;
+		white-space: wrap;
+		gap: $spacing-3;
+
+		> h1 {
+			font-size: $font-xxxxl;
+			margin: 0;
+		}
+
+		> img {
+			width: 150px;
+		}
+	}
+
+	&__actions {
+		margin-top: auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: $spacing-10 15%;
+		gap: $spacing-5;
+		width: 100%;
+
+		> button {
+			width: 100%;
+			border-radius: $border-radius-3;
+
+			&:first-of-type {
+				animation: ButtonBorderAnimation 15s ease infinite;
+			}
+
+			&:last-of-type {
+				animation: ButtonColorAnimation 15s ease infinite;
+			}
+		}
+	}
+}
+
+@keyframes ButtonColorAnimation {
+	0% {
+		background-color: #549ce3;
+	}
+	50% {
+		background-color: #ec407a;
+	}
+	100% {
+		background-color: #549ce3;
+	}
+}
+
+@keyframes ButtonBorderAnimation {
+	0% {
+		border-color: #90c7ff;
+		color: #90c7ff;
+	}
+	50% {
+		border-color: #ec407a;
+		color: #ec407a;
+	}
+	100% {
+		border-color: #90c7ff;
+		color: #90c7ff;
+	}
+}
+
+@keyframes BackgroundGradientAnimation {
+	0% {
+		background-position: 9% 100%;
+	}
+	50% {
+		background-position: 92% 10%;
+	}
+	100% {
+		background-position: 9% 100%;
+	}
+}

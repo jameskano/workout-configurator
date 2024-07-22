@@ -10,3 +10,7 @@ export const bodyParts = {
 export const miscellaneous = {
 	NO_DATA_TEXT: 'No data',
 };
+
+export const timer = {
+	loginAnimationTime: 200,
+};

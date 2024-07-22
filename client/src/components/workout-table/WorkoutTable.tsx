@@ -39,7 +39,6 @@ const WorkoutTable = ({ exercises, workoutId, expandedCard }: WorkoutTableType) 
 	useEffect(() => {
 		if (workoutIdToRefetch === workoutId) {
 			refetch();
-			console.log('yesso');
 			setWorkoutId('');
 		}
 	}, [exercises]);

@@ -46,8 +46,6 @@ const Layout = ({ currentPageComponent }: LayoutTypes) => {
 				<div className='layout__main-content'>{currentPageComponent}</div>
 			</div>
 
-			<Toast />
-
 			<Popover
 				open={popoverOpen}
 				anchorEl={popoverAnchorElement}

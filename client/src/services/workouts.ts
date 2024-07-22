@@ -1,23 +1,24 @@
-import axios from 'axios';
+import { axiosInstance } from '../utils/functions/axios-setup';
 import { WorkoutType } from 'utils/types/workout.types';
 
-export const getAllWorkouts = () => {
+export const getAllWorkouts = (userId: string) => {
 	const config = {
 		method: 'GET',
 		url: `${import.meta.env.VITE_WORKOUT_API}/workout`,
+		data: { userId },
 	};
 
-	return axios(config);
+	return axiosInstance(config);
 };
 
-export const createWorkout = (workoutData: WorkoutType) => {
+export const createWorkout = (workoutData: WorkoutType, userId: string) => {
 	const config = {
 		method: 'POST',
 		url: `${import.meta.env.VITE_WORKOUT_API}/workout`,
-		data: workoutData,
+		data: { workoutData, userId },
 	};
 
-	return axios(config);
+	return axiosInstance(config);
 };
 
 export const updateWorkout = (workoutData: WorkoutType) => {
@@ -27,7 +28,7 @@ export const updateWorkout = (workoutData: WorkoutType) => {
 		data: workoutData,
 	};
 
-	return axios(config);
+	return axiosInstance(config);
 };
 
 export const deleteWorkouts = (workoutIds: string[]) => {
@@ -37,15 +38,15 @@ export const deleteWorkouts = (workoutIds: string[]) => {
 		data: { workoutIds },
 	};
 
-	return axios(config);
+	return axiosInstance(config);
 };
 
-export const getFilteredWorkouts = (filter: string) => {
+export const getFilteredWorkouts = (filter: string, userId: string) => {
 	const config = {
 		method: 'POST',
 		url: `${import.meta.env.VITE_WORKOUT_API}/workout/filter`,
-		data: { filter },
+		data: { filter, userId },
 	};
 
-	return axios(config);
+	return axiosInstance(config);
 };

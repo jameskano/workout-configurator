@@ -1,0 +1,78 @@
+@import '../../styles/main-styles.scss';
+
+.login-modal {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	top: 0;
+	left: 100vw;
+	width: 100vw;
+	height: 100vh;
+	transition: left 0.2s ease-in-out;
+	z-index: 2;
+	align-items: center;
+
+	&--open {
+		left: 0;
+	}
+
+	&__header {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+
+		> div {
+			transform: scale(1.25);
+
+			> svg {
+				cursor: pointer;
+			}
+		}
+	}
+
+	&__logo {
+		margin-top: 40%;
+
+		> img {
+			width: 150px;
+		}
+	}
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+		gap: $spacing-2;
+		margin: auto 0 $spacing-3;
+		width: 70%;
+
+		> button {
+			text-transform: none;
+			background-color: $color-primary !important;
+			border-radius: $border-radius-3;
+
+			&:hover {
+				background-color: $color-primary-hover !important;
+			}
+		}
+	}
+
+	&__input {
+		@include register-input;
+	}
+
+	&__register {
+		display: flex;
+		gap: $spacing-2;
+		margin-bottom: $spacing-18;
+
+		> span {
+			font-size: $font-xxs;
+			color: $color-text-white-darker-1;
+
+			&:last-of-type {
+				color: $color-secondary;
+				cursor: pointer;
+			}
+		}
+	}
+}

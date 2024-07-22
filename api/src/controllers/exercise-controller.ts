@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 import {
+	createExerciseService,
 	deleteExerciseService,
 	getExerciseService,
 	getExercisesByIdsService,
@@ -12,8 +13,10 @@ import {
 } from '../data-access/exercise-repository';
 
 export const getAllExercises: RequestHandler = async (req, res, next) => {
+	const { userId } = req.query;
+
 	try {
-		const exercises = await getAllExercisesRepository();
+		const exercises = await getAllExercisesRepository(userId as string);
 		res.status(200).json(exercises);
 	} catch (error) {
 		next(error);
@@ -33,8 +36,11 @@ export const getExercise: RequestHandler = async (req, res, next) => {
 };
 
 export const createExercise: RequestHandler = async (req, res, next) => {
+	const { exerciseData, userId } = req.body;
+	const data = { ...exerciseData, userId };
+
 	try {
-		const newExercise = await createExerciseRepository(req.body);
+		const newExercise = await createExerciseService(data);
 		res.status(201).json(newExercise);
 	} catch (error) {
 		next(error);
@@ -66,10 +72,14 @@ export const updateExercise: RequestHandler = async (req, res, next) => {
 };
 
 export const getFilteredExercises: RequestHandler = async (req, res, next) => {
-	const { textFilter, bodyPartFilter } = req.body;
+	const { textFilter, bodyPartFilter, userId } = req.body;
 
 	try {
-		const filteredExercises = await getFilteredExercisesService(textFilter, bodyPartFilter);
+		const filteredExercises = await getFilteredExercisesService(
+			textFilter,
+			bodyPartFilter,
+			userId,
+		);
 
 		res.status(200).json(filteredExercises);
 	} catch (error) {

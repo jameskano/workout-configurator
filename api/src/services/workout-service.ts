@@ -1,11 +1,13 @@
 import { CustomError } from '../utils/classes/errors';
 import { checkIfElementExists, workoutIdValidation } from '../utils/functions/db-validations';
 import {
+	createWorkoutRepository,
 	deleteManyRepository,
 	getAllWorkoutsRepository,
 	updateWorkoutRepository,
 } from '../data-access/workout-repository';
-import { WorkoutType } from '../models/workout-model';
+import { validateWorkout } from '../utils/functions/data-validation';
+import { WorkoutType } from '../utils/types/workout.types';
 const diacriticLess = require('diacriticless');
 
 export const deleteWorkoutsService = async (workoutIds: string[]) => {
@@ -20,7 +22,17 @@ export const deleteWorkoutsService = async (workoutIds: string[]) => {
 	}
 };
 
+export const createWorkoutService = async (data: WorkoutType) => {
+	validateWorkout(data.title, data.exercises);
+
+	const newWorkout = await createWorkoutRepository(data);
+
+	return newWorkout;
+};
+
 export const updateWorkoutService = async (_id: string, data: WorkoutType) => {
+	validateWorkout(data.title, data.exercises);
+
 	await workoutIdValidation(_id);
 
 	const updatedWorkout = await updateWorkoutRepository(_id, data);
@@ -30,9 +42,9 @@ export const updateWorkoutService = async (_id: string, data: WorkoutType) => {
 	return updatedWorkout;
 };
 
-export const getFilteredWorkoutsService = async (filter: string) => {
+export const getFilteredWorkoutsService = async (filter: string, userId: string) => {
 	const formattedFilter = diacriticLess(filter.toLowerCase());
-	const workouts = await getAllWorkoutsRepository();
+	const workouts = await getAllWorkoutsRepository(userId);
 	const filteredWorkouts = workouts.filter((workout) => {
 		const titleWithoutDiacritics = diacriticLess(workout.title.toLowerCase());
 		return titleWithoutDiacritics.includes(formattedFilter);

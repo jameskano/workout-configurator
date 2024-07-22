@@ -7,7 +7,6 @@
 	top: 0;
 	left: 100%;
 	background-color: $color-background-dark-3;
-	border-radius: $border-radius-2;
 	display: flex;
 	flex-direction: column;
 	overflow-y: auto;
@@ -50,6 +49,7 @@
 		> button {
 			text-transform: none;
 			background-color: $color-primary !important;
+			border-radius: $border-radius-3;
 
 			&:hover {
 				background-color: $color-primary-darker-1 !important;
@@ -59,7 +59,9 @@
 
 	&__input {
 		@include generic-input;
-		background-color: $color-background-dark-4;
+		.MuiInputBase-root {
+			background-color: $color-background-dark-4;
+		}
 
 		label {
 			color: $color-text-white-darker-2;

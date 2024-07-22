@@ -1,0 +1,26 @@
+@import '../../styles/main-styles.scss';
+
+.backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 1;
+	visibility: hidden;
+	transition: visibility 0.2s ease-in-out;
+
+	&--open {
+		visibility: visible;
+	}
+
+	&--normal {
+		background-color: black;
+		opacity: 0.5;
+	}
+
+	&--blur {
+		backdrop-filter: blur(100px);
+		opacity: 1;
+	}
+}

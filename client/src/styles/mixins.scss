@@ -1,36 +1,98 @@
 @mixin generic-input {
-    border-radius: $border-radius-2;
-    background-color: $color-background-dark-5;
+	.MuiInputBase-root {
+		background-color: $color-background-dark-5;
+		border-radius: $border-radius-3;
+	}
 
-    &:hover {
-        fieldset {
-            border-color: $color-primary-hover !important;
-        }
-    }
+	.Mui-error {
+		color: $color-system-feedback-error;
+		background-color: transparent;
+	}
 
-    input:focus + fieldset {
-        border: 2px solid $color-primary-hover !important;
-    }
+	&:hover {
+		fieldset {
+			border-color: $color-primary-hover !important;
+		}
+	}
 
-    input {
-        font-size: $font-s;
-        color: $color-text-white-base;
-    }
+	input:focus + fieldset {
+		border: 2px solid $color-primary-hover !important;
+	}
 
-    label {
-        color: $color-text-black-brighter-2;
-    }
+	input {
+		font-size: $font-s;
+		color: $color-text-white-base;
+	}
 
-    fieldset {
-        border: 1px solid $color-background-dark-1 !important;
-        transition: all 0.2s;
+	label {
+		color: $color-text-black-brighter-2;
+	}
 
-        span {
-            color: $color-primary-darker-2;
-        }
-    }
+	fieldset {
+		border: 1px solid $color-background-dark-1 !important;
+		transition: all 0.2s;
 
-    svg {
-        color: $color-text-black-brighter-2;
-    }
+		span {
+			color: $color-primary-darker-2;
+		}
+	}
+
+	svg {
+		color: $color-text-black-brighter-2;
+	}
+
+	p {
+		letter-spacing: normal;
+		line-height: normal;
+	}
+}
+
+@mixin register-input {
+	border-radius: $border-radius-3;
+	background-color: transparent;
+
+	.Mui-focused {
+		color: $color-primary-brighter-2;
+	}
+
+	.Mui-error {
+		color: $color-system-feedback-error-brighter;
+	}
+
+	&:hover {
+		fieldset {
+			border-color: $color-primary-hover !important;
+		}
+	}
+
+	input:focus + fieldset {
+		border: 2px solid $color-primary-hover !important;
+	}
+
+	input {
+		font-size: $font-s;
+		color: $color-text-white-base;
+	}
+
+	label {
+		color: $color-text-white-darker-1;
+	}
+
+	fieldset {
+		border: 1px solid $color-background-light-5 !important;
+		transition: all 0.2s;
+
+		span {
+			color: $color-primary-darker-1;
+		}
+	}
+
+	svg {
+		color: $color-text-white-darker-2;
+	}
+
+	p {
+		letter-spacing: normal;
+		line-height: normal;
+	}
 }

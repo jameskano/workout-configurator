@@ -1,11 +1,12 @@
-import ExerciseModel, { ExerciseType } from '../models/exercise-model';
+import { ExerciseType } from '../utils/types/exercise.types';
+import ExerciseModel from '../models/exercise-model';
 
 export const deleteMany = async (exerciseIds: string[]) => {
 	return await ExerciseModel.deleteMany({ _id: { $in: exerciseIds } });
 };
 
-export const getAllExercisesRepository = async () =>
-	await ExerciseModel.find({}).sort({ createdAt: -1 });
+export const getAllExercisesRepository = async (userId: string) =>
+	await ExerciseModel.find({ userId }).sort({ createdAt: -1 });
 
 export const getExerciseByIdRepository = async (_id: string) => await ExerciseModel.findById(_id);
 

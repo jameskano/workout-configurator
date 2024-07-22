@@ -1,17 +1,17 @@
 import { RequestHandler } from 'express';
+import { getAllWorkoutsRepository } from '../data-access/workout-repository';
 import {
-	createWorkoutRepository,
-	getAllWorkoutsRepository,
-} from '../data-access/workout-repository';
-import {
+	createWorkoutService,
 	deleteWorkoutsService,
 	getFilteredWorkoutsService,
 	updateWorkoutService,
 } from '../services/workout-service';
 
 export const getAllWorkouts: RequestHandler = async (req, res, next) => {
+	const { userId } = req.body;
+
 	try {
-		const workouts = await getAllWorkoutsRepository();
+		const workouts = await getAllWorkoutsRepository(userId);
 		res.status(200).json(workouts);
 	} catch (error) {
 		next(error);
@@ -19,8 +19,11 @@ export const getAllWorkouts: RequestHandler = async (req, res, next) => {
 };
 
 export const createWorkout: RequestHandler = async (req, res, next) => {
+	const { workoutData, userId } = req.body;
+	const data = { ...workoutData, userId };
+
 	try {
-		const newWorkout = await createWorkoutRepository(req.body);
+		const newWorkout = await createWorkoutService(data);
 		res.status(201).json(newWorkout);
 	} catch (error) {
 		next(error);
@@ -52,10 +55,10 @@ export const updateWorkout: RequestHandler = async (req, res, next) => {
 };
 
 export const getFilteredWorkouts: RequestHandler = async (req, res, next) => {
-	const { filter } = req.body;
+	const { filter, userId } = req.body;
 
 	try {
-		const filteredWorkouts = await getFilteredWorkoutsService(filter);
+		const filteredWorkouts = await getFilteredWorkoutsService(filter, userId);
 
 		res.status(200).json(filteredWorkouts);
 	} catch (error) {

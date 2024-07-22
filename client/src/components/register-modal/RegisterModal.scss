@@ -1,0 +1,81 @@
+@import '../../styles/main-styles.scss';
+
+.register-modal {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	top: 0;
+	left: 100vw;
+	width: 100vw;
+	height: 100vh;
+	transition: left 0.2s ease-in-out;
+	align-items: center;
+
+	&--open {
+		left: 0;
+	}
+
+	&--open {
+		left: 0;
+	}
+
+	&__header {
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		> div {
+			transform: scale(1.25);
+
+			> svg {
+				cursor: pointer;
+			}
+		}
+	}
+
+	&__logo {
+		margin-top: 45%;
+
+		> img {
+			width: 150px;
+		}
+	}
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+		gap: $spacing-2;
+		margin: auto 0 $spacing-3;
+		width: 70%;
+
+		> button {
+			text-transform: none;
+			background-color: $color-secondary !important;
+			border-radius: $border-radius-3;
+
+			&:hover {
+				background-color: $color-secondary-hover !important;
+			}
+		}
+	}
+
+	&__input {
+		@include register-input;
+	}
+
+	&__login {
+		display: flex;
+		gap: $spacing-2;
+		margin-bottom: $spacing-16;
+
+		> span {
+			font-size: $font-xxs;
+			color: $color-text-white-darker-1;
+
+			&:last-of-type {
+				color: $color-primary;
+				cursor: pointer;
+			}
+		}
+	}
+}

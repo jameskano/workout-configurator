@@ -1,13 +1,14 @@
-import axios from 'axios';
+import { axiosInstance } from '../utils/functions/axios-setup';
 import { ExerciseType } from 'utils/types/exercise.types';
 
-export const getAllExercises = () => {
+export const getAllExercises = (userId: string) => {
 	const config = {
 		method: 'GET',
 		url: `${import.meta.env.VITE_WORKOUT_API}/exercise`,
+		params: { userId },
 	};
 
-	return axios(config);
+	return axiosInstance(config);
 };
 
 export const getExercise = (id: number) => {
@@ -16,17 +17,17 @@ export const getExercise = (id: number) => {
 		url: `${import.meta.env.VITE_WORKOUT_API}/exercise/${id}`,
 	};
 
-	return axios(config);
+	return axiosInstance(config);
 };
 
-export const createExercise = (exerciseData: ExerciseType) => {
+export const createExercise = (exerciseData: ExerciseType, userId: string) => {
 	const config = {
 		method: 'POST',
 		url: `${import.meta.env.VITE_WORKOUT_API}/exercise`,
-		data: exerciseData,
+		data: { exerciseData, userId },
 	};
 
-	return axios(config);
+	return axiosInstance(config);
 };
 
 export const updateExercise = (exerciseData: ExerciseType) => {
@@ -36,7 +37,7 @@ export const updateExercise = (exerciseData: ExerciseType) => {
 		data: exerciseData,
 	};
 
-	return axios(config);
+	return axiosInstance(config);
 };
 
 export const deleteExercise = (exerciseIds: string[]) => {
@@ -46,17 +47,21 @@ export const deleteExercise = (exerciseIds: string[]) => {
 		data: { exerciseIds },
 	};
 
-	return axios(config);
+	return axiosInstance(config);
 };
 
-export const getFilteredExercises = (textFilter: string, bodyPartFilter: string) => {
+export const getFilteredExercises = (
+	textFilter: string,
+	bodyPartFilter: string,
+	userId: string,
+) => {
 	const config = {
 		method: 'POST',
 		url: `${import.meta.env.VITE_WORKOUT_API}/exercise/filter`,
-		data: { textFilter, bodyPartFilter },
+		data: { textFilter, bodyPartFilter, userId },
 	};
 
-	return axios(config);
+	return axiosInstance(config);
 };
 
 export const getExercisesByIds = (exerciseIds: string[]) => {
@@ -65,5 +70,5 @@ export const getExercisesByIds = (exerciseIds: string[]) => {
 		url: `${import.meta.env.VITE_WORKOUT_API}/exercise/ids`,
 		data: { exerciseIds },
 	};
-	return axios(config);
+	return axiosInstance(config);
 };

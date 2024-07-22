@@ -15,4 +15,5 @@ export const toastMessages = {
 	EXERCISE_DELETE_SUCCESS: 'Exercises removed successfully',
 	WORKOUT_DELETE_ERROR: 'Error. Workouts could not be removed',
 	WORKOUT_DELETE_SUCCESS: 'Workouts removed successfully',
+	UNAUTHORIZED_ACCESS: 'You need to sign in again - Redirecting',
 };
