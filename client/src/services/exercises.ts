@@ -5,7 +5,7 @@ export const getAllExercises = (userId: string) => {
 	const config = {
 		method: 'GET',
 		url: `${import.meta.env.VITE_WORKOUT_API}/exercise`,
-		data: { userId },
+		params: { userId },
 	};
 
 	return axiosInstance(config);

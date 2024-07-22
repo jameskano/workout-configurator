@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 import {
+	createExerciseService,
 	deleteExerciseService,
 	getExerciseService,
 	getExercisesByIdsService,
@@ -12,10 +13,10 @@ import {
 } from '../data-access/exercise-repository';
 
 export const getAllExercises: RequestHandler = async (req, res, next) => {
-	const { userId } = req.body;
+	const { userId } = req.query;
 
 	try {
-		const exercises = await getAllExercisesRepository(userId);
+		const exercises = await getAllExercisesRepository(userId as string);
 		res.status(200).json(exercises);
 	} catch (error) {
 		next(error);
@@ -39,7 +40,7 @@ export const createExercise: RequestHandler = async (req, res, next) => {
 	const data = { ...exerciseData, userId };
 
 	try {
-		const newExercise = await createExerciseRepository(data);
+		const newExercise = await createExerciseService(data);
 		res.status(201).json(newExercise);
 	} catch (error) {
 		next(error);

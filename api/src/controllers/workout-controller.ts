@@ -1,9 +1,7 @@
 import { RequestHandler } from 'express';
+import { getAllWorkoutsRepository } from '../data-access/workout-repository';
 import {
-	createWorkoutRepository,
-	getAllWorkoutsRepository,
-} from '../data-access/workout-repository';
-import {
+	createWorkoutService,
 	deleteWorkoutsService,
 	getFilteredWorkoutsService,
 	updateWorkoutService,
@@ -25,7 +23,7 @@ export const createWorkout: RequestHandler = async (req, res, next) => {
 	const data = { ...workoutData, userId };
 
 	try {
-		const newWorkout = await createWorkoutRepository(data);
+		const newWorkout = await createWorkoutService(data);
 		res.status(201).json(newWorkout);
 	} catch (error) {
 		next(error);

@@ -3,6 +3,7 @@ import { checkIfUserExists, createUserRepository } from '../data-access/user-rep
 import userModel from '../models/user-model';
 import bcrypt from 'bcryptjs';
 import { createAccessToken } from '../utils/functions/access-token';
+import { validateUser } from '../utils/functions/data-validation';
 
 export const loginUserService = async (email: string, password: string) => {
 	const userExists = await checkIfUserExists(email);
@@ -17,6 +18,8 @@ export const loginUserService = async (email: string, password: string) => {
 };
 
 export const registerUserService = async (username: string, password: string, email: string) => {
+	validateUser(username, email, password);
+
 	const userExists = await userModel.findOne({ email });
 	if (userExists) throw new CustomError(400, 'Email is already in use');
 
@@ -25,7 +28,7 @@ export const registerUserService = async (username: string, password: string, em
 
 	const user = await createUserRepository(username, email, hash);
 
-	const accessToken = createAccessToken(userExists);
+	const accessToken = createAccessToken(user);
 
 	return { user, accessToken };
 };

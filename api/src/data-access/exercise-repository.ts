@@ -1,4 +1,5 @@
-import ExerciseModel, { ExerciseType } from '../models/exercise-model';
+import { ExerciseType } from '../utils/types/exercise.types';
+import ExerciseModel from '../models/exercise-model';
 
 export const deleteMany = async (exerciseIds: string[]) => {
 	return await ExerciseModel.deleteMany({ _id: { $in: exerciseIds } });

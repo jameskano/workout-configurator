@@ -1,5 +1,6 @@
 import { CustomError } from '../utils/classes/errors';
 import {
+	createExerciseRepository,
 	deleteMany,
 	getAllExercisesRepository,
 	getExerciseByIdRepository,
@@ -11,9 +12,10 @@ import {
 	updateWorkoutRepository,
 } from '../data-access/workout-repository';
 import { checkIfElementExists, exerciseIdValidation } from '../utils/functions/db-validations';
-import { ExerciseType } from '../models/exercise-model';
 const diacriticLess = require('diacriticless');
 import mongoose from 'mongoose';
+import { ExerciseType } from '../utils/types/exercise.types';
+import { validateExercise } from '../utils/functions/data-validation';
 
 export const deleteExerciseService = async (exerciseIds: string[]) => {
 	for (const _id of exerciseIds) {
@@ -31,6 +33,7 @@ export const deleteExerciseService = async (exerciseIds: string[]) => {
 	for (const workout of workouts) {
 		// @ts-expect-error
 		workout.exercises = workout.exercises.filter((id: string) => !exerciseIds.includes(id));
+		// @ts-expect-error
 		await updateWorkoutRepository(workout.id, workout);
 	}
 };
@@ -45,7 +48,21 @@ export const getExerciseService = async (_id: string) => {
 	return exercise;
 };
 
+export const createExerciseService = async (data: ExerciseType) => {
+	const { title, reps, sets, RPE } = data;
+
+	validateExercise(title, reps, sets, RPE);
+
+	const newExercise = await createExerciseRepository(data);
+
+	return newExercise;
+};
+
 export const updateExerciseService = async (_id: string, data: ExerciseType) => {
+	const { title, reps, sets, RPE } = data;
+
+	validateExercise(title, reps, sets, RPE);
+
 	await exerciseIdValidation(_id);
 
 	const updatedExercise = await updateExerciseRepository(_id, data);

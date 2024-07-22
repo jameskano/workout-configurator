@@ -1,4 +1,5 @@
-import WorkoutModel, { WorkoutType } from '../models/workout-model';
+import { WorkoutType } from '../utils/types/workout.types';
+import WorkoutModel from '../models/workout-model';
 
 export const findByIdInArrayRepository = async (exerciseIds: string[]) =>
 	await WorkoutModel.find({ exercises: { $in: exerciseIds } });

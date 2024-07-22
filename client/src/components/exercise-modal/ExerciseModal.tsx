@@ -13,6 +13,7 @@ import { toastConstants } from '../../utils/constants/toast';
 import { useCircularLoaderContext } from '../../store/context/circular-loader-context/circular-loader-context';
 import { useLoginContext } from '../../store/context/login-context/login-context';
 import { Controller, useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 
 const ExerciseModal = ({
 	showModal,
@@ -36,7 +37,27 @@ const ExerciseModal = ({
 		setValue,
 		reset,
 		formState: { errors },
-	} = useForm();
+	} = useForm({
+		defaultValues: {
+			title,
+			bodyPart,
+			reps,
+			sets,
+			RPE,
+			metadata,
+		},
+	});
+
+	useEffect(() => {
+		reset({
+			title,
+			bodyPart,
+			reps,
+			sets,
+			RPE,
+			metadata,
+		});
+	}, [exerciseItem, reset]);
 
 	const closeModalHandler = () => {
 		setShowModal(false);
@@ -48,6 +69,7 @@ const ExerciseModal = ({
 		const formattedValue = bodyPartToLowerCase(value, name);
 		const updateExerciseItem = { ...exerciseItem, [name]: formattedValue };
 		setExerciseItemDisp(updateExerciseItem);
+		// @ts-expect-error
 		setValue(name, value);
 	};
 
@@ -96,12 +118,11 @@ const ExerciseModal = ({
 				<Controller
 					name='title'
 					control={control}
-					defaultValue={title}
 					rules={{
 						required: 'Name is required',
 						minLength: {
 							value: 3,
-							message: 'Name must be at least 8 characters long',
+							message: 'Name must be at least 3 characters long',
 						},
 						maxLength: {
 							value: 20,
@@ -126,7 +147,6 @@ const ExerciseModal = ({
 				<Controller
 					name='bodyPart'
 					control={control}
-					defaultValue={bodyPart || null}
 					rules={{
 						required: 'Body part is required',
 					}}
@@ -155,7 +175,6 @@ const ExerciseModal = ({
 				<Controller
 					name='reps'
 					control={control}
-					defaultValue={reps}
 					rules={{
 						required: 'Reps is required',
 						min: {
@@ -185,7 +204,6 @@ const ExerciseModal = ({
 				<Controller
 					name='sets'
 					control={control}
-					defaultValue={sets}
 					rules={{
 						required: 'Sets is required',
 						min: {
@@ -215,7 +233,6 @@ const ExerciseModal = ({
 				<Controller
 					name='RPE'
 					control={control}
-					defaultValue={RPE}
 					rules={{
 						required: 'RPE is required',
 						min: {
@@ -253,7 +270,7 @@ const ExerciseModal = ({
 				/>
 			</div>
 			<div className='exercise-modal__bottom'>
-				<Button type='submit' variant='contained' onClick={() => console.log(exerciseItem)}>
+				<Button type='submit' variant='contained'>
 					Save exercise
 				</Button>
 			</div>

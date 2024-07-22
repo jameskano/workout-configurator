@@ -32,21 +32,6 @@ const WorkoutModal = ({
 	const { getAllExercisesFn } = useExerciseServices();
 	const { userId } = useLoginContext();
 	const {
-		handleSubmit,
-		control,
-		setValue,
-		setError,
-		clearErrors,
-		formState: { errors },
-	} = useForm();
-
-	const { isLoading, isError, data } = useCustomQuery({
-		queryKey: ['exercises'],
-		queryFn: getAllExercisesFn,
-		enabled: showModal,
-	});
-
-	const {
 		workoutItem: { title, favourite, exercises, metadata, _id },
 		workoutItem,
 		setWorkoutItemDisp,
@@ -54,11 +39,37 @@ const WorkoutModal = ({
 	} = useWorkoutContext();
 	const { setOpenLoader } = useCircularLoaderContext();
 	const { openToastHandler } = useToast();
+	const {
+		handleSubmit,
+		control,
+		setValue,
+		setError,
+		clearErrors,
+		reset,
+		formState: { errors },
+	} = useForm({
+		defaultValues: {
+			title,
+			exercises,
+		},
+	});
+
+	const { isLoading, isError, data } = useCustomQuery({
+		queryKey: ['exercises'],
+		queryFn: getAllExercisesFn,
+		enabled: showModal,
+	});
 
 	const [showSelected, setShowSelected] = useState(false);
 	const [exerciseFilter, setExerciseFilter] = useState('');
 
 	const debounceExerciseFilter = useDebounce(exerciseFilter, 1000);
+
+	useEffect(() => {
+		reset({
+			title,
+		});
+	}, [workoutItem, reset]);
 
 	useEffect(() => {
 		if (isError) openToastHandler(toastMessages.EXERCISE_GET_ERROR, toastConstants.TYPES.ERROR);
@@ -67,6 +78,7 @@ const WorkoutModal = ({
 	const closeModalHandler = () => {
 		setShowModal(false);
 		setWorkoutItemDisp();
+		reset();
 	};
 
 	const saveWorkoutHandler = async () => {
@@ -109,6 +121,7 @@ const WorkoutModal = ({
 	const changeFieldHandler = (value: string | boolean, name: string) => {
 		const updateExerciseItem = { ...workoutItem, [name]: value };
 		setWorkoutItemDisp(updateExerciseItem);
+		// @ts-expect-error
 		if (name === 'title') setValue(name, value);
 	};
 
