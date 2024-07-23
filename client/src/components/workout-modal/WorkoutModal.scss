@@ -70,6 +70,7 @@
 
 	&__favourites {
 		width: fit-content;
+		height: fit-content;
 
 		span:first-of-type {
 			padding-top: $spacing-1;
@@ -145,6 +146,16 @@
 		&--open {
 			left: $side-navbar-size;
 		}
+
+		&__bottom,
+		&__body {
+			padding-left: 20%;
+			padding-right: 20%;
+		}
+
+		&__body {
+			padding-top: 5%;
+		}
 	}
 }
 
@@ -153,6 +164,15 @@
 		&__body {
 			grid-template-columns: repeat(2, 1fr);
 			display: grid;
+			// flex-grow: 0;
 		}
+
+		// &__exercises-header {
+		// 	> div {
+		// 		display: flex;
+		// 		gap: $spacing-3;
+		// 		margin-bottom: $spacing-2;
+		// 	}
+		// }
 	}
 }
