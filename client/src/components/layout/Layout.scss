@@ -51,13 +51,25 @@
 		&__header {
 			margin-left: $side-navbar-size;
 
-			> span {
+			> svg {
 				display: none;
 			}
 		}
 
 		&__body {
 			margin-left: $side-navbar-size;
+		}
+
+		&__main-content {
+			padding: 0 20%;
+		}
+	}
+}
+
+@media (min-width: 1500px) {
+	.layout {
+		&__main-content {
+			padding: 0 25%;
 		}
 	}
 }

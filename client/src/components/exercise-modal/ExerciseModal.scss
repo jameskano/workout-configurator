@@ -82,6 +82,16 @@
 			left: $side-navbar-size;
 			width: calc(100% - $side-navbar-size);
 		}
+
+		&__bottom,
+		&__body {
+			padding-left: 20%;
+			padding-right: 20%;
+		}
+
+		&__body {
+			padding-top: 5%;
+		}
 	}
 }
 
@@ -89,6 +99,7 @@
 	.exercise-modal {
 		&__body {
 			grid-template-columns: repeat(2, 1fr);
+			gap: $spacing-5;
 		}
 	}
 }

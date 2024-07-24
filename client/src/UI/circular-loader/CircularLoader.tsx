@@ -1,7 +1,10 @@
 import CircularProgress from '@mui/material/CircularProgress';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import React from 'react';
 
 const CircularLoader = () => {
+	const isLargeScreen = useMediaQuery('(min-width:900px)');
+
 	return (
 		<React.Fragment>
 			<svg width={0} height={0}>
@@ -13,8 +16,8 @@ const CircularLoader = () => {
 				</defs>
 			</svg>
 			<CircularProgress
-				size={40}
-				thickness={4}
+				size={isLargeScreen ? 50 : 40}
+				thickness={isLargeScreen ? 4 : 3}
 				sx={{ 'svg circle': { stroke: 'url(#my_gradient)' } }}
 			/>
 		</React.Fragment>
