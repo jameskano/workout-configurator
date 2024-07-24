@@ -1,8 +1,11 @@
 @import '../../styles/main-styles.scss';
 
+$maxExerciseListHeight: 400px;
+$minExerciseListHeight: 50px;
+
 .workout-modal {
 	width: 100%;
-	height: 100vh;
+	height: 100%;
 	position: fixed;
 	top: 0;
 	left: 100%;
@@ -12,6 +15,7 @@
 	overflow-y: auto;
 	z-index: 5;
 	transition: left 0.2s ease-in-out;
+	container-type: inline-size;
 
 	&--open {
 		left: 0;
@@ -85,7 +89,7 @@
 	}
 
 	&__exercises {
-		grid-column: 1 / -1;
+		grid-column: span 2;
 		display: flex;
 		flex-direction: column;
 		flex-grow: 1;
@@ -129,7 +133,8 @@
 	}
 
 	&__exercises-list {
-		min-height: 50px;
+		min-height: $minExerciseListHeight;
+		max-height: $maxExerciseListHeight;
 		padding: 0 $spacing-2;
 		border: 2px solid $color-background-dark-1;
 		display: flex;
@@ -145,6 +150,7 @@
 	.workout-modal {
 		&--open {
 			left: $side-navbar-size;
+			width: calc(100% - $side-navbar-size);
 		}
 
 		&__bottom,
@@ -162,17 +168,22 @@
 @media (min-width: 768px) {
 	.workout-modal {
 		&__body {
-			grid-template-columns: repeat(2, 1fr);
 			display: grid;
-			// flex-grow: 0;
+			grid-template-columns: repeat(2, 1fr);
+			grid-template-rows: min-content minmax($minExerciseListHeight, $maxExerciseListHeight) min-content;
+			gap: $spacing-6;
 		}
+	}
+}
 
-		// &__exercises-header {
-		// 	> div {
-		// 		display: flex;
-		// 		gap: $spacing-3;
-		// 		margin-bottom: $spacing-2;
-		// 	}
-		// }
+@container (min-width: 420px) {
+	.workout-modal {
+		&__exercises-header {
+			> div {
+				display: flex;
+				gap: $spacing-3;
+				margin-bottom: $spacing-2;
+			}
+		}
 	}
 }

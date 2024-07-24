@@ -99,6 +99,7 @@
 	.exercise-modal {
 		&__body {
 			grid-template-columns: repeat(2, 1fr);
+			gap: $spacing-5;
 		}
 	}
 }
