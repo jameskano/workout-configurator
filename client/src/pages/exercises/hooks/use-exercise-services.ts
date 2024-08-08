@@ -8,7 +8,7 @@ export const useExerciseServices = () => {
 		try {
 			const response = await getAllExercises(userId);
 
-			if (response.statusText !== 'OK') throw new Error('Failed feching exercises');
+			if (response.status !== 200) throw new Error('Failed feching exercises');
 
 			return response.data;
 		} catch (error) {
@@ -23,8 +23,8 @@ export const useExerciseServices = () => {
 				bodyPartFilter.toLowerCase(),
 				userId,
 			);
-			console.log(response);
-			if (response.statusText !== 'OK') throw new Error('Failed feching exercises');
+
+			if (response.status !== 200) throw new Error('Failed feching exercises');
 
 			return response.data;
 		} catch (error) {

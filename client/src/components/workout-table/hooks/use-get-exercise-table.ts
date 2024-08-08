@@ -5,7 +5,7 @@ const useGetExerciseTable = () => {
 		try {
 			const response = await getExercisesByIds(exercises);
 
-			if (response.statusText !== 'OK') throw new Error('Failed feching exercises');
+			if (response.status !== 200) throw new Error('Failed feching exercises');
 
 			return response.data;
 		} catch (error) {

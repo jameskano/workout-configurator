@@ -8,7 +8,7 @@ export const useWorkoutServices = () => {
 		try {
 			const response = await getAllWorkouts(userId);
 
-			if (response.statusText !== 'OK') throw new Error('Failed feching workouts');
+			if (response.status !== 200) throw new Error('Failed feching workouts');
 
 			return response.data;
 		} catch (error) {
@@ -20,7 +20,7 @@ export const useWorkoutServices = () => {
 		try {
 			const response = await getFilteredWorkouts(debouncedFilter, userId);
 
-			if (response.statusText !== 'OK') throw new Error('Failed feching workouts');
+			if (response.status !== 200) throw new Error('Failed feching workouts');
 
 			return response.data;
 		} catch (error) {
