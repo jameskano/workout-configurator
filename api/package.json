@@ -7,7 +7,8 @@
 		"start": "nodemon src/server.ts",
 		"build": "tsc",
 		"lint": "eslint . --ext .ts",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"install-server": "npm install"
 	},
 	"author": "Jaime Canovas",
 	"license": "ISC",
