@@ -23,7 +23,7 @@ export const useExerciseServices = () => {
 				bodyPartFilter.toLowerCase(),
 				userId,
 			);
-
+			console.log(response);
 			if (response.statusText !== 'OK') throw new Error('Failed feching exercises');
 
 			return response.data;
