@@ -40,39 +40,43 @@ const GenericFilters = ({ setShowFavourites, showFavourites }: GenericFiltersTyp
 	return (
 		<section className='generic-filters'>
 			<span>Search</span>
-			<TextField
-				label='Name'
-				type='text'
-				variant='outlined'
-				className='generic-filters__input'
-				size='small'
-				value={pathname === '/exercises' ? exerciseTitle : workoutTitle}
-				onChange={(e) => changeTextFilterHandler(e.target.value)}
-			/>
-			{pathname === '/exercises' && (
-				<Autocomplete
-					disablePortal
-					value={bodyPartFilter || null}
-					options={Object.values(bodyParts)}
-					onChange={(e, value) => changeBodyPartHandler(value)}
-					renderInput={(params) => <TextField {...params} label='Body part' />}
-					className='generic-filters__selector'
+			<div className='generic-filters__inputs'>
+				<TextField
+					label='Name'
+					type='text'
+					variant='outlined'
+					className='generic-filters__input'
 					size='small'
+					value={pathname === '/exercises' ? exerciseTitle : workoutTitle}
+					onChange={(e) => changeTextFilterHandler(e.target.value)}
 				/>
-			)}
-			{pathname === '/workouts' && (
-				<FormControlLabel
-					className='generic-filters__checkbox'
-					control={
-						<Checkbox
-							checked={showFavourites}
-							color='info'
-							onChange={(e, value) => setShowFavourites && setShowFavourites(value)}
-						/>
-					}
-					label='Show selected workouts'
-				/>
-			)}
+				{pathname === '/exercises' && (
+					<Autocomplete
+						disablePortal
+						value={bodyPartFilter || null}
+						options={Object.values(bodyParts)}
+						onChange={(e, value) => changeBodyPartHandler(value)}
+						renderInput={(params) => <TextField {...params} label='Body part' />}
+						className='generic-filters__selector'
+						size='small'
+					/>
+				)}
+				{pathname === '/workouts' && (
+					<FormControlLabel
+						className='generic-filters__checkbox'
+						control={
+							<Checkbox
+								checked={showFavourites}
+								color='info'
+								onChange={(e, value) =>
+									setShowFavourites && setShowFavourites(value)
+								}
+							/>
+						}
+						label='Show selected workouts'
+					/>
+				)}
+			</div>
 		</section>
 	);
 };

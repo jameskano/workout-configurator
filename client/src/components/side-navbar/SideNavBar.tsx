@@ -20,18 +20,6 @@ const SideNavBar = ({ showSideNavbar, setIsSideNavbarShown }: SideNavbarTypes) =
 	return (
 		<section className={`side-navbar side-navbar--${showSideNavbar ? 'show' : 'hide'}`}>
 			<div className='side-navbar__option'>
-				<FitnessCenterRoundedIcon />
-				<div>
-					<NavLink
-						to='/exercises'
-						onClick={sideNavbarHandler}
-						className={({ isActive }) => (isActive ? 'active' : undefined)}>
-						Exercises
-						<ArrowForwardIosRoundedIcon />
-					</NavLink>
-				</div>
-			</div>
-			<div className='side-navbar__option'>
 				<ContentPasteRoundedIcon />
 				<div>
 					<NavLink
@@ -39,6 +27,18 @@ const SideNavBar = ({ showSideNavbar, setIsSideNavbarShown }: SideNavbarTypes) =
 						onClick={sideNavbarHandler}
 						className={({ isActive }) => (isActive ? 'active' : undefined)}>
 						Workouts
+						<ArrowForwardIosRoundedIcon />
+					</NavLink>
+				</div>
+			</div>
+			<div className='side-navbar__option'>
+				<FitnessCenterRoundedIcon />
+				<div>
+					<NavLink
+						to='/exercises'
+						onClick={sideNavbarHandler}
+						className={({ isActive }) => (isActive ? 'active' : undefined)}>
+						Exercises
 						<ArrowForwardIosRoundedIcon />
 					</NavLink>
 				</div>

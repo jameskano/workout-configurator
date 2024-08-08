@@ -80,9 +80,9 @@ const WorkoutCard = ({
 	const expandCardHandler = () => setExpandedCard((prevState) => !prevState);
 
 	return (
-		<div className='workout-card'>
+		<div className='workout-card' onClick={expandCardHandler}>
 			<Accordion expanded={expandedCard}>
-				<AccordionSummary onClick={expandCardHandler}>
+				<AccordionSummary>
 					<div className='workout-card__title'>
 						<h2>{title}</h2>
 						<div className='workout-card__actions'>

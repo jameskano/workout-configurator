@@ -55,6 +55,7 @@
 
 		> button {
 			width: 100%;
+			max-width: 400px;
 			border-radius: $border-radius-3;
 
 			&:first-of-type {
@@ -104,5 +105,19 @@
 	}
 	100% {
 		background-position: 9% 100%;
+	}
+}
+
+@media (min-width: 768px) {
+	.welcome-page {
+		&__title {
+			> img {
+				width: 200px;
+			}
+		}
+
+		&__actions {
+			margin-bottom: 5%;
+		}
 	}
 }

@@ -8,9 +8,20 @@
 	margin-top: $spacing-4;
 	font-size: $font-xs;
 
+	&__inputs {
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+		gap: $spacing-2;
+		container-type: inline-size;
+	}
+
 	&__input,
 	&__selector {
 		@include generic-input;
+
+		min-width: 200px;
+		flex: 1 1 200px;
 
 		input {
 			font-size: $font-xs;
@@ -28,6 +39,16 @@
 			> path {
 				color: $color-primary;
 			}
+		}
+	}
+}
+
+@container (min-width: 800px) {
+	.generic-filters {
+		&__input,
+		&__selector {
+			flex: 0;
+			min-width: 300px;
 		}
 	}
 }

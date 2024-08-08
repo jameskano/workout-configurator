@@ -31,7 +31,7 @@
 	}
 
 	&__logo {
-		margin-top: 40%;
+		@include auth-logo;
 
 		> img {
 			width: 150px;
@@ -39,11 +39,7 @@
 	}
 
 	&__form {
-		display: flex;
-		flex-direction: column;
-		gap: $spacing-2;
-		margin: auto 0 $spacing-3;
-		width: 70%;
+		@include auth-form;
 
 		> button {
 			text-transform: none;
@@ -63,7 +59,7 @@
 	&__register {
 		display: flex;
 		gap: $spacing-2;
-		margin-bottom: $spacing-18;
+		margin-bottom: $spacing-17;
 
 		> span {
 			font-size: $font-xxs;
@@ -72,6 +68,16 @@
 			&:last-of-type {
 				color: $color-secondary;
 				cursor: pointer;
+			}
+		}
+	}
+}
+
+@media (min-width: 900px) {
+	.login-modal {
+		&__logo {
+			> img {
+				width: 200px;
 			}
 		}
 	}

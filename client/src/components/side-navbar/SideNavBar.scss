@@ -63,7 +63,7 @@
 @media (min-width: 900px) {
 	.side-navbar {
 		width: $side-navbar-size;
-		padding: $spacing-6;
+		padding: $spacing-4 $spacing-6;
 		position: fixed;
 		left: 0;
 		box-shadow: $elevation-4;
