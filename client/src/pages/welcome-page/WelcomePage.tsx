@@ -31,7 +31,10 @@ const WelcomePage = () => {
 			<div
 				className={`welcome-page__container${showLogin || showRegister ? ' welcome-page__container--close' : ''}`}>
 				<div className='welcome-page__title'>
-					<img src='src/assets/workout-configurator-logo-light.png' alt='' />
+					<img
+						src='https://drive.google.com/thumbnail?sz=w1000&id=10fOoYxyja442-ygofo6UnLHdGzPKFTeI'
+						alt=''
+					/>
 					<h1>Workout</h1>
 					<h1>Configurator</h1>
 				</div>
